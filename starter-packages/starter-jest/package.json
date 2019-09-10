@@ -1,0 +1,25 @@
+{
+    "name": "starter-jest",
+    "version": "1.0.0",
+    "description": "Starter Package with Jest",
+    "main": "./lib/src/index.js",
+    "scripts": {
+        "build": "tslint --project tsconfig.json & tsc",
+        "test": "jest"
+    },
+    "devDependencies": {
+        "@types/jest": "^24.0.17",
+        "@types/node": "^12.6.9",
+        "jest": "^24.8.0",
+        "ts-jest": "^24.0.2",
+        "tslint": "^5.18.0",
+        "tslint-shared": "^1.0.0"
+    },
+    "dependencies": {
+        "typescript": "^3.5.3"
+    },
+    "jest": {
+        "testRegex": "/lib/test/test.*\\.js",
+        "verbose": true
+    }
+}

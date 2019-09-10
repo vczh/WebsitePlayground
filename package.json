@@ -1,0 +1,23 @@
+{
+  "name": "vczh-website-playground",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "lerna run build --stream",
+    "test": "lerna run test --stream"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:vczh/WebsitePlayground.git"
+  },
+  "license": "Apache-2.0",
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "starter-packages/*"
+    ]
+  },
+  "devDependencies": {
+    "lerna": "^3.16.1"
+  }
+}
