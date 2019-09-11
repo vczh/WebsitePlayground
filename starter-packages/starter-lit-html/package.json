@@ -4,15 +4,17 @@
     "description": "Starter Package with Lit-HTML and Webpack",
     "scripts": {
         "build": "tslint --project tsconfig.json & tsc",
-        "deploy": "copyfiles -u 1 assest/* lib/dist/"
+        "deploy": "copyfiles -u 1 assest/* lib/dist/ & webpack --config webpack.config.js"
     },
     "devDependencies": {
         "@types/node": "^12.6.9",
+        "copyfiles": "^2.1.1",
         "tslint": "^5.18.0",
-        "tslint-shared": "^1.0.0"
+        "tslint-shared": "^1.0.0",
+        "webpack": "^4.39.1",
+        "webpack-cli": "^3.3.6"
     },
     "dependencies": {
-        "copyfiles": "^2.1.1",
         "lit-html": "^1.1.2",
         "typescript": "^3.5.3"
     }
