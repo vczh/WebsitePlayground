@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "description": "Starter Package with Lit-HTML and Webpack",
     "scripts": {
-        "build": "tslint --project tsconfig.json & tsc"
+        "build": "tslint --project tsconfig.json & tsc",
+        "deploy": "copyfiles -u 1 assest/* lib/dist/"
     },
     "devDependencies": {
         "@types/node": "^12.6.9",
