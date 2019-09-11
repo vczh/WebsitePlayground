@@ -9,7 +9,7 @@ class IndexView {
     }
 }
 
-export function renderTemplate(title: string, target: Element): void {
+export default function renderTemplate(title: string, target: Element): void {
     const view = new IndexView(title);
     render(view.getTemplate(), target);
 }

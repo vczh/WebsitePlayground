@@ -13,6 +13,7 @@ Play with nodejs
 yarn
 yarn build
 yarn test
+yarn deploy
 ```
 
 ## clean-starter branch
