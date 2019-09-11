@@ -1,0 +1,21 @@
+{
+    "name": "starter-website-scraper",
+    "version": "1.0.0",
+    "description": "Starter Package with website-scraper",
+    "main": "./lib/index.js",
+    "scripts": {
+        "build": "tslint --project tsconfig.json & tsc",
+        "start": "node ./lib/index.js"
+    },
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "@types/node": "^12.6.9",
+        "@types/website-scraper": "1.2.3",
+        "tslint": "^5.18.0",
+        "tslint-shared": "^1.0.0"
+    },
+    "dependencies": {
+        "typescript": "^3.5.3",
+        "website-scraper": "4.0.1"
+    }
+}

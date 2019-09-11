@@ -27,10 +27,16 @@ A TypeScript package with unit test in **jest**.
 
 ### starter-http-server
 
-An http server. Use `npm run start` to host.
+An http server.
+`npm run start` and browse `http://127.0.0.1:8080`.
 
 ### starter-lit-html
 
 An HTML page using `lit-html` as a browser side template.
 
 After `yarn deploy`, you are able to use IIS to run `starter-packages/starter-lit-html/lib/dist`.
+
+### starter-website-scraper
+
+Download a website to a local folder.
+`npm run start` to download `http://127.0.0.1:8080`.

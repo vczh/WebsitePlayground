@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "es6"
+        ],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es5",
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "outDir": "./lib",
+        "noEmitOnError": true,
+        "noUnusedLocals": true,
+        "strictNullChecks": true
+    },
+    "exclude": [
+        "node_modules",
+        "lib"
+    ]
+}
