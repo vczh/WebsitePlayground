@@ -16,13 +16,9 @@ yarn test
 yarn deploy
 ```
 
-## clean-starter branch
-
-Contains nothing but starter packages. Just copy and start your journey with TypeScript!
-
 ## starter-packages folder
 
-- Copy folder to create new packages
+- Copy any package  to `package` folder to create a new package
 - Change folder name and `name` in `package.json`
 
 ### starter-jest
