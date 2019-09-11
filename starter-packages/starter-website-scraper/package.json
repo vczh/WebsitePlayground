@@ -5,7 +5,7 @@
     "main": "./lib/index.js",
     "scripts": {
         "build": "tslint --project tsconfig.json & tsc",
-        "start": "node ./lib/index.js"
+        "start": "rimraf ./lib/dist & node ./lib/index.js"
     },
     "license": "Apache-2.0",
     "devDependencies": {
@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "typescript": "^3.5.3",
+        "rimraf": "^2.6.3",
         "website-scraper": "4.0.1"
     }
 }

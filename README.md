@@ -39,4 +39,4 @@ After `yarn deploy`, you are able to use IIS to run `starter-packages/starter-li
 ### starter-website-scraper
 
 Download a website to a local folder.
-`npm run start` to download `http://127.0.0.1:8080`.
+`npm run start` to download `http://127.0.0.1:8080` to `starter-packages/starter-website-scraper/lib/dist`.
