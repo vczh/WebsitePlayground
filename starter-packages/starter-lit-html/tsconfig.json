@@ -9,10 +9,15 @@
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
-        "outDir": "./lib",
+        "outDir": "./lib/script",
         "noEmitOnError": true,
         "noUnusedLocals": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "plugins": [
+            {
+                "name": "typescript-lit-html-plugin"
+            }
+        ]
     },
     "exclude": [
         "node_modules",
