@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "lerna run build --stream",
-    "test": "lerna run test --stream"
+    "test": "lerna run test --stream",
+    "deploy": "lerna run deploy --stream"
   },
   "repository": {
     "type": "git",

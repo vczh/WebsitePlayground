@@ -10,7 +10,7 @@
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
-        "outDir": "./lib/script",
+        "outDir": "./lib/raw/scripts",
         "noEmitOnError": true,
         "noUnusedLocals": true,
         "strictNullChecks": true,
