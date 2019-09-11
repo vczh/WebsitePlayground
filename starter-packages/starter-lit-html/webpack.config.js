@@ -4,7 +4,10 @@ const indexView = {
     entry: './lib/raw/scripts/indexView.js',
     output: {
         path: path.resolve(__dirname, 'lib/dist/scripts'),
-        filename: 'indexView.js'
+        filename: 'indexView.js',
+        library: "renderTemplate",
+        libraryTarget: "window",
+        libraryExport: "default"
     },
     mode: 'development'
 };
