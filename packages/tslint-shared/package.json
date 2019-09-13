@@ -6,7 +6,7 @@
     "private": true,
     "devDependencies": {
         "tslint": "^5.18.0",
-        "typescript": "^3.5.3",
+        "typescript": "^3.6.3",
         "tslint-microsoft-contrib": "^6.2.0"
     }
 }
