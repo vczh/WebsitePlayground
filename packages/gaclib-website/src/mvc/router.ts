@@ -24,6 +24,8 @@ type ValidPropertyTypes<T> = T[keyof T];
 
 // remove properties that do not have a type in RouterParameterTypes
 type FilterOutInvalidProperties<T> = Pick<T, ValidPropertyTypes<ValidPropertiesToKeys<T>>>;
+
+// A|B|... -> ((k:FIOP<A>)=>void)|((k:FIOP<B>)=>void)|... -> (k:FIOP<A>&FIOP<B>&...)=>void -> FIOP<A>&FIOP<B>&...
 type MergeParameters<U> = (U extends any ? (k: FilterOutInvalidProperties<U>) => void : never) extends ((k: infer I) => void) ? I : never;
 
 export interface RouterPattern<T, TMethod extends HttpMethods | undefined> {
