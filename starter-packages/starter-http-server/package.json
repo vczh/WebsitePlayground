@@ -11,9 +11,7 @@
     "devDependencies": {
         "@types/node": "^12.6.9",
         "tslint": "^5.18.0",
-        "tslint-shared": "^1.0.0"
-    },
-    "dependencies": {
+        "tslint-shared": "^1.0.0",
         "typescript": "^3.5.3"
     }
 }

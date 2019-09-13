@@ -2,18 +2,27 @@
     "name": "gaclib-website",
     "version": "1.0.0",
     "description": "http://gaclib.net",
-    "main": "./lib/index.js",
+    "main": "./lib/src/index.js",
     "scripts": {
-        "build": "tslint --project tsconfig.json & tsc",
+        "build": "rimraf ./lib & tslint --project tsconfig.json & tsc",
+        "test": "jest",
         "start": "node ./lib/index.js"
     },
     "license": "Apache-2.0",
     "devDependencies": {
+        "@types/jest": "^24.0.17",
         "@types/node": "^12.6.9",
+        "jest": "^24.8.0",
+        "rimraf": "^2.6.3",
+        "ts-jest": "^24.0.2",
         "tslint": "^5.18.0",
-        "tslint-shared": "^1.0.0"
+        "tslint-shared": "^1.0.0",
+        "typescript": "^3.5.3"
     },
     "dependencies": {
-        "typescript": "^3.5.3"
+    },
+    "jest": {
+        "testRegex": "/lib/test/Test.*\\.js",
+        "verbose": true
     }
 }

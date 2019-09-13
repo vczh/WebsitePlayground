@@ -11,12 +11,12 @@
     "devDependencies": {
         "@types/node": "^12.6.9",
         "@types/website-scraper": "1.2.3",
+        "rimraf": "^2.6.3",
         "tslint": "^5.18.0",
-        "tslint-shared": "^1.0.0"
+        "tslint-shared": "^1.0.0",
+        "typescript": "^3.5.3"
     },
     "dependencies": {
-        "typescript": "^3.5.3",
-        "rimraf": "^2.6.3",
         "website-scraper": "4.0.1"
     }
 }
