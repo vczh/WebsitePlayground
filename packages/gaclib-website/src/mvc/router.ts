@@ -26,22 +26,36 @@ type ValidPropertyTypes<T> = T[keyof T];
 type FilterOutInvalidProperties<T> = Pick<T, ValidPropertyTypes<ValidPropertiesToKeys<T>>>;
 
 // A|B|... -> ((k:FIOP<A>)=>void)|((k:FIOP<B>)=>void)|... -> (k:FIOP<A>&FIOP<B>&...)=>void -> FIOP<A>&FIOP<B>&...
-type MergeParameters<U> = (U extends any ? (k: FilterOutInvalidProperties<U>) => void : never) extends ((k: infer I) => void) ? I : never;
+type MergeParameters<U> = (U extends {} ? (k: FilterOutInvalidProperties<U>) => void : never) extends ((k: infer I) => void) ? I : never;
 
-export interface RouterPattern<T, TMethod extends HttpMethods | undefined> {
-    match(url: string): T;
+export interface RouterPattern<T> {
+    readonly methods: HttpMethods[];
+    match(url: string): T | undefined;
+    method(m: HttpMethods): RouterPattern<T>;
 }
 
-export function route<T>(strings: TemplateStringsArray): RouterPattern<{}, 'GET'>;
-export function route<T>(strings: TemplateStringsArray, ...values: T[]): RouterPattern<MergeParameters<T>, 'GET'>;
-export function route(strings: TemplateStringsArray, ...values: {}[]): {} {
-    return {
-        match(url: string): undefined {
-            return undefined;
-        }
-    };
+class RouterPatternImpl implements RouterPattern<{}> {
+    public methods: HttpMethods[];
+
+    constructor(public strings: readonly string[], public parameters: {}[]) {
+    }
+
+    public match(url: string): {} | undefined {
+        return undefined;
+    }
+
+    public method(m: HttpMethods): RouterPattern<{}> {
+        this.methods.push(m);
+        return this;
+    }
 }
 
-export const _1 = route`/`;
-export const _2 = route`/index.html`;
-export const _3 = route`/tutorial/category/${{ category: '' }}/name/${{ name: '' }}.html`;
+export function route<T>(strings: TemplateStringsArray): RouterPattern<{}>;
+export function route<T>(strings: TemplateStringsArray, ...parameters: T[]): RouterPattern<MergeParameters<T>>;
+export function route(strings: TemplateStringsArray, ...parameters: {}[]): RouterPattern<{}> {
+    return new RouterPatternImpl(strings, parameters);
+}
+
+export const _1 = route`/`.method('GET');
+export const _2 = route`/index.html`.method('GET');
+export const _3 = route`/tutorial/category/${{ category: '' }}/name/${{ name: '' }}.html`.method('GET').method('POST');
