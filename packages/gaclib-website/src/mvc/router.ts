@@ -35,9 +35,7 @@ export interface RouterPattern<T> {
 }
 
 class RouterPatternImpl implements RouterPattern<{}> {
-    public methods: HttpMethods[];
-
-    constructor(public strings: readonly string[], public parameters: {}[]) {
+    constructor(public strings: TemplateStringsArray, public parameters: {}[], public methods: HttpMethods[]) {
     }
 
     public match(url: string): {} | undefined {
@@ -45,15 +43,14 @@ class RouterPatternImpl implements RouterPattern<{}> {
     }
 
     public method(m: HttpMethods): RouterPattern<{}> {
-        this.methods.push(m);
-        return this;
+        return new RouterPatternImpl(this.strings, this.parameters, this.methods.concat([m]));
     }
 }
 
 export function route<T>(strings: TemplateStringsArray): RouterPattern<{}>;
 export function route<T>(strings: TemplateStringsArray, ...parameters: T[]): RouterPattern<MergeParameters<T>>;
 export function route(strings: TemplateStringsArray, ...parameters: {}[]): RouterPattern<{}> {
-    return new RouterPatternImpl(strings, parameters);
+    return new RouterPatternImpl(strings, parameters, []);
 }
 
 export const _1 = route`/`.method('GET');
