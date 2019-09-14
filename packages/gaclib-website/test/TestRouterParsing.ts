@@ -78,7 +78,6 @@ test(`/{a}-{b}`, () => {
 });
 
 test(`/Text/Head{head}/{tail}Tail/{free}/Head{both}Tail/Complex{a}Pattern{b}Example`, () => {
-
     const rp = route`/Text/Head${{ head: '' }}/${{ tail: '' }}Tail/${{ free: '' }}/Head${{ both: '' }}Tail/Complex${{ a: '' }}Pattern${{ b: '' }}Example`;
     assertFragments(rp, [{
         kind: RouterFragmentKind.Text,
@@ -105,4 +104,19 @@ test(`/Text/Head{head}/{tail}Tail/{free}/Head{both}Tail/Complex{a}Pattern{b}Exam
         parameters: [['a', RouterParameterKind.String], ['b', RouterParameterKind.String]]
     }]);
     assertDefaultValue(rp, { head: '', tail: '', free: '', both: '', a: '', b: '' });
+});
+
+test(`/{s}/{n}/{b}`, () => {
+    const rp = route`/${{ s: 'ignored' }}/${{ n: 9999 }}/${{ b: true }}`;
+    assertFragments(rp, [{
+        kind: RouterFragmentKind.Free,
+        parameter: ['s', RouterParameterKind.String]
+    }, {
+        kind: RouterFragmentKind.Free,
+        parameter: ['n', RouterParameterKind.Number]
+    }, {
+        kind: RouterFragmentKind.Free,
+        parameter: ['b', RouterParameterKind.Boolean]
+    }]);
+    assertDefaultValue(rp, { s: '', n: 0, b: false });
 });
