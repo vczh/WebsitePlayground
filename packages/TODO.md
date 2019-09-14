@@ -5,9 +5,10 @@
   - Provide a function for creating  webpack exported array
   - Provide a function for generating cascading views in HTML
 - create `gaclib-host`
-  - Text file registration to `Router<[string, (string | Buffer)]>`
-  - binary file registration to `Router<[string, (string | Buffer)]>`
-  - Accept `Router<[string, (string | Buffer)]>` and host a website
+  - Text file registration to router
+  - binary file registration to router
+  - `[Pattern, View]` registration to router
+  - Accept views + `Router<[string, (string | Buffer)]>` and host a website
 - merge `gaclib-views` to `gaclib-website`
   - `gaclib-website` contains
     - views
