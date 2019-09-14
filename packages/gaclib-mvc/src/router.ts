@@ -1,9 +1,9 @@
 import { HttpMethods, Router, RouterCallback, RouterPattern, RouterPatternBase } from './interfaces';
 
 interface RouterPackage<TResult> {
-    methods: string[];
+    methods: HttpMethods[];
     pattern: RouterPatternBase;
-    callback(model: {}): TResult;
+    callback(method: HttpMethods, model: {}): TResult;
 }
 
 class RouterImpl<TResult> implements Router<TResult> {
@@ -17,7 +17,7 @@ class RouterImpl<TResult> implements Router<TResult> {
         });
     }
 
-    public match(method: string, query: string): TResult | undefined {
+    public match(method: HttpMethods, query: string): TResult | undefined {
         if (query[0] !== '/') {
             throw new Error('Query should begin with "/".');
         }
@@ -36,7 +36,7 @@ class RouterImpl<TResult> implements Router<TResult> {
                 }
 
                 if (result === undefined) {
-                    result = pattern.callback(model);
+                    result = pattern.callback(method, model);
                 } else {
                     throw new Error(`Multiple patterns match query: "${query}".`);
                 }
