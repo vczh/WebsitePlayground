@@ -1,6 +1,6 @@
 {
     "name": "gaclib-mvc",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "Gaclib Website MVC",
     "main": "./lib/src/index.js",
     "scripts": {

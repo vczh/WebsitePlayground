@@ -1,6 +1,6 @@
 {
     "name": "gaclib-website",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "http://gaclib.net",
     "main": "./lib/index.js",
     "scripts": {
@@ -15,5 +15,9 @@
         "tslint": "^5.18.0",
         "tslint-shared": "^1.0.0",
         "typescript": "^3.6.3"
+    },
+    "dependencies": {
+        "gaclib-mvc": "^0.0.1",
+        "gaclib-views": "^0.0.1"
     }
 }

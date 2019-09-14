@@ -1,17 +1,19 @@
-import { html, render, TemplateResult } from 'lit-html';
+import { html, render } from 'lit-html';
+import { ViewMetadata } from '../interfaces';
 
-class IndexView {
-    constructor(public title: string) {
+export const metadata: ViewMetadata = {
+    name: 'Gaclib-IndexView',
+    path: '/scripts/indexView.js',
+    htmlInfo: {
+        title: 'Hello, world!',
+        shortcutIcon: '/favicon.ico',
+        styleSheets: ['/global.css']
     }
+};
 
-    public getTemplate(): TemplateResult {
-        return html`Hello, <strong>${this.title}</strong>`;
+export const viewExport = {
+    renderIndexView(model: { title: string }, target: Element): void {
+        const htmlTemplate = html`Hello, <strong>${model.title}</strong>`;
+        render(htmlTemplate, target);
     }
-}
-
-export namespace indexView {
-    export function renderIndexView(title: string, target: Element): void {
-        const view = new IndexView(title);
-        render(view.getTemplate(), target);
-    }
-}
+};
