@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "es6",
+            "dom"
+        ],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es5",
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "outDir": "./lib",
+        "noEmitOnError": true,
+        "noUnusedLocals": true,
+        "strictNullChecks": true,
+        "plugins": [
+            {
+                "name": "typescript-lit-html-plugin"
+            }
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "lib"
+    ]
+}
