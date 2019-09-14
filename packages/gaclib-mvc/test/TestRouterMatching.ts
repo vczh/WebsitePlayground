@@ -7,7 +7,7 @@ test(`Query not begin with "/"`, () => {
     }).toThrow();
 });
 
-function returnMethod(method: HttpMethods, value: {}): HttpMethods {
+function returnMethod(method: HttpMethods, model: {}): HttpMethods {
     return method;
 }
 
@@ -15,6 +15,15 @@ test(`Query mismatched`, () => {
     const router = createRouter<{}>();
     router.register(['GET'], route`/index.html`, returnMethod);
     assert.deepStrictEqual(router.match('GET', '/'), undefined);
+});
+
+test(`Query ambiguous`, () => {
+    const router = createRouter<{}>();
+    router.register(['GET'], route`/index.html`, returnMethod);
+    router.register(['GET'], route`/index.html`, returnMethod);
+    expect(() => {
+        router.match('GET', '/index.html');
+    }).toThrow();
 });
 
 test(`Query match methods`, () => {
@@ -28,4 +37,17 @@ test(`Query match methods`, () => {
     assert.deepStrictEqual(router.match('PUT', '/'), 'PUT');
     assert.deepStrictEqual(router.match('DELETE', '/'), 'DELETE');
     assert.deepStrictEqual(router.match('PATCH', '/'), undefined);
+});
+
+test(`Query match parameters`, () => {
+    const router = createRouter<{}>();
+    router.register([], route`/`, (method: HttpMethods, model: {}) => 'root');
+    router.register([], route`/index.html`, (method: HttpMethods, model: {}) => 'index');
+    router.register([], route`/getting_started/${{ lib: '' }}.html`, (method: HttpMethods, model: {}) => model);
+    router.register([], route`/tutorial/${{ tutorial: '' }}/demo/${{ title: '' }}.html`, (method: HttpMethods, model: {}) => model);
+
+    assert.deepStrictEqual(router.match('GET', '/'), 'root');
+    assert.deepStrictEqual(router.match('GET', '/index.html'), 'index');
+    assert.deepStrictEqual(router.match('GET', '/getting_started/vlpp.html'), { lib: 'vlpp' });
+    assert.deepStrictEqual(router.match('GET', '/tutorial/HelloWorld/demo/CppXml.html'), { tutorial: 'HelloWorld', title: 'CppXml' });
 });
