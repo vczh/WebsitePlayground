@@ -1,9 +1,21 @@
 import * as http from 'http';
+import * as querystring from 'querystring';
+import * as url from 'url';
 
 const server = http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.write(`Hello, you are querying: ${req.url}`);
-    res.end();
+    if (req.url === undefined) {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end();
+    } else {
+        const query = url.parse(req.url);
+
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.write(`Hello, you are querying: ${JSON.stringify(query, undefined, 4)}\r\n`);
+        if (query.search !== undefined) {
+            res.write(`With arguments: ${JSON.stringify(querystring.parse(query.search.substr(1)), undefined, 4)}\r\n`);
+        }
+        res.end();
+    }
 });
 
 server.listen(8080, 'localhost', () => {

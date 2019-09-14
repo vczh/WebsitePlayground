@@ -6,7 +6,7 @@
     "scripts": {
         "build": "rimraf ./lib & tslint --project tsconfig.json & tsc",
         "test": "jest",
-        "start": "node ./lib/index.js"
+        "start": "node ./lib/src/index.js"
     },
     "license": "Apache-2.0",
     "devDependencies": {
