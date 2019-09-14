@@ -3,6 +3,8 @@
         "tslint-shared"
     ],
     "rules": {
-        "no-var-requires": false
+        "label-position": false,
+        "no-var-requires": false,
+        "prefer-object-spread": false
     }
 }

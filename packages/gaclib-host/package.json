@@ -8,7 +8,6 @@
     },
     "license": "Apache-2.0",
     "devDependencies": {
-        "@types/escape-string-regexp": "0.0.32",
         "@types/node": "^12.6.9",
         "rimraf": "^2.6.3",
         "tslint": "^5.18.0",

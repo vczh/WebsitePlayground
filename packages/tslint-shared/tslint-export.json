@@ -25,6 +25,7 @@
         "no-parameter-properties": false,
         "non-literal-fs-path": false,
         "non-literal-require": false,
+        "no-require-imports": false,
         "typedef": [
             true,
             "call-signature",
