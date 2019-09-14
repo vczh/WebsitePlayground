@@ -1,14 +1,14 @@
 import * as path from 'path';
 import { ViewMetadata } from './interfaces';
-import { metadata as indexView } from './views/indexView/Metadata';
+import { views } from './views';
 
-const exportedArray = [indexView].map((metadata: ViewMetadata) => {
+const exportedArray = views.map((metadata: ViewMetadata) => {
     return {
-        entry: indexView.source,
+        entry: metadata.source,
         output: {
-            path: path.join(__dirname, `./dist${path.dirname(indexView.path)}`),
-            filename: path.basename(indexView.path),
-            library: indexView.name,
+            path: path.join(__dirname, `./dist${path.dirname(metadata.path)}`),
+            filename: path.basename(metadata.path),
+            library: metadata.name,
             libraryTarget: 'window',
             libraryExport: 'viewExport'
         },

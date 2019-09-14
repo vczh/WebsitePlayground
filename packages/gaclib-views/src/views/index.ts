@@ -1,8 +1,8 @@
-import { ViewMetadata } from '../../interfaces';
+import { ViewMetadata } from '../interfaces';
 
-export const metadata: ViewMetadata = {
+const indexView: ViewMetadata = {
     name: 'Gaclib-IndexView',
-    source: `${__dirname}/View.js`,
+    source: `${__dirname}/indexView.js`,
     path: '/scripts/indexView.js',
     htmlInfo: {
         title: 'Hello, world!',
@@ -10,3 +10,5 @@ export const metadata: ViewMetadata = {
         styleSheets: ['/global.css']
     }
 };
+
+export const views = [indexView];
