@@ -1,7 +1,7 @@
 import { HtmlInfo } from './interfaces';
 
 export function mergeHtmlInfo(original: HtmlInfo, override: HtmlInfo): HtmlInfo {
-    const info = Object.assign({}, original);
+    const info = { ...original };
     if (override.title !== undefined) {
         info.title = override.title;
     }

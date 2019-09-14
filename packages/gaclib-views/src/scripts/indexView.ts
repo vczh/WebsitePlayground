@@ -3,6 +3,7 @@ import { ViewMetadata } from '../interfaces';
 
 export const metadata: ViewMetadata = {
     name: 'Gaclib-IndexView',
+    source: __filename,
     path: '/scripts/indexView.js',
     htmlInfo: {
         title: 'Hello, world!',

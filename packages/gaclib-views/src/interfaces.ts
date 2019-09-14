@@ -7,6 +7,7 @@ export interface HtmlInfo {
 
 export interface ViewMetadata {
     name: string;
+    source: string;
     path: string;
     parentView?: string;
     htmlInfo?: HtmlInfo;
