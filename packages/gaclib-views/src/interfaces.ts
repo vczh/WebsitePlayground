@@ -10,5 +10,5 @@ export interface ViewMetadata {
     source: string;
     path: string;
     parentView?: string;
-    htmlInfo?: HtmlInfo;
+    htmlInfo: HtmlInfo;
 }

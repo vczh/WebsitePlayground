@@ -34,7 +34,7 @@ ${info.scripts === undefined ? '' : info.scripts.map((value: string) => `<script
 ${head}
 </head>
 <body>
-<script type="text/javascript">
+<script lang="javascript">
 window["Gaclib-Model"] = ${JSON.stringify(model, undefined, 2)};
 </script>
 ${body}
@@ -44,3 +44,4 @@ ${body}
 }
 
 export * from './interfaces';
+export { views } from './views';
