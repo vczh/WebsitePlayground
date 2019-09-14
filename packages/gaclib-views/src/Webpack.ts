@@ -1,13 +1,13 @@
 import * as path from 'path';
 import { ViewMetadata } from './interfaces';
-import { metadata as indexView } from './scripts/indexView';
+import { metadata as indexView } from './views/indexView/Metadata';
 
 const exportedArray = [indexView].map((metadata: ViewMetadata) => {
     return {
         entry: indexView.source,
         output: {
-            path: `./lib/dist${path.dirname(indexView.path)}`,
-            fileame: path.basename(indexView.path),
+            path: path.join(__dirname, `./dist${path.dirname(indexView.path)}`),
+            filename: path.basename(indexView.path),
             library: indexView.name,
             libraryTarget: 'window',
             libraryExport: 'viewExport'
