@@ -36,7 +36,96 @@ function getParameterName(fragment: {}): [true, RouterParameter] | [false, strin
     throw new Error(`Parameter object "${JSON.stringify(fragment)}" should have exactly one property.`);
 }
 
-function addParameter(value: {}, parameter: RouterParameter, text: string | undefined = undefined): boolean {
+function submitFragment(target: RouterFragment[], fragmentBuilders: {}[]): void {
+    const processedFragments = fragmentBuilders.map(getParameterName);
+    switch (processedFragments.length) {
+        case 0: {
+            if (target.length !== 0) {
+                throw new Error('Empty pattern is not allowed between "/"s.');
+            }
+            target.push({
+                kind: RouterFragmentKind.Text,
+                text: ''
+            });
+            return;
+        }
+        case 1: {
+            const arg1 = processedFragments[0];
+            if (arg1[0]) {
+                target.push({
+                    kind: RouterFragmentKind.Free,
+                    parameter: arg1[1]
+                });
+                return;
+            } else {
+                target.push({
+                    kind: RouterFragmentKind.Text,
+                    text: arg1[1]
+                });
+                return;
+            }
+        }
+        case 2: {
+            const arg1 = processedFragments[0];
+            const arg2 = processedFragments[1];
+            if (!arg1[0] && arg2[0]) {
+                target.push({
+                    kind: RouterFragmentKind.Head,
+                    head: arg1[1],
+                    parameter: arg2[1]
+                });
+                return;
+            } else if (arg1[0] && !arg2[0]) {
+                target.push({
+                    kind: RouterFragmentKind.Tail,
+                    tail: arg2[1],
+                    parameter: arg1[1]
+                });
+                return;
+            }
+        }
+        case 3: {
+            const arg1 = processedFragments[0];
+            const arg2 = processedFragments[1];
+            const arg3 = processedFragments[2];
+            if (!arg1[0] && arg2[0] && !arg3[0]) {
+                target.push({
+                    kind: RouterFragmentKind.HeadTail,
+                    head: arg1[1],
+                    tail: arg3[1],
+                    parameter: arg2[1]
+                });
+                return;
+            }
+        }
+        default:
+    }
+
+    let pattern = '';
+    const parameters: RouterParameter[] = [];
+    let lastType: 0 | 1 | 2 = 0;
+
+    for (const fragment of processedFragments) {
+        if (fragment[0]) {
+            if (lastType === 1) {
+                throw new Error('A non-empty text pattern is required between parameters.');
+            }
+            lastType = 1;
+            pattern += '(.+)';
+            parameters.push(fragment[1]);
+        } else if (fragment[1] !== '') {
+            lastType = 2;
+            pattern += escapeStringRegexp(fragment[1]);
+        }
+    }
+    target.push({
+        kind: RouterFragmentKind.MultiplePatterns,
+        pattern: `^${pattern}$`,
+        parameters
+    });
+}
+
+function addParameter(value: {}, parameter: RouterParameter, text?: string): boolean {
     const prop = parameter[0];
     switch (parameter[1]) {
         case RouterParameterKind.String:
@@ -82,7 +171,7 @@ class RouterPatternImpl implements RouterPatternBase {
                 ;
             for (let j = 0; j < fragments.length; j++) {
                 if (j > 0) {
-                    this.submitFragment(fragmentBuilders);
+                    submitFragment(this.fragments, fragmentBuilders);
                     fragmentBuilders = [];
                 }
 
@@ -95,7 +184,7 @@ class RouterPatternImpl implements RouterPatternBase {
                 fragmentBuilders.push(parameters[i]);
             }
         }
-        this.submitFragment(fragmentBuilders);
+        submitFragment(this.fragments, fragmentBuilders);
     }
 
     public createDefaultValue(): {} {
@@ -160,114 +249,24 @@ class RouterPatternImpl implements RouterPatternBase {
                     );
                 }
                 return false;
-            case RouterFragmentKind.MultiplePatterns:
-                {
-                    if (fragment.cachedRegExp === undefined) {
-                        fragment.cachedRegExp = new RegExp(fragment.pattern, 'i');
-                    }
-                    const matches = text.match(fragment.cachedRegExp);
-                    if (matches !== null) {
-                        for (let i = 0; i < fragment.parameters.length; i++) {
-                            if (!addParameter(value, fragment.parameters[i], matches[i + 1])) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-                    return false;
+            case RouterFragmentKind.MultiplePatterns: {
+                if (fragment.cachedRegExp === undefined) {
+                    fragment.cachedRegExp = new RegExp(fragment.pattern, 'i');
                 }
+                const matches = text.match(fragment.cachedRegExp);
+                if (matches !== null) {
+                    for (let i = 0; i < fragment.parameters.length; i++) {
+                        if (!addParameter(value, fragment.parameters[i], matches[i + 1])) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            }
             default:
                 return false;
         }
-    }
-
-    private submitFragment(fragmentBuilders: {}[]): void {
-        const processedFragments = fragmentBuilders.map(getParameterName);
-        switch (processedFragments.length) {
-            case 0: {
-                if (this.fragments.length !== 0) {
-                    throw new Error('Empty pattern is not allowed between "/"s.');
-                }
-                this.fragments.push({
-                    kind: RouterFragmentKind.Text,
-                    text: ''
-                });
-                return;
-            }
-            case 1: {
-                const arg1 = processedFragments[0];
-                if (arg1[0]) {
-                    this.fragments.push({
-                        kind: RouterFragmentKind.Free,
-                        parameter: arg1[1]
-                    });
-                    return;
-                } else {
-                    this.fragments.push({
-                        kind: RouterFragmentKind.Text,
-                        text: arg1[1]
-                    });
-                    return;
-                }
-            }
-            case 2: {
-                const arg1 = processedFragments[0];
-                const arg2 = processedFragments[1];
-                if (!arg1[0] && arg2[0]) {
-                    this.fragments.push({
-                        kind: RouterFragmentKind.Head,
-                        head: arg1[1],
-                        parameter: arg2[1]
-                    });
-                    return;
-                } else if (arg1[0] && !arg2[0]) {
-                    this.fragments.push({
-                        kind: RouterFragmentKind.Tail,
-                        tail: arg2[1],
-                        parameter: arg1[1]
-                    });
-                    return;
-                }
-            }
-            case 3: {
-                const arg1 = processedFragments[0];
-                const arg2 = processedFragments[1];
-                const arg3 = processedFragments[2];
-                if (!arg1[0] && arg2[0] && !arg3[0]) {
-                    this.fragments.push({
-                        kind: RouterFragmentKind.HeadTail,
-                        head: arg1[1],
-                        tail: arg3[1],
-                        parameter: arg2[1]
-                    });
-                    return;
-                }
-            }
-            default:
-        }
-
-        let pattern = '';
-        const parameters: RouterParameter[] = [];
-        let lastType: 0 | 1 | 2 = 0;
-
-        for (const fragment of processedFragments) {
-            if (fragment[0]) {
-                if (lastType === 1) {
-                    throw new Error('A non-empty text pattern is required between parameters.');
-                }
-                lastType = 1;
-                pattern += '(.+)';
-                parameters.push(fragment[1]);
-            } else if (fragment[1] !== '') {
-                lastType = 2;
-                pattern += escapeStringRegexp(fragment[1]);
-            }
-        }
-        this.fragments.push({
-            kind: RouterFragmentKind.MultiplePatterns,
-            pattern: `^${pattern}$`,
-            parameters
-        });
     }
 }
 
