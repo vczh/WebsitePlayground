@@ -14,6 +14,7 @@ function returnMethod(method: HttpMethods, model: {}): HttpMethods {
 test(`Query mismatched`, () => {
     const router = createRouter<{}>();
     router.register(['GET'], route`/index.html`, returnMethod);
+
     assert.deepStrictEqual(router.match('GET', '/'), undefined);
 });
 
@@ -21,6 +22,7 @@ test(`Query ambiguous`, () => {
     const router = createRouter<{}>();
     router.register(['GET'], route`/index.html`, returnMethod);
     router.register(['GET'], route`/index.html`, returnMethod);
+
     expect(() => {
         router.match('GET', '/index.html');
     }).toThrow();
