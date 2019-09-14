@@ -83,6 +83,9 @@ class RouterPatternImpl implements RouterPatternBase {
         const processedFragments = fragmentBuilders.map(getParameterName);
         switch (processedFragments.length) {
             case 0: {
+                if (this.fragments.length !== 0) {
+                    throw new Error('Empty pattern is not allowed between "/"s.');
+                }
                 this.fragments.push({
                     kind: RouterFragmentKind.Text,
                     text: ''
@@ -143,11 +146,18 @@ class RouterPatternImpl implements RouterPatternBase {
 
         let pattern = '';
         const parameters: RouterParameter[] = [];
+        let lastType: 0 | 1 | 2 = 0;
+
         for (const fragment of processedFragments) {
             if (fragment[0]) {
+                if (lastType === 1) {
+                    throw new Error('A non-empty text pattern is required between parameters.');
+                }
+                lastType = 1;
                 pattern += '(.+)';
                 parameters.push(fragment[1]);
-            } else {
+            } else if (fragment[1] !== '') {
+                lastType = 2;
                 pattern += escapeStringRegexp(fragment[1]);
             }
         }
