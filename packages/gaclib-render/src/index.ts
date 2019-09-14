@@ -42,7 +42,7 @@ interface ViewMap {
 }
 
 interface MvcView {
-    targetObject?: string;
+    targetObject: string;
     viewName: string;
 }
 
@@ -67,7 +67,10 @@ export function generateHtml(htmlInfo: HtmlInfo, views: ViewMetadata[], viewName
             mvcViews[0].targetObject = currentView.containerId;
         }
 
-        mvcViews.unshift({ viewName: currentViewName });
+        mvcViews.unshift({
+            targetObject: 'MVC-ViewContainer',
+            viewName: currentViewName
+        });
         currentViewName = currentView.parentView;
     }
 
@@ -91,11 +94,20 @@ ${info.scripts === undefined ? '' : info.scripts.map((value: string) => `<script
 ${head}
 </head>
 <body>
+<div id="MVC-ViewContainer"/>
 <script lang="javascript">
-const mvcModel = ${JSON.stringify(mvcModel, undefined, 2)};
-const mvcViews = ${JSON.stringify(mvcViews, undefined, 2)};
-for(const view of mvcViews) {
-  window[view.viewName].renderView(mvcModel, (view.targetObject === undefined ? document.body : document.getElementById(view.targetObject)));
+{
+  const mvcModel = ${JSON.stringify(mvcModel, undefined, 2)};
+  const mvcViews = ${JSON.stringify(mvcViews, undefined, 2)};
+  for (const view of mvcViews) {
+    window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
+  }
+  const renderedScriptTags = document.getElementById("MVC-ViewContainer").getElementsByTagName("script");
+  for (const scriptTag of renderedScriptTags) {
+    eval(
+      "(function(){" + scriptTag.innerHTML + "})()"
+    );
+  }
 }
 </script>
 ${body}
