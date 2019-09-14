@@ -36,18 +36,30 @@ function getParameterName(fragment: {}): [true, RouterParameter] | [false, strin
     throw new Error(`Parameter object "${JSON.stringify(fragment)}" should have exactly one property.`);
 }
 
-function addParameter(value: {}, parameter: RouterParameter): void {
+function addParameter(value: {}, parameter: RouterParameter, text: string | undefined = undefined): boolean {
+    const prop = parameter[0];
     switch (parameter[1]) {
         case RouterParameterKind.String:
-            value[parameter[0]] = '';
-            break;
+            value[prop] = text === undefined ? '' : text;
+            return true;
         case RouterParameterKind.Number:
-            value[parameter[0]] = 0;
-            break;
+            if (text === undefined) {
+                value[prop] = 0;
+            } else if (`${+text}` === text) {
+                value[prop] = +text;
+            } else {
+                return false;
+            }
+            return true;
         case RouterParameterKind.Boolean:
-            value[parameter[0]] = false;
-            break;
+            switch (text) {
+                case undefined: value[prop] = false; return true;
+                case 'true': value[prop] = true; return true;
+                case 'false': value[prop] = false; return true;
+                default: return false;
+            }
         default:
+            return false;
     }
 }
 
@@ -118,32 +130,55 @@ class RouterPatternImpl implements RouterPatternBase {
                 if (text.length > fragment.head.length
                     && text.substr(0, fragment.head.length) === fragment.head
                 ) {
-                    value[fragment.parameter[0]] = text.substr(fragment.head.length);
-                    return true;
+                    return addParameter(
+                        value,
+                        fragment.parameter,
+                        text.substr(fragment.head.length)
+                    );
                 }
-                break;
+                return false;
             case RouterFragmentKind.Tail:
                 if (text.length > fragment.tail.length
                     && text.substr(-fragment.tail.length) === fragment.tail
                 ) {
-                    value[fragment.parameter[0]] = text.substr(0, text.length - fragment.tail.length);
-                    return true;
+                    return addParameter(
+                        value,
+                        fragment.parameter,
+                        text.substr(0, text.length - fragment.tail.length)
+                    );
                 }
-                break;
+                return false;
             case RouterFragmentKind.HeadTail:
                 if (text.length > fragment.head.length + fragment.tail.length
                     && text.substr(0, fragment.head.length) === fragment.head
                     && text.substr(-fragment.tail.length) === fragment.tail
                 ) {
-                    value[fragment.parameter[0]] = text.substring(fragment.head.length, - fragment.tail.length);
-                    return true;
+                    return addParameter(
+                        value,
+                        fragment.parameter,
+                        text.substr(fragment.head.length, text.length - fragment.head.length - fragment.tail.length)
+                    );
                 }
-                break;
+                return false;
             case RouterFragmentKind.MultiplePatterns:
-                break;
+                {
+                    if (fragment.cachedRegExp === undefined) {
+                        fragment.cachedRegExp = new RegExp(fragment.pattern, 'i');
+                    }
+                    const matches = text.match(fragment.cachedRegExp);
+                    if (matches !== null) {
+                        for (let i = 0; i < fragment.parameters.length; i++) {
+                            if (!addParameter(value, fragment.parameters[i], matches[i + 1])) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                    return false;
+                }
             default:
+                return false;
         }
-        return false;
     }
 
     private submitFragment(fragmentBuilders: {}[]): void {

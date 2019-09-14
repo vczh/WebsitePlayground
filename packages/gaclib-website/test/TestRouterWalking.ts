@@ -49,13 +49,13 @@ test(`/Gaclib{x}Mvc`, () => {
 });
 
 test(`/{a}.{b}.{c}.{d}`, () => {
-    const rp = route`/${{ a: '' }}.${{ b: '' }}.${{ c: '' }}.${{ d: '' }}`;
+    const rp = route`/${{ a: 1 }}.${{ b: 2 }}.${{ c: 3 }}.${{ d: 4 }}`;
     const url = '/127.0.0.1';
-    assertWalk(rp, url, { a: '127', b: '0', c: '0', d: '1' });
+    assertWalk(rp, url, { a: 127, b: 0, c: 0, d: 1 });
 });
 
 test(`/Tutorial/{tutorial}/Demo/{title}.html`, () => {
-    const rp = route`/Tutorial/${{ tutorial: '' }}/Demo/${{ title: '' }}.html`;
-    const url = '/Tutorial/HelloWorld/Demo/CppXml.html';
-    assertWalk(rp, url, { tutorial: 'HelloWorld', title: 'CppXml' });
+    const rp = route`/Tutorial/${{ tutorial: true }}/Demo/${{ title: false }}.html`;
+    const url = '/Tutorial/false/Demo/true.html';
+    assertWalk(rp, url, { tutorial: false, title: true });
 });
