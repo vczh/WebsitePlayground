@@ -53,3 +53,9 @@ test(`/{a}.{b}.{c}.{d}`, () => {
     const url = '/127.0.0.1';
     assertWalk(rp, url, { a: '127', b: '0', c: '0', d: '1' });
 });
+
+test(`/Tutorial/{tutorial}/Demo/{title}.html`, () => {
+    const rp = route`/Tutorial/${{ tutorial: '' }}/Demo/${{ title: '' }}.html`;
+    const url = '/Tutorial/HelloWorld/Demo/CppXml.html';
+    assertWalk(rp, url, { tutorial: 'HelloWorld', title: 'CppXml' });
+});

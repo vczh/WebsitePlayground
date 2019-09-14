@@ -108,7 +108,42 @@ class RouterPatternImpl implements RouterPatternBase {
     }
 
     public walk(text: string, fragment: RouterFragment, value: {}): boolean {
-        throw new Error('Not Implemented');
+        switch (fragment.kind) {
+            case RouterFragmentKind.Text:
+                return fragment.text === text;
+            case RouterFragmentKind.Free:
+                value[fragment.parameter[0]] = text;
+                return true;
+            case RouterFragmentKind.Head:
+                if (text.length > fragment.head.length
+                    && text.substr(0, fragment.head.length) === fragment.head
+                ) {
+                    value[fragment.parameter[0]] = text.substr(fragment.head.length);
+                    return true;
+                }
+                break;
+            case RouterFragmentKind.Tail:
+                if (text.length > fragment.tail.length
+                    && text.substr(-fragment.tail.length) === fragment.tail
+                ) {
+                    value[fragment.parameter[0]] = text.substr(0, text.length - fragment.tail.length);
+                    return true;
+                }
+                break;
+            case RouterFragmentKind.HeadTail:
+                if (text.length > fragment.head.length + fragment.tail.length
+                    && text.substr(0, fragment.head.length) === fragment.head
+                    && text.substr(-fragment.tail.length) === fragment.tail
+                ) {
+                    value[fragment.parameter[0]] = text.substring(fragment.head.length, - fragment.tail.length);
+                    return true;
+                }
+                break;
+            case RouterFragmentKind.MultiplePatterns:
+                break;
+            default:
+        }
+        return false;
     }
 
     private submitFragment(fragmentBuilders: {}[]): void {
