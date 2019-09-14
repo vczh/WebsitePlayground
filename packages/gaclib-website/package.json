@@ -10,6 +10,7 @@
     },
     "license": "Apache-2.0",
     "devDependencies": {
+        "@types/escape-string-regexp": "0.0.32",
         "@types/jest": "^24.0.17",
         "@types/node": "^12.6.9",
         "jest": "^24.8.0",
@@ -20,6 +21,7 @@
         "typescript": "^3.6.3"
     },
     "dependencies": {
+        "escape-string-regexp": "^2.0.0"
     },
     "jest": {
         "testRegex": "/lib/test/Test.*\\.js",
