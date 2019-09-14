@@ -14,7 +14,7 @@ function indexViewCallback(method: HttpMethods, model: { title: string }): [stri
     const head = '';
     const body = `
 <script lang="javascript">
-indexView.renderIndexView(document.title, document.body);
+window["Gaclib-IndexView"].renderIndexView(window["Gaclib-Model"], document.body);
 </script>
 `;
     const generatedHtml = generateHtml(
@@ -41,7 +41,7 @@ const distFolder = path.join(__dirname, `../../gaclib-views/lib/dist`);
 const router = createRouter<[string, string | Buffer]>();
 router.register([], route`/favicon.ico`, binaryFileCallback('image/x-icon', path.join(distFolder, './favicon.ico')));
 router.register([], route`/global.css`, textFileCallback('text/css', path.join(distFolder, './global.css')));
-router.register([], route`/script/indexView.js`, textFileCallback('application/javascript', path.join(distFolder, './script/indexView.js')));
+router.register([], route`/scripts/indexView.js`, textFileCallback('application/javascript', path.join(distFolder, './scripts/indexView.js')));
 router.register([], route`/${{ title: '' }}.html`, indexViewCallback);
 
 const server = http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
@@ -60,8 +60,13 @@ const server = http.createServer((req: http.IncomingMessage, res: http.ServerRes
             break NOT_FOUND;
         }
 
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(htmlResult);
+        if (typeof htmlResult[1] === 'string') {
+            res.writeHead(200, { 'Content-Type': htmlResult[0] });
+            res.write(htmlResult[1]);
+        } else {
+            res.writeHead(200, { 'Content-Type': htmlResult[0] });
+            res.write(htmlResult[1], 'binary');
+        }
         res.end();
         return;
     }
