@@ -1,8 +1,12 @@
 import * as assert from 'assert';
 import { route, RouterFragment, RouterFragmentKind, RouterParameterKind, RouterPattern } from '../src/mvc';
 
-function assertFragments<T>(rp: RouterPattern<T>, expect: RouterFragment[]): void {
-    assert.deepStrictEqual(rp.fragments, expect);
+function assertFragments<T>(rp: RouterPattern<T>, expected: RouterFragment[]): void {
+    assert.deepStrictEqual(rp.fragments, expected);
+}
+
+function assertDefaultValue<T>(rp: RouterPattern<T>, expected: T): void {
+    assert.deepStrictEqual(rp.createDefaultValue(), expected);
 }
 
 test(`/`, () => {
@@ -11,6 +15,7 @@ test(`/`, () => {
         kind: RouterFragmentKind.Text,
         text: ''
     }]);
+    assertDefaultValue(rp, {});
 });
 
 test(`/index.html`, () => {
@@ -19,6 +24,7 @@ test(`/index.html`, () => {
         kind: RouterFragmentKind.Text,
         text: 'index.html'
     }]);
+    assertDefaultValue(rp, {});
 });
 
 test(`/{name}`, () => {
@@ -27,6 +33,7 @@ test(`/{name}`, () => {
         kind: RouterFragmentKind.Free,
         parameter: ['name', RouterParameterKind.String]
     }]);
+    assertDefaultValue(rp, { name: '' });
 });
 
 test(`/Demo-{title}`, () => {
@@ -36,6 +43,7 @@ test(`/Demo-{title}`, () => {
         head: 'Demo-',
         parameter: ['title', RouterParameterKind.String]
     }]);
+    assertDefaultValue(rp, { title: '' });
 });
 
 test(`/{title}.html`, () => {
@@ -45,6 +53,7 @@ test(`/{title}.html`, () => {
         tail: '.html',
         parameter: ['title', RouterParameterKind.String]
     }]);
+    assertDefaultValue(rp, { title: '' });
 });
 
 test(`/Demo-{title}.html`, () => {
@@ -55,6 +64,7 @@ test(`/Demo-{title}.html`, () => {
         tail: '.html',
         parameter: ['title', RouterParameterKind.String]
     }]);
+    assertDefaultValue(rp, { title: '' });
 });
 
 test(`/{a}-{b}`, () => {
@@ -64,6 +74,7 @@ test(`/{a}-{b}`, () => {
         pattern: /^(.+)\-(.+)$/.source,
         parameters: [['a', RouterParameterKind.String], ['b', RouterParameterKind.String]]
     }]);
+    assertDefaultValue(rp, { a: '', b: '' });
 });
 
 test(`/Text/Head{head}/{tail}Tail/{free}/Head{both}Tail/Complex{a}Pattern{b}Example`, () => {
@@ -93,4 +104,5 @@ test(`/Text/Head{head}/{tail}Tail/{free}/Head{both}Tail/Complex{a}Pattern{b}Exam
         pattern: /^Complex(.+)Pattern(.+)Example$/.source,
         parameters: [['a', RouterParameterKind.String], ['b', RouterParameterKind.String]]
     }]);
+    assertDefaultValue(rp, { head: '', tail: '', free: '', both: '', a: '', b: '' });
 });

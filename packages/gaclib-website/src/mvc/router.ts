@@ -36,6 +36,21 @@ function getParameterName(fragment: {}): [true, RouterParameter] | [false, strin
     throw new Error(`Parameter object "${JSON.stringify(fragment)}" should have exactly one property.`);
 }
 
+function addParameter(value: {}, parameter: RouterParameter): void {
+    switch (parameter[1]) {
+        case RouterParameterKind.String:
+            value[parameter[0]] = '';
+            break;
+        case RouterParameterKind.Number:
+            value[parameter[0]] = 0;
+            break;
+        case RouterParameterKind.Boolean:
+            value[parameter[0]] = false;
+            break;
+        default:
+    }
+}
+
 class RouterPatternImpl implements RouterPatternBase {
     public fragments: RouterFragment[] = [];
 
@@ -72,7 +87,24 @@ class RouterPatternImpl implements RouterPatternBase {
     }
 
     public createDefaultValue(): {} {
-        throw new Error('Not Implemented');
+        const value = {};
+        for (const fragment of this.fragments) {
+            switch (fragment.kind) {
+                case RouterFragmentKind.Free:
+                case RouterFragmentKind.Head:
+                case RouterFragmentKind.Tail:
+                case RouterFragmentKind.HeadTail:
+                    addParameter(value, fragment.parameter);
+                    break;
+                case RouterFragmentKind.MultiplePatterns:
+                    for (const parameter of fragment.parameters) {
+                        addParameter(value, parameter);
+                    }
+                    break;
+                default:
+            }
+        }
+        return value;
     }
 
     public walk(text: string, fragment: RouterFragment, value: {}): boolean {
