@@ -1,20 +1,4 @@
-type RouterParameterTypes =
-    | string
-    | number
-    | boolean
-    ;
-
-export type HttpMethods =
-    | 'GET'
-    | 'HEAD'
-    | 'POST'
-    | 'PUT'
-    | 'DELETE'
-    | 'CONNECT'
-    | 'OPTIONS'
-    | 'TRACE'
-    | 'PATCH'
-    ;
+import { RouterFragment, RouterParameterTypes, RouterPattern, RouterPatternBase } from './interfaces';
 
 // if the type of a property is one of RouterParameterTypes, then convert the type of the property to be the key
 type ValidPropertiesToKeys<T> = { [P in keyof T]: T[P] extends RouterParameterTypes ? P : never; };
@@ -28,31 +12,28 @@ type FilterOutInvalidProperties<T> = Pick<T, ValidPropertyTypes<ValidPropertiesT
 // A|B|... -> ((k:FIOP<A>)=>void)|((k:FIOP<B>)=>void)|... -> (k:FIOP<A>&FIOP<B>&...)=>void -> FIOP<A>&FIOP<B>&...
 type MergeParameters<U> = (U extends {} ? (k: FilterOutInvalidProperties<U>) => void : never) extends ((k: infer I) => void) ? I : never;
 
-export interface RouterPattern<T> {
-    readonly methods: HttpMethods[];
-    match(url: string): T | undefined;
-    method(m: HttpMethods): RouterPattern<T>;
-}
+class RouterPatternImpl implements RouterPatternBase {
+    public fragments: RouterFragment[];
 
-class RouterPatternImpl implements RouterPattern<{}> {
-    constructor(public strings: TemplateStringsArray, public parameters: {}[], public methods: HttpMethods[]) {
+    constructor(strings: TemplateStringsArray, parameters: {}[]) {
+        throw new Error('Not Implemented');
     }
 
-    public match(url: string): {} | undefined {
-        return undefined;
+    public createDefaultValue(): {} {
+        throw new Error('Not Implemented');
     }
 
-    public method(m: HttpMethods): RouterPattern<{}> {
-        return new RouterPatternImpl(this.strings, this.parameters, this.methods.concat([m]));
+    public walk(text: string, fragment: RouterFragment, value: {}): boolean {
+        throw new Error('Not Implemented');
     }
 }
 
 export function route<T>(strings: TemplateStringsArray): RouterPattern<{}>;
 export function route<T>(strings: TemplateStringsArray, ...parameters: T[]): RouterPattern<MergeParameters<T>>;
-export function route(strings: TemplateStringsArray, ...parameters: {}[]): RouterPattern<{}> {
-    return new RouterPatternImpl(strings, parameters, []);
+export function route(strings: TemplateStringsArray, ...parameters: {}[]): RouterPatternBase {
+    return new RouterPatternImpl(strings, parameters);
 }
 
-export const _1 = route`/`.method('GET');
-export const _2 = route`/index.html`.method('GET');
-export const _3 = route`/tutorial/category/${{ category: '' }}/name/${{ name: '' }}.html`.method('GET').method('POST');
+export const _1 = route`/`;
+export const _2 = route`/index.html`;
+export const _3 = route`/tutorial/category/${{ category: '' }}/name/${{ name: '' }}.html`;
