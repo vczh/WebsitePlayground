@@ -58,7 +58,7 @@ test(`/Demo-{title}.html`, () => {
 });
 
 test(`/{a}-{b}`, () => {
-    const rp = route`${{ a: '' }}-${{ b: '' }}`;
+    const rp = route`/${{ a: '' }}-${{ b: '' }}`;
     assertFragments(rp, [{
         kind: RouterFragmentKind.MultiplePatterns,
         pattern: /^(.+)\-(.+)$/.source,
@@ -90,7 +90,7 @@ test(`/Text/Head{head}/{tail}Tail/{free}/Head{both}Tail/Complex{a}Pattern{b}Exam
         name: 'both'
     }, {
         kind: RouterFragmentKind.MultiplePatterns,
-        pattern: /^Complex(.+)Pattern(.+)Example/.source,
+        pattern: /^Complex(.+)Pattern(.+)Example$/.source,
         names: ['a', 'b']
     }]);
 });

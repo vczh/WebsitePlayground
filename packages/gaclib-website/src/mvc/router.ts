@@ -50,14 +50,16 @@ class RouterPatternImpl implements RouterPatternBase {
             const fragments = strings[i]
                 .substr(i === 0 ? 1 : 0)
                 .split('/')
-                .map(escapeStringRegexp);
+                ;
             for (let j = 0; j < fragments.length; j++) {
                 if (j > 0) {
                     this.submitFragment(fragmentBuilders);
                     fragmentBuilders = [];
                 }
 
-                fragmentBuilders.push(fragments[j]);
+                if (fragments[j] !== '') {
+                    fragmentBuilders.push(fragments[j]);
+                }
             }
 
             if (i < parameters.length) {
@@ -77,7 +79,13 @@ class RouterPatternImpl implements RouterPatternBase {
 
     private submitFragment(fragmentBuilders: {}[]): void {
         switch (fragmentBuilders.length) {
-            case 0: return;
+            case 0: {
+                this.fragments.push({
+                    kind: RouterFragmentKind.Text,
+                    text: ''
+                });
+                return;
+            }
             case 1: {
                 const name = getParameterName(fragmentBuilders[0]);
                 if (name === undefined) {
@@ -100,7 +108,7 @@ class RouterPatternImpl implements RouterPatternBase {
                 if (name1 === undefined && name2 !== undefined) {
                     this.fragments.push({
                         kind: RouterFragmentKind.Head,
-                        head: <string>fragmentBuilders[1],
+                        head: <string>fragmentBuilders[0],
                         name: name2
                     });
                     return;
@@ -135,7 +143,7 @@ class RouterPatternImpl implements RouterPatternBase {
         for (const fragment of fragmentBuilders) {
             const name = getParameterName(fragment);
             if (name === undefined) {
-                pattern += <string>fragment;
+                pattern += escapeStringRegexp(<string>fragment);
             } else {
                 pattern += '(.+)';
                 names.push(name);
@@ -143,7 +151,7 @@ class RouterPatternImpl implements RouterPatternBase {
         }
         this.fragments.push({
             kind: RouterFragmentKind.MultiplePatterns,
-            pattern,
+            pattern: `^${pattern}$`,
             names
         });
     }
