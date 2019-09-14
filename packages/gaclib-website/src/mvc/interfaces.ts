@@ -76,9 +76,9 @@ export interface RouterPattern<T> extends RouterPatternBase {
     walk(text: string, fragment: RouterFragment, value: T): boolean;
 }
 
-export type RouterCallback<TModel, TResult> = (parameters: TModel) => TResult;
+export type RouterCallback<TModel, TResult> = (model: TModel) => TResult;
 
 export interface Router<TResult> {
     register<TModel>(methods: HttpMethods[], pattern: RouterPattern<TModel>, callback: RouterCallback<TModel, TResult>): void;
-    match(text: string): TResult;
+    match(method: string, query: string): TResult | undefined;
 }
