@@ -5,6 +5,7 @@
     "main": "./lib/index.js",
     "scripts": {
         "build": "rimraf ./lib & tslint --project tsconfig.json & tsc & copyfiles -u 1 assest/* lib/dist/ & webpack --config ./lib/Webpack.js",
+        "fullbuild": "cls & pushd ..\\.. & yarn build & popd",
         "start": "node ./lib/index.js"
     },
     "license": "Apache-2.0",

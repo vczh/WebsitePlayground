@@ -95,7 +95,7 @@ ${head}
 const mvcModel = ${JSON.stringify(mvcModel, undefined, 2)};
 const mvcViews = ${JSON.stringify(mvcViews, undefined, 2)};
 for(const view of mvcViews) {
-  window[view.viewName].renderView(mvcModel, (view.targetObject === undefined ? document.body : document.getDocumentById(view.targetObject)));
+  window[view.viewName].renderView(mvcModel, (view.targetObject === undefined ? document.body : document.getElementById(view.targetObject)));
 }
 </script>
 ${body}
