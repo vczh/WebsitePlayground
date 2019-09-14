@@ -213,8 +213,11 @@ class RouterPatternImpl implements RouterPatternBase {
             case RouterFragmentKind.Text:
                 return fragment.text === text;
             case RouterFragmentKind.Free:
-                value[fragment.parameter[0]] = text;
-                return true;
+                return addParameter(
+                    value,
+                    fragment.parameter,
+                    text
+                );
             case RouterFragmentKind.Head:
                 if (text.length > fragment.head.length
                     && text.substr(0, fragment.head.length) === fragment.head
