@@ -11,7 +11,7 @@ const server = http.createServer((req: http.IncomingMessage, res: http.ServerRes
 
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         res.write(`Hello, you are querying: ${JSON.stringify(query, undefined, 4)}\r\n`);
-        if (query.search !== undefined) {
+        if (typeof query.search === 'string') {
             res.write(`With arguments: ${JSON.stringify(querystring.parse(query.search.substr(1)), undefined, 4)}\r\n`);
         }
         res.end();

@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { route, RouterPattern } from '../src/mvc';
+import { route, RouterPattern } from '../src';
 
 function assertWalk<T>(rp: RouterPattern<T>, url: string, expected: T): void {
     const fragments = url.split('/');

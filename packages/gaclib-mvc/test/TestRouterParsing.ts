@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { route, RouterFragment, RouterFragmentKind, RouterParameterKind, RouterPattern } from '../src/mvc';
+import { route, RouterFragment, RouterFragmentKind, RouterParameterKind, RouterPattern } from '../src';
 
 function assertFragments<T>(rp: RouterPattern<T>, expected: RouterFragment[]): void {
     assert.deepStrictEqual(rp.fragments, expected);

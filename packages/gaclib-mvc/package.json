@@ -1,19 +1,29 @@
 {
-    "name": "gaclib-website",
+    "name": "gaclib-mvc",
     "version": "1.0.0",
-    "description": "http://gaclib.net",
-    "main": "./lib/index.js",
+    "description": "Gaclib Website MVC",
+    "main": "./lib/src/index.js",
     "scripts": {
         "build": "rimraf ./lib & tslint --project tsconfig.json & tsc",
-        "start": "node ./lib/index.js"
+        "test": "jest"
     },
     "license": "Apache-2.0",
     "devDependencies": {
         "@types/escape-string-regexp": "0.0.32",
+        "@types/jest": "^24.0.17",
         "@types/node": "^12.6.9",
+        "jest": "^24.8.0",
         "rimraf": "^2.6.3",
+        "ts-jest": "^24.0.2",
         "tslint": "^5.18.0",
         "tslint-shared": "^1.0.0",
         "typescript": "^3.6.3"
+    },
+    "dependencies": {
+        "escape-string-regexp": "^2.0.0"
+    },
+    "jest": {
+        "testRegex": "/lib/test/Test.*\\.js",
+        "verbose": true
     }
 }
