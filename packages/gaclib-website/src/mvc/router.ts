@@ -1,6 +1,6 @@
 // why @types/escape-string-regexp doesn't work?
 const escapeStringRegexp = <(str: string) => string>require('escape-string-regexp');
-import { RouterFragment, RouterFragmentKind, RouterParameterTypes, RouterPattern, RouterPatternBase } from './interfaces';
+import { RouterFragment, RouterFragmentKind, RouterParameter, RouterParameterKind, RouterParameterTypes, RouterPattern, RouterPatternBase } from './interfaces';
 
 // if the type of a property is one of RouterParameterTypes, then convert the type of the property to be the key
 type ValidPropertiesToKeys<T> = { [P in keyof T]: T[P] extends RouterParameterTypes ? P : never; };
@@ -14,18 +14,20 @@ type FilterOutInvalidProperties<T> = Pick<T, ValidPropertyTypes<ValidPropertiesT
 // A|B|... -> ((k:FIOP<A>)=>void)|((k:FIOP<B>)=>void)|... -> (k:FIOP<A>&FIOP<B>&...)=>void -> FIOP<A>&FIOP<B>&...
 type MergeParameters<U> = (U extends {} ? (k: FilterOutInvalidProperties<U>) => void : never) extends ((k: infer I) => void) ? I : never;
 
-function getParameterName(fragment: {}): string | undefined {
+function getParameterName(fragment: {}): [true, RouterParameter] | [false, string] {
     if (typeof fragment === 'string') {
-        return undefined;
+        return [false, fragment];
     }
 
     const keys = Object.keys(fragment);
     if (keys.length === 1) {
         switch (typeof fragment[keys[0]]) {
             case 'string':
+                return [true, [keys[0], RouterParameterKind.String]];
             case 'number':
+                return [true, [keys[0], RouterParameterKind.Number]];
             case 'boolean': {
-                return keys[0];
+                return [true, [keys[0], RouterParameterKind.Boolean]];
             }
             default:
                 throw new Error(`The property of the parameter object "${JSON.stringify(fragment)}" can only be string, number or boolean.`);
@@ -78,7 +80,8 @@ class RouterPatternImpl implements RouterPatternBase {
     }
 
     private submitFragment(fragmentBuilders: {}[]): void {
-        switch (fragmentBuilders.length) {
+        const processedFragments = fragmentBuilders.map(getParameterName);
+        switch (processedFragments.length) {
             case 0: {
                 this.fragments.push({
                     kind: RouterFragmentKind.Text,
@@ -87,50 +90,50 @@ class RouterPatternImpl implements RouterPatternBase {
                 return;
             }
             case 1: {
-                const name = getParameterName(fragmentBuilders[0]);
-                if (name === undefined) {
+                const arg1 = processedFragments[0];
+                if (arg1[0]) {
                     this.fragments.push({
-                        kind: RouterFragmentKind.Text,
-                        text: <string>fragmentBuilders[0]
+                        kind: RouterFragmentKind.Free,
+                        parameter: arg1[1]
                     });
                     return;
                 } else {
                     this.fragments.push({
-                        kind: RouterFragmentKind.Free,
-                        name
+                        kind: RouterFragmentKind.Text,
+                        text: arg1[1]
                     });
                     return;
                 }
             }
             case 2: {
-                const name1 = getParameterName(fragmentBuilders[0]);
-                const name2 = getParameterName(fragmentBuilders[1]);
-                if (name1 === undefined && name2 !== undefined) {
+                const arg1 = processedFragments[0];
+                const arg2 = processedFragments[1];
+                if (!arg1[0] && arg2[0]) {
                     this.fragments.push({
                         kind: RouterFragmentKind.Head,
-                        head: <string>fragmentBuilders[0],
-                        name: name2
+                        head: arg1[1],
+                        parameter: arg2[1]
                     });
                     return;
-                } else if (name1 !== undefined && name2 === undefined) {
+                } else if (arg1[0] && !arg2[0]) {
                     this.fragments.push({
                         kind: RouterFragmentKind.Tail,
-                        tail: <string>fragmentBuilders[1],
-                        name: name1
+                        tail: arg2[1],
+                        parameter: arg1[1]
                     });
                     return;
                 }
             }
             case 3: {
-                const name1 = getParameterName(fragmentBuilders[0]);
-                const name2 = getParameterName(fragmentBuilders[1]);
-                const name3 = getParameterName(fragmentBuilders[2]);
-                if (name1 === undefined && name2 !== undefined && name3 === undefined) {
+                const arg1 = processedFragments[0];
+                const arg2 = processedFragments[1];
+                const arg3 = processedFragments[2];
+                if (!arg1[0] && arg2[0] && !arg3[0]) {
                     this.fragments.push({
                         kind: RouterFragmentKind.HeadTail,
-                        head: <string>fragmentBuilders[0],
-                        tail: <string>fragmentBuilders[2],
-                        name: name2
+                        head: arg1[1],
+                        tail: arg3[1],
+                        parameter: arg2[1]
                     });
                     return;
                 }
@@ -139,20 +142,19 @@ class RouterPatternImpl implements RouterPatternBase {
         }
 
         let pattern = '';
-        const names: string[] = [];
-        for (const fragment of fragmentBuilders) {
-            const name = getParameterName(fragment);
-            if (name === undefined) {
-                pattern += escapeStringRegexp(<string>fragment);
-            } else {
+        const parameters: RouterParameter[] = [];
+        for (const fragment of processedFragments) {
+            if (fragment[0]) {
                 pattern += '(.+)';
-                names.push(name);
+                parameters.push(fragment[1]);
+            } else {
+                pattern += escapeStringRegexp(fragment[1]);
             }
         }
         this.fragments.push({
             kind: RouterFragmentKind.MultiplePatterns,
             pattern: `^${pattern}$`,
-            names
+            parameters
         });
     }
 }

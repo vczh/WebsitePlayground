@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { route, RouterFragment, RouterFragmentKind, RouterPattern } from '../src/mvc';
+import { route, RouterFragment, RouterFragmentKind, RouterParameterKind, RouterPattern } from '../src/mvc';
 
 function assertFragments<T>(rp: RouterPattern<T>, expect: RouterFragment[]): void {
     assert.deepStrictEqual(rp.fragments, expect);
@@ -25,7 +25,7 @@ test(`/{name}`, () => {
     const rp = route`/${{ name: '' }}`;
     assertFragments(rp, [{
         kind: RouterFragmentKind.Free,
-        name: 'name'
+        parameter: ['name', RouterParameterKind.String]
     }]);
 });
 
@@ -34,7 +34,7 @@ test(`/Demo-{title}`, () => {
     assertFragments(rp, [{
         kind: RouterFragmentKind.Head,
         head: 'Demo-',
-        name: 'title'
+        parameter: ['title', RouterParameterKind.String]
     }]);
 });
 
@@ -43,7 +43,7 @@ test(`/{title}.html`, () => {
     assertFragments(rp, [{
         kind: RouterFragmentKind.Tail,
         tail: '.html',
-        name: 'title'
+        parameter: ['title', RouterParameterKind.String]
     }]);
 });
 
@@ -53,7 +53,7 @@ test(`/Demo-{title}.html`, () => {
         kind: RouterFragmentKind.HeadTail,
         head: 'Demo-',
         tail: '.html',
-        name: 'title'
+        parameter: ['title', RouterParameterKind.String]
     }]);
 });
 
@@ -62,7 +62,7 @@ test(`/{a}-{b}`, () => {
     assertFragments(rp, [{
         kind: RouterFragmentKind.MultiplePatterns,
         pattern: /^(.+)\-(.+)$/.source,
-        names: ['a', 'b']
+        parameters: [['a', RouterParameterKind.String], ['b', RouterParameterKind.String]]
     }]);
 });
 
@@ -75,22 +75,22 @@ test(`/Text/Head{head}/{tail}Tail/{free}/Head{both}Tail/Complex{a}Pattern{b}Exam
     }, {
         kind: RouterFragmentKind.Head,
         head: 'Head',
-        name: 'head'
+        parameter: ['head', RouterParameterKind.String]
     }, {
         kind: RouterFragmentKind.Tail,
         tail: 'Tail',
-        name: 'tail'
+        parameter: ['tail', RouterParameterKind.String]
     }, {
         kind: RouterFragmentKind.Free,
-        name: 'free'
+        parameter: ['free', RouterParameterKind.String]
     }, {
         kind: RouterFragmentKind.HeadTail,
         head: 'Head',
         tail: 'Tail',
-        name: 'both'
+        parameter: ['both', RouterParameterKind.String]
     }, {
         kind: RouterFragmentKind.MultiplePatterns,
         pattern: /^Complex(.+)Pattern(.+)Example$/.source,
-        names: ['a', 'b']
+        parameters: [['a', RouterParameterKind.String], ['b', RouterParameterKind.String]]
     }]);
 });

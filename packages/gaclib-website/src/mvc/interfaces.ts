@@ -25,6 +25,14 @@ export enum RouterFragmentKind {
     MultiplePatterns
 }
 
+export enum RouterParameterKind {
+    String,
+    Number,
+    Boolean
+}
+
+export type RouterParameter = [string, RouterParameterKind];
+
 export type RouterFragment =
     | {
         kind: RouterFragmentKind.Text;
@@ -32,28 +40,28 @@ export type RouterFragment =
     }
     | {
         kind: RouterFragmentKind.Free;
-        name: string;
+        parameter: RouterParameter;
     }
     | {
         kind: RouterFragmentKind.Head;
         head: string;
-        name: string;
+        parameter: RouterParameter;
     }
     | {
         kind: RouterFragmentKind.Tail;
         tail: string;
-        name: string;
+        parameter: RouterParameter;
     }
     | {
         kind: RouterFragmentKind.HeadTail;
         head: string;
         tail: string;
-        name: string;
+        parameter: RouterParameter;
     }
     | {
         kind: RouterFragmentKind.MultiplePatterns;
         pattern: string;
-        names: string[];
+        parameters: RouterParameter[];
         cachedRegExp?: RegExp;
     };
 
