@@ -1,5 +1,5 @@
+import { ViewMetadata } from 'gaclib-render';
 import * as path from 'path';
-import { ViewMetadata } from './interfaces';
 import { views } from './views';
 
 const exportedArray = views.map((metadata: ViewMetadata) => {

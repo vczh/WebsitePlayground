@@ -1,4 +1,4 @@
-import { ViewMetadata } from '../interfaces';
+import { ViewMetadata } from 'gaclib-render';
 
 const indexView: ViewMetadata = {
     name: 'Gaclib-IndexView',

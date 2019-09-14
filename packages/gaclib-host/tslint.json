@@ -1,0 +1,8 @@
+{
+    "extends": [
+        "tslint-shared"
+    ],
+    "rules": {
+        "no-var-requires": false
+    }
+}

@@ -1,8 +1,7 @@
 {
     "compilerOptions": {
         "lib": [
-            "es6",
-            "dom"
+            "es6"
         ],
         "module": "commonjs",
         "moduleResolution": "node",
@@ -13,12 +12,7 @@
         "outDir": "./lib",
         "noEmitOnError": true,
         "noUnusedLocals": true,
-        "strictNullChecks": true,
-        "plugins": [
-            {
-                "name": "typescript-lit-html-plugin"
-            }
-        ]
+        "strictNullChecks": true
     },
     "exclude": [
         "node_modules",

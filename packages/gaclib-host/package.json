@@ -1,0 +1,22 @@
+{
+    "name": "gaclib-host",
+    "version": "0.0.1",
+    "description": "Gaclib Website Hosting",
+    "main": "./lib/index.js",
+    "scripts": {
+        "build": "rimraf ./lib & tslint --project tsconfig.json & tsc"
+    },
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "@types/escape-string-regexp": "0.0.32",
+        "@types/node": "^12.6.9",
+        "rimraf": "^2.6.3",
+        "tslint": "^5.18.0",
+        "tslint-shared": "^1.0.0",
+        "typescript": "^3.6.3"
+    },
+    "dependencies": {
+        "gaclib-mvc": "^0.0.1",
+        "gaclib-render": "^0.0.1"
+    }
+}

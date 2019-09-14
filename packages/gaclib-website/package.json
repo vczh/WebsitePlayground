@@ -1,23 +1,27 @@
 {
     "name": "gaclib-website",
     "version": "0.0.1",
-    "description": "http://gaclib.net",
+    "description": "Gaclib Website http://gaclib.net",
     "main": "./lib/index.js",
     "scripts": {
-        "build": "rimraf ./lib & tslint --project tsconfig.json & tsc",
+        "build": "rimraf ./lib & tslint --project tsconfig.json & tsc & copyfiles -u 1 assest/* lib/dist/ & webpack --config ./lib/Webpack.js",
         "start": "node ./lib/index.js"
     },
     "license": "Apache-2.0",
     "devDependencies": {
-        "@types/escape-string-regexp": "0.0.32",
         "@types/node": "^12.6.9",
+        "copyfiles": "^2.1.1",
         "rimraf": "^2.6.3",
         "tslint": "^5.18.0",
         "tslint-shared": "^1.0.0",
-        "typescript": "^3.6.3"
+        "typescript": "^3.6.3",
+        "webpack": "^4.39.1",
+        "webpack-cli": "^3.3.6"
     },
     "dependencies": {
         "gaclib-mvc": "^0.0.1",
-        "gaclib-views": "^0.0.1"
+        "gaclib-render": "^0.0.1",
+        "gaclib-host": "^0.0.1",
+        "lit-html": "^1.1.2"
     }
 }
