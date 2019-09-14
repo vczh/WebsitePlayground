@@ -4,9 +4,9 @@ export const viewExport = {
     renderView(model: { title: string }, target: Element): void {
         const htmlTemplate = html`
 <script lang="javascript">
-document.getElementById("navHome").classList.add("Selected");
+document.getElementById("navTutorial").classList.add("Selected");
 </script>
-Hello, navHome.
+Hello, navTutorial.
 `;
         render(htmlTemplate, target);
     }
