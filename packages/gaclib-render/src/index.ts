@@ -46,7 +46,7 @@ interface MvcView {
     viewName: string;
 }
 
-export function generateHtml(htmlInfo: HtmlInfo, views: ViewMetadata[], viewName: string, mvcModel: {}, head: string, body: string): string {
+function checkViews(views: ViewMetadata[], viewName: string): [ViewMap, MvcView[]] {
     const viewMap: ViewMap = {};
     for (const view of views) {
         viewMap[view.name] = view;
@@ -74,6 +74,17 @@ export function generateHtml(htmlInfo: HtmlInfo, views: ViewMetadata[], viewName
         currentViewName = currentView.parentView;
     }
 
+    return [viewMap, mvcViews];
+}
+
+export interface EmbeddedResources {
+    [key: string]: {};
+}
+
+export function generateHtml(htmlInfo: HtmlInfo, views: ViewMetadata[], viewName: string, mvcModel: {}, extraHeadHtml: string, embeddedResources: EmbeddedResources): string {
+    const [viewMap, mvcViews] = checkViews(views, viewName);
+    const resources = { mvcModel, mvcViews, ...embeddedResources };
+
     let info: HtmlInfo = mergeHtmlInfo(
         {
             scripts: mvcViews.map((mvcView: MvcView) => viewMap[mvcView.viewName].path)
@@ -91,14 +102,13 @@ export function generateHtml(htmlInfo: HtmlInfo, views: ViewMetadata[], viewName
 ${info.shortcutIcon === undefined ? '' : `<link rel="shortcut icon" href="${info.shortcutIcon}" />`}
 ${info.styleSheets === undefined ? '' : info.styleSheets.map((value: string) => `<link rel="stylesheet" type="text/css" href="${value}" />`).join('\n')}
 ${info.scripts === undefined ? '' : info.scripts.map((value: string) => `<script src="${value}"></script>`).join('\n')}
-${head}
+${extraHeadHtml}
 </head>
 <body>
 <div id="MVC-ViewContainer"/>
 <script lang="javascript">
 {
-  const mvcModel = ${JSON.stringify(mvcModel, undefined, 2)};
-  const mvcViews = ${JSON.stringify(mvcViews, undefined, 2)};
+${Object.keys(resources).map((resourceKey: string) => `  const ${resourceKey} = ${JSON.stringify(resources[resourceKey], undefined, 2)};`).join('\r\n')}
   for (const view of mvcViews) {
     window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
   }
@@ -110,7 +120,6 @@ ${head}
   }
 }
 </script>
-${body}
 </body>
 </html>
 `;

@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, statSync } from 'fs';
 import { HttpMethods, route, Router, RouterCallback } from 'gaclib-mvc';
-import { generateHtml, HtmlInfo, ViewMetadata } from 'gaclib-render';
+import { EmbeddedResources, generateHtml, HtmlInfo, ViewMetadata } from 'gaclib-render';
 import * as http from 'http';
 import * as mime from 'mime-types';
 import * as path from 'path';
@@ -9,7 +9,17 @@ import * as url from 'url';
 type MvcRouterResult = [string, string | Buffer];
 type MvcRouter = Router<MvcRouterResult>;
 
-export function indexViewCallback(views: ViewMetadata[], viewName: string, info: HtmlInfo = {}, head: string = '', body: string = ''): RouterCallback<{ title: string }, MvcRouterResult> {
+export interface ViewConfig {
+    info?: HtmlInfo;
+    extraHeadHtml?: string;
+    embeddedResources?: EmbeddedResources;
+}
+
+export function indexViewCallback(views: ViewMetadata[], viewName: string, config?: ViewConfig): RouterCallback<{ title: string }, MvcRouterResult> {
+    const info = config !== undefined && config.info !== undefined ? config.info : {};
+    const head = config !== undefined && config.extraHeadHtml !== undefined ? config.extraHeadHtml : '';
+    const res = config !== undefined && config.embeddedResources !== undefined ? config.embeddedResources : {};
+
     return (method: HttpMethods, model: { title: string }): [string, string] => {
         const generatedHtml = generateHtml(
             info,
@@ -17,7 +27,7 @@ export function indexViewCallback(views: ViewMetadata[], viewName: string, info:
             viewName,
             model,
             head,
-            body
+            res
         );
         return ['text/html', generatedHtml];
     };
