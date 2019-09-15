@@ -1,7 +1,8 @@
-import { readFileSync } from 'fs';
+import { readdirSync, readFileSync, statSync } from 'fs';
 import { HttpMethods, route, Router, RouterCallback } from 'gaclib-mvc';
 import { generateHtml, HtmlInfo, ViewMetadata } from 'gaclib-render';
 import * as http from 'http';
+import * as mime from 'mime-types';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -22,31 +23,34 @@ export function indexViewCallback(views: ViewMetadata[], viewName: string, info:
     };
 }
 
-export function textFileCallback(type: string, filename: string): RouterCallback<{}, MvcRouterResult> {
-    const buffer = readFileSync(filename, { encoding: 'utf-8' });
-    return (): [string, string] => [type, buffer];
-}
-
-export function binaryFileCallback(type: string, filename: string): RouterCallback<{}, MvcRouterResult> {
+export function fileCallback(type: string, filename: string): RouterCallback<{}, MvcRouterResult> {
     const buffer = readFileSync(filename);
     return (): [string, Buffer] => [type, buffer];
 }
 
-function registerFile(router: MvcRouter, type: string, resourcePath: string, dir: string, callback: (type: string, filename: string) => RouterCallback<{}, MvcRouterResult>): void {
+export function registerFile(router: MvcRouter, type: string, resourcePath: string, dir: string): void {
     if (resourcePath.length === 0 || resourcePath[0] !== '/') {
         throw new Error('Path should begin with "/".');
     }
 
     const tsa: TemplateStringsArray = Object.assign([resourcePath], { raw: [resourcePath] });
-    router.register([], route(tsa), callback(type, path.join(dir, `.${resourcePath}`)));
+    router.register([], route(tsa), fileCallback(type, path.join(dir, `.${resourcePath}`)));
 }
 
-export function registerTextFile(router: MvcRouter, type: string, resourcePath: string, dir: string): void {
-    registerFile(router, type, resourcePath, dir, textFileCallback);
-}
-
-export function registerBinaryFile(router: MvcRouter, type: string, resourcePath: string, dir: string): void {
-    registerFile(router, type, resourcePath, dir, binaryFileCallback);
+export function registerFolder(router: MvcRouter, distFolder: string, prefix: string = '/'): void {
+    const currentFolder = path.join(distFolder, prefix.substr(1));
+    for (const filename of readdirSync(currentFolder)) {
+        const childFolder = path.join(currentFolder, filename);
+        if (statSync(childFolder).isDirectory()) {
+            registerFolder(router, distFolder, `${prefix}${filename}/`);
+        } else {
+            const urlPath = `${prefix}${filename}`;
+            const mimeType = mime.lookup(urlPath);
+            if (mimeType !== false) {
+                registerFile(router, mimeType, urlPath, distFolder);
+            }
+        }
+    }
 }
 
 export function createMvcServer(router: MvcRouter): http.Server {

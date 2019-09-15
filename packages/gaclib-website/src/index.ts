@@ -1,34 +1,10 @@
-import * as fs from 'fs';
-import { createMvcServer, hostUntilPressingEnter, indexViewCallback, registerBinaryFile, registerTextFile } from 'gaclib-host';
+import { createMvcServer, hostUntilPressingEnter, indexViewCallback, registerFolder } from 'gaclib-host';
 import { createRouter, route } from 'gaclib-mvc';
-import * as mime from 'mime-types';
 import * as path from 'path';
 import { views } from './views';
 
 const router = createRouter<[string, string | Buffer]>();
-
-function registerDist(distFolder: string, prefix: string): void {
-    const currentFolder = path.join(distFolder, prefix.substr(1));
-    for (const filename of fs.readdirSync(currentFolder)) {
-        const childFolder = path.join(currentFolder, filename);
-        if (fs.statSync(childFolder).isDirectory()) {
-            registerDist(distFolder, `${prefix}${filename}/`);
-        } else {
-            const urlPath = `${prefix}${filename}`;
-            const mimeType = mime.lookup(urlPath);
-            if (mimeType !== false) {
-                if (mimeType.substr(0, 6) === 'image/') {
-                    registerBinaryFile(router, mimeType, urlPath, distFolder);
-                } else {
-                    registerTextFile(router, mimeType, urlPath, distFolder);
-                }
-            }
-        }
-    }
-}
-
-registerDist(path.join(__dirname, `./dist`), '/');
-
+registerFolder(router, path.join(__dirname, `./dist`));
 router.register([], route`/`, indexViewCallback(views, 'Gaclib-IndexView'));
 router.register([], route`/index.html`, indexViewCallback(views, 'Gaclib-IndexView'));
 router.register([], route`/tutorial.html`, indexViewCallback(views, 'Gaclib-TutorialView'));

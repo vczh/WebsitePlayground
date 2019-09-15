@@ -9,6 +9,7 @@
     "license": "Apache-2.0",
     "devDependencies": {
         "@types/node": "^12.6.9",
+        "@types/mime-types": "^2.1.0",
         "rimraf": "^2.6.3",
         "tslint": "^5.18.0",
         "tslint-shared": "^1.0.0",
@@ -16,6 +17,7 @@
     },
     "dependencies": {
         "gaclib-mvc": "^0.0.1",
-        "gaclib-render": "^0.0.1"
+        "gaclib-render": "^0.0.1",
+        "mime-types": "^2.1.24"
     }
 }
