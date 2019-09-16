@@ -7,6 +7,10 @@
   - Code
   - Links to document (fully implemented after C++ parser is done)
 
+- `indexViewCallback` is not strongly typed
+  - Make it strongly typed
+  - Allow calculating some embedded resources from mvcModel's value
+
 ## Home page
 
 - Introduction to Vlpp, VlppOS, VlppParser, VlppReflection, VlppParser, Workflow, GacUI
