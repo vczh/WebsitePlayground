@@ -4,7 +4,7 @@
     "description": "Gaclib Website Rendering",
     "main": "./lib/index.js",
     "scripts": {
-        "build": "rimraf ./lib & tslint --project tsconfig.json & tsc"
+        "build": "rimraf ./lib && tslint --project tsconfig.json && tsc"
     },
     "license": "Apache-2.0",
     "devDependencies": {

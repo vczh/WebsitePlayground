@@ -4,7 +4,7 @@
     "description": "Gaclib Website MVC",
     "main": "./lib/src/index.js",
     "scripts": {
-        "build": "rimraf ./lib & tslint --project tsconfig.json & tsc",
+        "build": "rimraf ./lib && tslint --project tsconfig.json && tsc",
         "test": "jest"
     },
     "license": "Apache-2.0",
