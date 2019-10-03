@@ -4,10 +4,11 @@
   - Create a `articleView.ts`
   - XML will be load during `router.register` as a embedded resource in config
   - `articleView.ts` will find the resource with a specific name and render to html
+  - `https://www.npmjs.com/package/xml-js`
 
 ```xml
 <article index="true" numberBeforeTitle="true">
-    <topic>
+    <topic anchor="Name to use in 'a' element">
         <title>This is automatically a H1 title</title>
         <p>H1 title is the title of the article, numberBeforeTitle does not apply.</p>
         <p>paragraph</p>
@@ -25,7 +26,7 @@
             </topic>
         </topic>
         <topic>
-            <title>H2</title>
+            <title>Regardless where a title is placed, it is always moved to the first</title>
             <p>numberBeforeTitle applies here and gives 2.xxx</p>
         </topic>
     </topic>
@@ -33,9 +34,17 @@
 ```
 
 - Valid inside `<p/>`
+  - Implement `symbol` after document is ready
+  - Implement `program`'s after document is ready
+    - For now only convert to HTML but no colorize and validate
 
 ```xml
 <a href="./document.html">Text</a>
+<a anchor="Anchor">
+  If there is no text then the title is copied here.
+  If Anchor cannot be found, then it will search all topic and convert non-letter continuous characters to '-', and compare it with Anchor, case insensitive
+    e.g. "This is my car's color" -> "#this-is-my-car-s-color"
+</a>
 <symbol name="C++:vl.presentation.controls.GuiControl">C++ could be omitted because it is the default value. Other values could be Workflow</symbol>
 <symbol>IncompleteClassOrFunctionName, C++ only</symbol>
 <name>Just like `` in md</name>
@@ -61,6 +70,7 @@
 
 ## Home page
 
+- Summary of showcase, click and jump to below
 - Introduction to Vlpp, VlppOS, VlppParser, VlppReflection, VlppParser, Workflow, GacUI
 - GacUI features
 - ScreenShots
