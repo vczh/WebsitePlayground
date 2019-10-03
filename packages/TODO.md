@@ -1,13 +1,46 @@
 # TODO
 
 - XML format artical that supports
-  - Simple styles
-  - Images with descriptions
-  - Lists
-  - Code
-  - Links to document (fully implemented after C++ parser is done)
+  - Create a `articleView.ts`
+  - XML will be load during `router.register` as a embedded resource in config
+  - `articleView.ts` will find the resource with a specific name and render to html
 
-- `indexViewCallback` is not strongly typed
+    <topic>
+        <p>H1 title is the title of the article, numberBeforeTitle does not apply.</p>
+        <p>paragraph</p>
+                <p>Becomes 1.1 H3</p>
+            </topic>
+            <topic>
+                <title>H3</title>
+                <p>Becomes 1.2 H3</p>
+            </topic>
+        </topic>
+```
+
+- Valid inside `<p/>`
+
+```xml
+<a href="./document.html">Text</a>
+<symbol name="C++:vl.presentation.controls.GuiControl">C++ could be omitted because it is the default value. Other values could be Workflow</symbol>
+<symbol>IncompleteClassOrFunctionName, C++ only</symbol>
+<name>Just like `` in md</name>
+<figure><img src="logo.png"/><figcapture>Description</figcapture></figure>
+<ul><li>...</li></ul>
+<ol><li>...</li></ol>
+<b>translate to strong</b>
+<em>translate to em</em>
+<program project="vlpp" language="C++">
+    <code>
+        <![CDATA[translated to <pre><code>]]>
+    </code>
+    <output>
+        <!--This will be automatically validated-->
+        <![CDATA[translated to <pre><samp>]]>
+    </output>
+</program>
+```
+
+- `litHtmlViewCallback` is not strongly typed
   - Make it strongly typed
   - Allow calculating some embedded resources from mvcModel's value
 
