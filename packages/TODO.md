@@ -5,7 +5,10 @@
   - XML will be load during `router.register` as a embedded resource in config
   - `articleView.ts` will find the resource with a specific name and render to html
 
+```xml
+<article index="true" numberBeforeTitle="true">
     <topic>
+        <title>This is automatically a H1 title</title>
         <p>H1 title is the title of the article, numberBeforeTitle does not apply.</p>
         <p>paragraph</p>
                 <p>Becomes 1.1 H3</p>
@@ -15,6 +18,12 @@
                 <p>Becomes 1.2 H3</p>
             </topic>
         </topic>
+        <topic>
+            <title>H2</title>
+            <p>numberBeforeTitle applies here and gives 2.xxx</p>
+        </topic>
+    </topic>
+</article>
 ```
 
 - Valid inside `<p/>`
