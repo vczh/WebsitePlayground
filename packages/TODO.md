@@ -11,6 +11,12 @@
         <title>This is automatically a H1 title</title>
         <p>H1 title is the title of the article, numberBeforeTitle does not apply.</p>
         <p>paragraph</p>
+        <p>Valid elements inside topic is, a single title, multiple pargraphcs and multiple topics</p>
+        <topic>
+            <title>H2</title>
+            <p>numberBeforeTitle applies here and gives 1.xxx</p>
+            <topic>
+                <title>H3</title>
                 <p>Becomes 1.1 H3</p>
             </topic>
             <topic>
