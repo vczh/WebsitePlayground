@@ -18,8 +18,9 @@ router.register(
     route`/`,
     litHtmlViewCallback(
         views,
-        'Gaclib-IndexView',
+        'Gaclib-ArticleView',
         {
+            info: { title: 'Gaclib -- GPU Accelerated C++ User Interface (vczh)' },
             embeddedResources: {
                 activeButton: 'Home',
                 article: loadArticle('home.xml')
@@ -33,8 +34,9 @@ router.register(
     route`/index.html`,
     litHtmlViewCallback(
         views,
-        'Gaclib-IndexView',
+        'Gaclib-ArticleView',
         {
+            info: { title: 'Gaclib -- GPU Accelerated C++ User Interface (vczh)' },
             embeddedResources: {
                 activeButton: 'Home',
                 article: loadArticle('home.xml')
@@ -48,8 +50,9 @@ router.register(
     route`/tutorial.html`,
     litHtmlViewCallback(
         views,
-        'Gaclib-TutorialView',
+        'Gaclib-ArticleView',
         {
+            info: { title: 'Gaclib -- Tutorial' },
             embeddedResources: {
                 activeButton: 'Tutorial',
                 article: loadArticle('tutorial.xml')
@@ -63,8 +66,9 @@ router.register(
     route`/demo.html`,
     litHtmlViewCallback(
         views,
-        'Gaclib-DemoView',
+        'Gaclib-ArticleView',
         {
+            info: { title: 'Gaclib -- Demoes' },
             embeddedResources: {
                 activeButton: 'Demo',
                 article: loadArticle('demo.xml')
@@ -78,8 +82,9 @@ router.register(
     route`/download.html`,
     litHtmlViewCallback(
         views,
-        'Gaclib-DownloadView',
+        'Gaclib-ArticleView',
         {
+            info: { title: 'Gaclib -- Download' },
             embeddedResources: {
                 activeButton: 'Download',
                 article: loadArticle('download.xml')
@@ -93,8 +98,9 @@ router.register(
     route`/document.html`,
     litHtmlViewCallback(
         views,
-        'Gaclib-DocumentView',
+        'Gaclib-ArticleView',
         {
+            info: { title: 'Gaclib -- Document' },
             embeddedResources: {
                 activeButton: 'Document',
                 article: loadArticle('document.xml')
@@ -108,8 +114,9 @@ router.register(
     route`/contact.html`,
     litHtmlViewCallback(
         views,
-        'Gaclib-ContactView',
+        'Gaclib-ArticleView',
         {
+            info: { title: 'Gaclib -- Article' },
             embeddedResources: {
                 activeButton: 'Contact',
                 article: loadArticle('contact.xml')
