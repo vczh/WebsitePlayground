@@ -22,7 +22,7 @@ export interface Name {
 
 export interface Image {
     kind: 'Image';
-    href: string;
+    src: string;
     caption?: string;
 }
 

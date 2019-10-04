@@ -147,11 +147,11 @@ test(`Flat paragraph`, () => {
                         },
                         {
                             kind: 'Image',
-                            href: 'logo.png'
+                            src: 'logo.png'
                         },
                         {
                             kind: 'Image',
-                            href: 'logo.png',
+                            src: 'logo.png',
                             caption: 'This is a logo'
                         }
                     ]

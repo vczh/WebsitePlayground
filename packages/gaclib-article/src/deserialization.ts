@@ -80,6 +80,33 @@ function parseContent(container: Element): a.Content[] {
                             continue CHILD_LOOP;
                         }
                         case 'img': {
+                            if (xmlChild.attributes !== undefined) {
+                                const atts = Object.keys(xmlChild.attributes);
+                                if (atts.length === 1) {
+                                    switch (atts[0]) {
+                                        case 'src':
+                                            if (typeof xmlChild.attributes.src !== 'string') {
+                                                throw new Error(`Attribute ${atts[0]} in <img> should be a string.`);
+                                            }
+                                            const caption = parseTextContent(xmlChild, true);
+                                            if (caption === '') {
+                                                content.push({
+                                                    kind: 'Image',
+                                                    src: xmlChild.attributes.src
+                                                });
+                                            } else {
+                                                content.push({
+                                                    kind: 'Image',
+                                                    src: xmlChild.attributes.src,
+                                                    caption
+                                                });
+                                            }
+                                            continue CHILD_LOOP;
+                                        default:
+                                    }
+                                }
+                            }
+                            throw new Error('Exactly one "src" attribute should exist in <img>.');
                             continue CHILD_LOOP;
                         }
                         case 'ul': case 'ol': {
