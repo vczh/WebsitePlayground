@@ -1,7 +1,14 @@
+import { readFileSync } from 'fs';
+import { Article, parseArticle } from 'gaclib-article';
 import { createMvcServer, hostUntilPressingEnter, litHtmlViewCallback, registerFolder } from 'gaclib-host';
 import { createRouter, route } from 'gaclib-mvc';
 import * as path from 'path';
 import { views } from './views';
+
+function loadArticle(filename: string): Article {
+    const xml = readFileSync(path.join(__dirname, `../src/articles/${filename}`), { encoding: 'utf-8' });
+    return parseArticle(xml);
+}
 
 const router = createRouter<[string, string | Buffer]>();
 registerFolder(router, path.join(__dirname, `./dist`));
@@ -12,7 +19,12 @@ router.register(
     litHtmlViewCallback(
         views,
         'Gaclib-IndexView',
-        { embeddedResources: { activeButton: 'Home' } }
+        {
+            embeddedResources: {
+                activeButton: 'Home',
+                article: loadArticle('home.xml')
+            }
+        }
     )
 );
 
@@ -22,7 +34,12 @@ router.register(
     litHtmlViewCallback(
         views,
         'Gaclib-IndexView',
-        { embeddedResources: { activeButton: 'Home' } }
+        {
+            embeddedResources: {
+                activeButton: 'Home',
+                article: loadArticle('home.xml')
+            }
+        }
     )
 );
 
@@ -32,7 +49,12 @@ router.register(
     litHtmlViewCallback(
         views,
         'Gaclib-TutorialView',
-        { embeddedResources: { activeButton: 'Tutorial' } }
+        {
+            embeddedResources: {
+                activeButton: 'Tutorial',
+                article: loadArticle('tutorial.xml')
+            }
+        }
     )
 );
 
@@ -42,7 +64,12 @@ router.register(
     litHtmlViewCallback(
         views,
         'Gaclib-DemoView',
-        { embeddedResources: { activeButton: 'Demo' } }
+        {
+            embeddedResources: {
+                activeButton: 'Demo',
+                article: loadArticle('demo.xml')
+            }
+        }
     )
 );
 
@@ -52,7 +79,12 @@ router.register(
     litHtmlViewCallback(
         views,
         'Gaclib-DownloadView',
-        { embeddedResources: { activeButton: 'Download' } }
+        {
+            embeddedResources: {
+                activeButton: 'Download',
+                article: loadArticle('download.xml')
+            }
+        }
     )
 );
 
@@ -62,7 +94,12 @@ router.register(
     litHtmlViewCallback(
         views,
         'Gaclib-DocumentView',
-        { embeddedResources: { activeButton: 'Document' } }
+        {
+            embeddedResources: {
+                activeButton: 'Document',
+                article: loadArticle('document.xml')
+            }
+        }
     )
 );
 
@@ -72,7 +109,12 @@ router.register(
     litHtmlViewCallback(
         views,
         'Gaclib-ContactView',
-        { embeddedResources: { activeButton: 'Contact' } }
+        {
+            embeddedResources: {
+                activeButton: 'Contact',
+                article: loadArticle('contact.xml')
+            }
+        }
     )
 );
 

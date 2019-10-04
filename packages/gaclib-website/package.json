@@ -20,6 +20,7 @@
         "webpack-cli": "^3.3.6"
     },
     "dependencies": {
+        "gaclib-article": "^0.0.1",
         "gaclib-mvc": "^0.0.1",
         "gaclib-render": "^0.0.1",
         "gaclib-host": "^0.0.1",
