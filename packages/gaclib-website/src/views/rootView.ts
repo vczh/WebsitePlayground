@@ -42,6 +42,9 @@ export const viewExport = {
         </td>
     </tr>
 </table>
+<script lang="javascript">
+document.getElementById("nav" + activeButton).classList.add("Selected");
+</script>
 `;
         render(htmlTemplate, target);
     }
