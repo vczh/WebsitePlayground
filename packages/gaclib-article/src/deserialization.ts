@@ -1,6 +1,24 @@
 import { Element, xml2js } from 'xml-js';
 import * as a from './interfaces';
 
+function parseTextContent(container: Element, allowEmpty: boolean): string {
+    if (container.elements !== undefined) {
+        if (container.elements.length === 1) {
+            const xmlText = container.elements[0];
+            if (xmlText.type === 'text' && typeof xmlText.text === 'string') {
+                return xmlText.text;
+            }
+        }
+        throw new Error(`Only text should exist in <${container.name}>.`);
+    } else {
+        if (allowEmpty) {
+            return '';
+        } else {
+            throw new Error(`<${container.name}> should not be empty.`);
+        }
+    }
+}
+
 function parseContent(container: Element): a.Content[] {
     const content: a.Content[] = [];
     if (container.elements !== undefined) {
@@ -18,12 +36,47 @@ function parseContent(container: Element): a.Content[] {
                 case 'element':
                     switch (xmlChild.name) {
                         case 'a': {
-                            continue CHILD_LOOP;
+                            if (xmlChild.attributes !== undefined) {
+                                const atts = Object.keys(xmlChild.attributes);
+                                if (atts.length === 1) {
+                                    switch (atts[0]) {
+                                        case 'href':
+                                            if (typeof xmlChild.attributes.href !== 'string') {
+                                                throw new Error(`Attribute ${atts[0]} in <a> should be a string.`);
+                                            }
+                                            content.push({
+                                                kind: 'PageLink',
+                                                href: xmlChild.attributes.href,
+                                                content: parseContent(xmlChild)
+                                            });
+                                            continue CHILD_LOOP;
+                                        case 'anchor':
+                                            if (typeof xmlChild.attributes.anchor !== 'string') {
+                                                throw new Error(`Attribute ${atts[0]} in <a> should be a string.`);
+                                            }
+                                            content.push({
+                                                kind: 'AnchorLink',
+                                                anchor: xmlChild.attributes.anchor,
+                                                content: parseContent(xmlChild)
+                                            });
+                                            continue CHILD_LOOP;
+                                        default:
+                                    }
+                                }
+                            }
+                            throw new Error('Exactly one "href" or "anchor" attribute should exist in <a>.');
                         }
                         case 'symbol': {
                             throw new Error('<symbol> is not supported yet.');
                         }
                         case 'name': {
+                            if (xmlChild.attributes !== undefined && xmlChild.attributes.length !== 0) {
+                                throw new Error('No attribute is allowed in <name>.');
+                            }
+                            content.push({
+                                kind: 'Name',
+                                text: parseTextContent(xmlChild, false)
+                            });
                             continue CHILD_LOOP;
                         }
                         case 'img': {
@@ -33,20 +86,34 @@ function parseContent(container: Element): a.Content[] {
                             continue CHILD_LOOP;
                         }
                         case 'b': {
+                            if (xmlChild.attributes !== undefined && xmlChild.attributes.length !== 0) {
+                                throw new Error('No attribute is allowed in <b>.');
+                            }
+                            content.push({
+                                kind: 'Strong',
+                                content: parseContent(xmlChild)
+                            });
                             continue CHILD_LOOP;
                         }
                         case 'em': {
+                            if (xmlChild.attributes !== undefined && xmlChild.attributes.length !== 0) {
+                                throw new Error('No attribute is allowed in <em>.');
+                            }
+                            content.push({
+                                kind: 'Emphasise',
+                                content: parseContent(xmlChild)
+                            });
                             continue CHILD_LOOP;
                         }
                         case 'program': {
                             continue CHILD_LOOP;
                         }
                         default:
+                            throw new Error(`Only text, <a>, <symbol>, <name>, <img>, <ul>, <ol>, <b>, <em>, <program> are allowed in <${container.name}> instead of <${xmlChild.name}>.`);
                     }
-                    break;
                 default:
+                    throw new Error(`Only text and elements are allowed in <${container.name}> instead of ${xmlChild.type}.`);
             }
-            throw new Error(`Only text, <a>, <symbol>, <name>, <img>, <ul>, <ol>, <b>, <em>, <program> are allowed in <${container.name}>.`);
         }
     }
     return content;
@@ -88,18 +155,8 @@ function parseTopic(xmlTopic: Element): a.Topic {
             if (xmlChild.type === 'element') {
                 switch (xmlChild.name) {
                     case 'title': {
-                        if (xmlChild.elements !== undefined) {
-                            if (xmlChild.elements.length === 1) {
-                                const xmlText = xmlChild.elements[0];
-                                if (xmlText.type === 'text' && typeof xmlText.text === 'string') {
-                                    title = xmlText.text;
-                                    continue CHILD_LOOP;
-                                }
-                            }
-                            throw new Error('Only text should exist in <title>.');
-                        } else {
-                            throw new Error('<title> should not be empty.');
-                        }
+                        title = parseTextContent(xmlChild, false);
+                        continue CHILD_LOOP;
                     }
                     case 'p':
                         content.push(parseParagraph(xmlChild));
