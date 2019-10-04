@@ -152,7 +152,7 @@
             </p>
         </topic>
         <topic>
-            <title>Cross platform GPU Accelerated UI Library</title>
+            <title>GacUI: Cross platform GPU Accelerated UI Library</title>
             <p>
                 <ul>
                     <li><b>GacUI.h/cpp</b> </li>

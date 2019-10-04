@@ -1,8 +1,179 @@
-<article>
+<article numberBeforeTitle="true">
     <topic>
-        <title>Tutorial</title>
+        <title>Build your first GacUI Application!</title>
         <p>
-            This page is under construction.
+            This is a walkthrough of building a Hello World application in GacUI.
+            It based on <a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_HelloWorlds/CppXml">one of the demo project</a> released with GacUI.
+            You need to prepare the following first:
+            <ul>
+                <li><a href="./download.xml">Download</a> GacUI from github.</li>
+                <li>
+                    Install Visual Studio 2017 Community or newer version
+                    <ul>
+                        <li>Go to <a href="https://visualstudio.microsoft.com">https://visualstudio.microsoft.com</a></li>
+                        <li>Or use <a href="https://code.visualstudio.com/">Visual Studio Code</a> with <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/">Visual C++ Build Tools</a> instead.</li>
+                    </ul>
+                </li>
+            </ul>
         </p>
+        <topic>
+            <title>Prepare your folder structure</title>
+            <p>
+                <ul>
+                    <li><b>GacUI.xml</b></li>
+                    <li>
+                        <b>UI</b> folder
+                        <ul>
+                            <li><b>Source</b> folder: empty, storing generated C++ files from Resource.xml</li>
+                            <li><b>Resource.xml</b></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <b>Lib</b> folder: copy files to this folder from <a href="https://github.com/vczh-libraries/Release/tree/master/Import">here</a>. Choose all files in "Files you need for a typical GacUI application" from the <a href="./download.xml">Download</a> page.
+                    </li>
+                    <li><b>Main.cpp</b></li>
+                </ul>
+            </p>
+            <topic>GacUI.xml</topic>
+            <p>
+                GacUI allow resource files to have dependency to other resource files.
+                GacUI.xml is placed in the root folder.
+                Run GacBuild.ps1 on GacUI.xml and it will search all resource files recursively.
+            </p>
+            <p>
+                In this tutorial, we only have one resource file,
+                that is UI\Resource.xml.
+                In this case, concent of GacUI.xml is very simple:
+            </p>
+            <p>
+                <program language="xml">
+                    <code><![CDATA[
+<GacUI/>
+                    ]]></code>
+                </program>
+            </p>
+            <topic>UI\Resource.xml</topic>
+            <p>
+                In this file, we specify the following informations:
+                <ul>
+                    <li>Where to store generated C++ files</li>
+                    <li>Where to store the generated binary resource file</li>
+                    <li>Include "GacUI.h" because we don't need runtime reflection</li>
+                    <li>The name is HelloWorld</li>
+                    <li>Describe the HelloWorld window</li>
+                </ul>
+            </p>
+            <p>
+                <program language="xml">
+                    <code><![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<Resource>
+  <Folder name="GacGenConfig">
+    <Folder name="Cpp">
+      <Text name="SourceFolder">Source</Text>
+      <Text name="Resource">..\HelloWorld.bin</Text>
+      <Text name="NormalInclude">GacUI.h</Text>
+      <Text name="Name">HelloWorld</Text>
+    </Folder>
+  </Folder>
+  <Folder name="MainWindow">
+    <Instance name="MainWindowResource">
+      <Instance ref.CodeBehind="false" ref.Class="helloworld::MainWindow">
+        <Window Text="Hello, world!" ClientSize="x:480 y:320">
+          <att.BoundsComposition-set PreferredMinSize="x:480 y:320"/>
+          <Label Text="Welcome to GacUI Library!">
+            <att.Font>fontFamily:"Segoe UI" size:32 antialias:true</att.Font>
+          </Label>
+        </Window>
+      </Instance>
+    </Instance>
+  </Folder>
+</Resource>
+                    ]]></code>
+                </program>
+            </p>
+        </topic>
+        <topic>
+            <title>Build GacUI Resource File</title>
+            <p>
+                In the root folder, run <a href="https://github.com/vczh-libraries/Release/tree/master/Tools">GacBuild.ps1</a>, with parameter "GacUI.xml".
+            </p>
+            <p>
+                <b>GacBuild.ps1</b> performs incremental build,
+                when you have multiple GacUI resource files.
+            </p>
+            <p>
+                <b>GacClear.ps1</b> deletes all log files created by GacBuild.ps1,
+                to cause GacBuild.ps1 perform a full build in the next time.
+            </p>
+            <p>
+                If it build successfully, you will see some files in <b>UI\Source</b> folder. We only need:
+                <ul>
+                    <li>HelloWorld.h</li>
+                    <li>HelloWorldPartialClasses.h</li>
+                    <li>HelloWorldPartialClasses.cpp</li>
+                </ul>
+            </p>
+        </topic>
+        <topic>
+            <title>Main.cpp</title>
+            <p>
+                To build this file,
+                you need to include necessary files to your VC++ project:
+                <ul>
+                    <li><b>UI\Source</b>\HelloWorld.h</li>
+                    <li><b>UI\Source</b>\HelloWorldPartialClasses.h</li>
+                    <li><b>UI\Source</b>\HelloWorldPartialClasses.cpp</li>
+                    <li>Selected files in <b>Lib</b> folder.</li>
+                </ul>
+            </p>
+            <p>
+                We don't need runtime reflection in this project,
+                so you have to define a empty <b>VCZH_DEBUG_NO_REFLECTION</b> macro using <a href="https://docs.microsoft.com/en-us/cpp/build/reference/d-preprocessor-definition">in preprocessor definitions</a>.
+                You can either to this by updating your project properties,
+                or use the /D compiler option if you are using Visual Studio Code.
+            </p>
+            <p>
+                You need to add <b>Lib</b> to your <a href="https://docs.microsoft.com/en-us/cpp/build/reference/i-additional-include-directories">include folder list</a>.
+                You can either to this by updating your project properties,
+                or use the /I compiler option if you are using Visual Studio Code.
+            </p>
+            <p>
+                <program language="c++">
+                    <code><![CDATA[
+#define GAC_HEADER_USE_NAMESPACE
+#include "UI/Source/HelloWorld.h"
+
+using namespace vl::collections;
+using namespace vl::stream;
+
+void GuiMain()
+{
+	{
+		FileStream fileStream(L"HelloWorld.bin", FileStream::ReadOnly);
+		GetResourceManager()->LoadResourceOrPending(fileStream);
+	}
+	helloworld::MainWindow window;
+	window.MoveToScreenCenter();
+	GetApplication()->Run(&window);
+}
+                    ]]></code>
+                </program>
+            </p>
+            <p>
+                Please note that, you need to carefully place <b>HelloWorld.bin</b>,
+                and search for this file in runtime.
+                <b>"HelloWorld.bin"</b> is a relative path,
+                it will try to find the file in your working directory.
+                When you press F5 in Visual Studio, the working directory is the folder containing the ".vcxproj" file.
+                When you double click the executable file, the working directory is where the executable file is in.
+                You are recommended to <b>Calculate a absolute path based on the full path of the executable file</b>.
+                <a href="https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulefilenamew">GetModuleFileName</a> is useful here.
+            </p>
+        </topic>
+        <topic>
+            <title>Build and run your program!</title>
+            <img src="/HelloWOrld.png"/>
+        </topic>
     </topic>
 </article>
