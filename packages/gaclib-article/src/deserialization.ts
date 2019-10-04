@@ -2,10 +2,59 @@ import { Element, xml2js } from 'xml-js';
 import * as a from './interfaces';
 
 function parseParagraph(xmlParagraph: Element): a.Paragraph {
-    return {
+    const p: a.Paragraph = {
         kind: 'Paragraph',
         content: []
     };
+
+    if (xmlParagraph.elements !== undefined) {
+        CHILD_LOOP:
+        for (const xmlChild of xmlParagraph.elements) {
+            switch (xmlChild.type) {
+                case 'text':
+                    if (typeof xmlChild.text === 'string') {
+                        p.content.push({
+                            kind: 'Text',
+                            text: xmlChild.text
+                        });
+                    }
+                    break;
+                case 'element':
+                    switch (xmlChild.name) {
+                        case 'a': {
+                            continue CHILD_LOOP;
+                        }
+                        case 'symbol': {
+                            continue CHILD_LOOP;
+                        }
+                        case 'name': {
+                            continue CHILD_LOOP;
+                        }
+                        case 'img': {
+                            continue CHILD_LOOP;
+                        }
+                        case 'ul': case 'ol': {
+                            continue CHILD_LOOP;
+                        }
+                        case 'b': {
+                            continue CHILD_LOOP;
+                        }
+                        case 'em': {
+                            continue CHILD_LOOP;
+                        }
+                        case 'program': {
+                            continue CHILD_LOOP;
+                        }
+                        default:
+                    }
+                    break;
+                default:
+            }
+            throw new Error('Only text, <a>, <symbol>, <name>, <img>, <ul>, <ol>, <b>, <em>, <program> are allowed in <p>.');
+        }
+    }
+
+    return p;
 }
 
 function parseTopic(xmlTopic: Element): a.Topic {
@@ -59,7 +108,7 @@ function parseTopic(xmlTopic: Element): a.Topic {
                     default:
                 }
             }
-            throw new Error('Only <title>, <p>, <topic> could exist in <topic>.');
+            throw new Error('Only <title>, <p>, <topic> are allowed in <topic>.');
         }
     }
 

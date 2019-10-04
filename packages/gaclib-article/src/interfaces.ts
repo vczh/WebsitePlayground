@@ -1,5 +1,6 @@
 export interface Text {
     kind: 'Text';
+    text: string;
 }
 
 export interface PageLink {
@@ -19,8 +20,8 @@ export interface Name {
     text: string;
 }
 
-export interface ImageFigure {
-    kind: 'ImageFigure';
+export interface Image {
+    kind: 'Image';
     href: string;
     caption: string;
 }
@@ -64,7 +65,7 @@ export type Content =
     | PageLink
     | AnchorLink
     | Name
-    | ImageFigure
+    | Image
     | List
     | Strong
     | Emphasise

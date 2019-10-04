@@ -48,7 +48,7 @@
 <symbol name="C++:vl.presentation.controls.GuiControl">C++ could be omitted because it is the default value. Other values could be Workflow</symbol>
 <symbol>IncompleteClassOrFunctionName, C++ only</symbol>
 <name>Just like `` in md</name>
-<figure><img src="logo.png"/><figcapture>Description</figcapture></figure>
+<img src="logo.png"/>Description</img>
 <ul><li>...</li></ul>
 <ol><li>...</li></ol>
 <b>translate to strong</b>
