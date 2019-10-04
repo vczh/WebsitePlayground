@@ -91,47 +91,50 @@ export function parseArticle(xml: string): a.Article {
         }
     );
 
-    if (element.name !== 'article') {
-        throw new Error('Root element of an article should be <article>.');
-    }
-
-    let articleIndex = false;
-    let articleNumberBeforeTitle = false;
-    if (element.attributes !== undefined) {
-        for (const key of Object.keys(element.attributes)) {
-            switch (key) {
-                case 'index':
-                    switch (element.attributes.index) {
-                        case 'true': articleIndex = true; break;
-                        case 'false': break;
-                        default:
-                            throw new Error(`Attribute ${key} in <article> should be a boolean.`);
-                    }
-                    break;
-                case 'numberBeforeTitle':
-                    switch (element.attributes.numberBeforeTitle) {
-                        case 'true': articleNumberBeforeTitle = true; break;
-                        case 'false': break;
-                        default:
-                            throw new Error(`Attribute ${key} in <article> should be a boolean.`);
-                    }
-                    break;
-                default:
-                    throw new Error(`Unrecognized attribute ${key} in <article>.`);
-            }
-        }
-    }
-
     if (element.elements !== undefined) {
-        const xmlTopic = element.elements[0];
-        if (xmlTopic.type === 'element' || xmlTopic.name === 'topic') {
-            return {
-                index: articleIndex,
-                numberBeforeTitle: articleNumberBeforeTitle,
-                topic: parseTopic(xmlTopic)
-            };
+        const xmlArticle = element.elements[0];
+        if (xmlArticle.type === 'element' && xmlArticle.name === 'article') {
+            let articleIndex = false;
+            let articleNumberBeforeTitle = false;
+            if (xmlArticle.attributes !== undefined) {
+                for (const key of Object.keys(xmlArticle.attributes)) {
+                    switch (key) {
+                        case 'index':
+                            switch (xmlArticle.attributes.index) {
+                                case 'true': articleIndex = true; break;
+                                case 'false': break;
+                                default:
+                                    throw new Error(`Attribute ${key} in <article> should be a boolean.`);
+                            }
+                            break;
+                        case 'numberBeforeTitle':
+                            switch (xmlArticle.attributes.numberBeforeTitle) {
+                                case 'true': articleNumberBeforeTitle = true; break;
+                                case 'false': break;
+                                default:
+                                    throw new Error(`Attribute ${key} in <article> should be a boolean.`);
+                            }
+                            break;
+                        default:
+                            throw new Error(`Unrecognized attribute ${key} in <article>.`);
+                    }
+                }
+            }
+
+            if (xmlArticle.elements !== undefined) {
+                const xmlTopic = xmlArticle.elements[0];
+                if (xmlTopic.type === 'element' || xmlTopic.name === 'topic') {
+                    return {
+                        index: articleIndex,
+                        numberBeforeTitle: articleNumberBeforeTitle,
+                        topic: parseTopic(xmlTopic)
+                    };
+                }
+            }
+
+            throw new Error(`Exactly one <topic> should exist in <article>.`);
         }
     }
+    throw new Error(`Root element of an article should be <article> instead of <${element.name}>.`);
 
-    throw new Error(`Exactly one <topic> should exist in <article>.`);
 }
