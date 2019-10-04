@@ -20,3 +20,23 @@ test(`Empty Article`, () => {
     };
     assert.deepStrictEqual(parseArticle(input), output);
 });
+
+test(`Article with attributes`, () => {
+    const input = `
+<article index="true" numberBeforeTitle="true">
+    <topic>
+        <title>Title</title>
+    </topic>
+</article>
+`;
+    const output: Article = {
+        index: true,
+        numberBeforeTitle: true,
+        topic: {
+            kind: 'Topic',
+            title: 'Title',
+            content: []
+        }
+    };
+    assert.deepStrictEqual(parseArticle(input), output);
+});
