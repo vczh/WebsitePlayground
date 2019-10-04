@@ -18,9 +18,7 @@
             <title>Basic C++ Construction</title>
             <p>
                 <ul>
-                    <li>
-                        <b>Vlpp.h/cpp</b>
-                    </li>
+                    <li><b>Vlpp.h/cpp</b></li>
                 </ul>
             </p>
             <p>
@@ -105,6 +103,11 @@
                 A GLR parser generator for C++.
                 This library will be re-shaped in GacUI 2.0.
             </p>
+            <p>
+                You are able to write the syntax in a text file,
+                and then run <name>ParserGen.exe</name> to generated parser, AST with traverse algorithms in C++.
+                You also automatically get predefined parsers and printers for <b>XML and JSON</b>.
+            </p>
         </topic>
         <topic>
             <title>Reflection</title>
@@ -166,6 +169,118 @@
         </topic>
         <topic>
             <title>Cross platform GPU Accelerated UI Library</title>
+            <p>
+                <ul>
+                    <li>
+                        <b>GacUI.h/cpp</b>
+                    </li>
+                    <li>
+                        <b>GacUIWindows.h/cpp</b>
+                    </li>
+                    <li>
+                        <b>GacUIReflection.h/cpp</b>
+                    </li>
+                    <li>
+                        <b>GacUICompiler.h/cpp</b>
+                    </li>
+                    <li>
+                        <b>DarkSkin.h/cpp</b>
+                    </li>
+                    <li>
+                        <b>DarkSkinReflection.h/cpp</b>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                GacUI has a high performance and extensible framework,
+                to enable porting to different platform using different rendering engine.
+                Windows is ready, macOS and Linux support will be done in 2.0.
+            </p>
+            <p>
+                GacUI also has a rich set of layouts, controls, skins and data bindings.
+                <ul>
+                    <li>
+                        Layouts
+                        <ul>
+                            <li>
+                                <b>Bounds</b>: Stick to some or all sides of the parent layout,
+                                with the ability to do absolute layout.
+                            </li>
+                            <li>
+                                <b>Stack</b>: Stack sub-layouts together in different directions.
+                            </li>
+                            <li>
+                                <b>Flow</b>: Place sub-layouts in one line, and when the space of the parent layout is not enough,
+                                new lines will be created automatically.
+                                This can be done in different directions.
+                            </li>
+                            <li>
+                                <b>Table</b>: Place sub-layouts in a table,
+                                with different row/column configurations to perform a very flexible layout.
+                                Table is used widely in GacUI,
+                                and the performance is super high,
+                                you don't even need to worry about slowing down your application by putting too many layouts in nested tables.
+                            </li>
+                            <li>
+                                <b>Side and PartialView</b>: Place sub-layouts and expand them to a specified percentage of the space of the parent layout.
+                            </li>
+                            <li>
+                                <b>SharedSizeItem and SharedSizeRoot</b>: Control sub-layouts in different layouts to have the same width or height.
+                                It is very useful when you need to align icons, texts and shortcuts in a menu,
+                                but they cannot just be put in a table,
+                                because icon, text and shortcut are grouped by menu item controls.
+                            </li>
+                            <li>
+                                <b>RepeatStack and RepeatFlow</b>: Bindable Stack and Flow layout.
+                            </li>
+                            <li>
+                                <b>Responsive</b>: Place sub-layouts in a Responsive layout,
+                                and when the size of the responsive layout get changed,
+                                sub-layouts will be organized differently with different appearance,
+                                according to how large the space is given.
+                                Ribbon controls are a very good example of using Responsive layout.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Controls
+                        <ul>
+                            <li>Window, Tooltip, CustomControl</li>
+                            <li>Button, CheckBox, RadioButton, GroupBox, Label</li>
+                            <li>Scroll, Tracker, ScrollView, ProgressBar, Tab</li>
+                            <li>DatePicker, DateComboBox</li>
+                            <li>TextList, CheckList, RadioList, ListView, TreeView, DataGrid, ComboBox</li>
+                            <li>SinglelineTextBox, MultilineTextBox</li>
+                            <li>DocumentLabel, DocumentTextBox, DocumentViewer</li>
+                            <li>ToolstripMenuBar, ToolstripToolBar, ToolstripButton, ToolstripDropDownButton, ToolstripSplitButton, ToolstripSplitter</li>
+                            <li>RibbonTab, RibbonGroup, RibbonIconLabel, RibbonSmallIconlabel, RibbonButtons, RibbonToolstrips, RibbonGallery, RibbonToolstripMenu</li>
+                            <li>RibbonGallery, RibbonGalleryList, RibbonGalleryItemList</li>
+                            <li>RibbonSmallButton, RibbonSmallDropdownButton, RibbonSmallSplitButton, RibbonLargeButton, RibbonLargeDropdownButton, RibbonLargeSplitButton</li>
+                            <li>RibbonSplitter, RibbonToolstripHeader</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>
+                            Skins: GacUI is released with DarkSkin as a default skin.
+                            You could create your own skin, or just use DarkSkin to create your application.
+                            Please note that a GacUI application has to start with a skin.
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Data Bindings: GacUI has a very powerful data binding feature.
+                            You are able to create windows, layouts, controls and skins in XML,
+                            define view models in Workflow,
+                            bind view model properties to GacUI controls bidirectionally using complex expressions that you could even not imagine,
+                            implement view models in C++,
+                            and finally bring them together to work.
+                        </p>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                Demoes of full GacUI features can be found <a href="./Demo.html">here</a>.
+            </p>
         </topic>
     </topic>
 </article>
