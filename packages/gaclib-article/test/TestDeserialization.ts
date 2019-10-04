@@ -1,4 +1,5 @@
 import * as assert from 'assert';
+import { EOL } from 'os';
 import { Article, parseArticle } from '../src';
 
 test(`Empty Article`, () => {
@@ -205,7 +206,7 @@ int main()
 {
     cout << "Hello, world!";
     return 0;
-}`
+}`.split(/\r?\n/).join(EOL)
                         }
                     ]
                 }
@@ -265,9 +266,10 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello, world!";
+    cout << "Hello, world!" << endl;
+    cout << "This is a C++ program!" << endl;
     return 0;
-}`,
+}`.split(/\r?\n/).join(EOL),
                             output: [
                                 'Hello, world!',
                                 'This is a C++ program!'

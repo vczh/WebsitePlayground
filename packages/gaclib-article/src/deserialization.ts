@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { Element, xml2js } from 'xml-js';
 import * as a from './interfaces';
 
@@ -23,8 +24,88 @@ function parseList(container: Element, ordered: boolean): a.List {
     throw new Error('Not Implemented');
 }
 
+function trimEmptyLines(cdataContainer: Element): string {
+    if (cdataContainer.elements === undefined) {
+        throw new Error(`<${cdataContainer.name}> should not be empty.`);
+    }
+
+    if (cdataContainer.elements.length !== 1 || cdataContainer.elements[0].type !== 'cdata') {
+        throw new Error(`Exactly one cdata should exist in <${cdataContainer.name}>.`);
+    }
+
+    const lines = (<string>cdataContainer.elements[0].cdata).split(/\r?\n/);
+    while (lines.length > 0) {
+        if (/^\s*$/.test(lines[0])) {
+            lines.shift();
+        } else {
+            break;
+        }
+    }
+
+    while (lines.length > 0) {
+        if (/^\s*$/.test(lines[lines.length - 1])) {
+            lines.pop();
+        } else {
+            break;
+        }
+    }
+
+    return lines.join(EOL);
+}
+
 function parseProgram(container: Element): a.Program {
-    throw new Error('Not Implemented');
+    const p: a.Program = {
+        kind: 'Program',
+        code: ''
+    };
+
+    if (container.attributes !== undefined) {
+        for (const key of Object.keys(container.attributes)) {
+            switch (key) {
+                case 'project':
+                    if (typeof container.attributes.project !== 'string') {
+                        throw new Error(`Attribute ${key} in <program> should be a string.`);
+                    }
+                    p.project = container.attributes.project;
+                    break;
+                case 'language':
+                    if (typeof container.attributes.language !== 'string') {
+                        throw new Error(`Attribute ${key} in <program> should be a string.`);
+                    }
+                    p.language = container.attributes.language;
+                    break;
+                default:
+                    throw new Error(`Only "project" and "language" attributes are allowed in <program> instead of "${key}".`);
+            }
+        }
+    }
+
+    if (container.elements !== undefined) {
+        CHILD_LOOP:
+        for (const xmlChild of container.elements) {
+            if (xmlChild.type === 'element') {
+                switch (xmlChild.name) {
+                    case 'code': {
+                        p.code = trimEmptyLines(xmlChild);
+                        continue CHILD_LOOP;
+                    }
+                    case 'output': {
+                        p.output = trimEmptyLines(xmlChild).split(/\r?\n/);
+                        continue CHILD_LOOP;
+                    }
+                    default:
+                        throw new Error(`Only <code>, <program> are allowed in <${container.name}> instead of <${xmlChild.name}>.`);
+                }
+            }
+            throw new Error(`Only elements are allowed in <${container.name}> instead of ${xmlChild.type}.`);
+        }
+    }
+
+    if (p.code === '') {
+        throw new Error('<code> should exist in <program>.');
+    }
+
+    return p;
 }
 
 function parseContent(container: Element): a.Content[] {
@@ -72,7 +153,7 @@ function parseContent(container: Element): a.Content[] {
                                     }
                                 }
                             }
-                            throw new Error('Exactly one "href" or "anchor" attribute should exist in <a>.');
+                            throw new Error('Exactly one "href" or "anchor" attribute is allowed in <a>.');
                         }
                         case 'symbol': {
                             throw new Error('<symbol> is not supported yet.');
@@ -114,7 +195,7 @@ function parseContent(container: Element): a.Content[] {
                                     }
                                 }
                             }
-                            throw new Error('Exactly one "src" attribute should exist in <img>.');
+                            throw new Error('Exactly one "src" attribute is allowed in <img>.');
                             continue CHILD_LOOP;
                         }
                         case 'ul': case 'ol': {
@@ -181,7 +262,7 @@ function parseTopic(xmlTopic: Element): a.Topic {
                     break;
                 }
                 default:
-                    throw new Error(`Unrecognized attribute ${key} in <topic>.`);
+                    throw new Error(`Only "anchor" attribute is allowed in <topic> instead of "${key}".`);
             }
         }
     }
