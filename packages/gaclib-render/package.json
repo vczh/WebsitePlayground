@@ -1,7 +1,7 @@
 {
     "name": "gaclib-render",
     "version": "0.0.1",
-    "description": "Gaclib Website Rendering",
+    "description": "Gaclib Website front-end rendering using lit-html",
     "main": "./lib/index.js",
     "scripts": {
         "build": "rimraf ./lib && tslint --project tsconfig.json && tsc"

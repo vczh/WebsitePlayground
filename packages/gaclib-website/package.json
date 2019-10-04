@@ -1,7 +1,7 @@
 {
     "name": "gaclib-website",
     "version": "0.0.1",
-    "description": "Gaclib Website http://gaclib.net",
+    "description": "Gaclib Website content: http://gaclib.net",
     "main": "./lib/index.js",
     "scripts": {
         "build": "rimraf ./lib && tslint --project tsconfig.json && tsc && copyfiles -u 1 assest/* lib/dist/ && webpack --config ./lib/Webpack.js",
