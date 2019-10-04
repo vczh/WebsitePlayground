@@ -215,28 +215,53 @@
                         </ul>
                     </li>
                     <li>
-                        Controls
-                        <ul>
-                            <li>Window, Tooltip, CustomControl</li>
-                            <li>Button, CheckBox, RadioButton, GroupBox, Label</li>
-                            <li>Scroll, Tracker, ScrollView, ProgressBar, Tab</li>
-                            <li>DatePicker, DateComboBox</li>
-                            <li>TextList, CheckList, RadioList, ListView, TreeView, DataGrid, ComboBox</li>
-                            <li>SinglelineTextBox, MultilineTextBox</li>
-                            <li>DocumentLabel, DocumentTextBox, DocumentViewer</li>
-                            <li>ToolstripMenuBar, ToolstripToolBar, ToolstripButton, ToolstripDropDownButton, ToolstripSplitButton, ToolstripSplitter</li>
-                            <li>RibbonTab, RibbonGroup, RibbonButtons, RibbonToolstrips, RibbonToolstripMenu</li>
-                            <li>RibbonIconLabel, RibbonSmallIconLabel</li>
-                            <li>RibbonGallery, RibbonGalleryList, RibbonGalleryItemList</li>
-                            <li>RibbonSmallButton, RibbonSmallDropdownButton, RibbonSmallSplitButton, RibbonLargeButton, RibbonLargeDropdownButton, RibbonLargeSplitButton</li>
-                            <li>RibbonSplitter, RibbonToolstripHeader</li>
-                        </ul>
+                        <p>
+                            Controls:
+                            <ul>
+                                <li>Window, Tooltip, CustomControl</li>
+                                <li>Button, CheckBox, RadioButton, GroupBox, Label</li>
+                                <li>Scroll, Tracker, ScrollView, ProgressBar, Tab</li>
+                                <li>DatePicker, DateComboBox</li>
+                                <li>TextList, CheckList, RadioList, ListView, TreeView, DataGrid, ComboBox</li>
+                                <li>SinglelineTextBox, MultilineTextBox</li>
+                                <li>DocumentLabel, DocumentTextBox, DocumentViewer</li>
+                                <li>ToolstripMenuBar, ToolstripToolBar, ToolstripButton, ToolstripDropDownButton, ToolstripSplitButton, ToolstripSplitter</li>
+                                <li>RibbonTab, RibbonGroup, RibbonButtons, RibbonToolstrips, RibbonToolstripMenu</li>
+                                <li>RibbonIconLabel, RibbonSmallIconLabel</li>
+                                <li>RibbonGallery, RibbonGalleryList, RibbonGalleryItemList</li>
+                                <li>RibbonSmallButton, RibbonSmallDropdownButton, RibbonSmallSplitButton, RibbonLargeButton, RibbonLargeDropdownButton, RibbonLargeSplitButton</li>
+                                <li>RibbonSplitter, RibbonToolstripHeader</li>
+                            </ul>
+                        </p>
+                        <p>
+                            Controls and applications are able to be separated into multiple resource files.
+                            Here is a demo showing how to share code between two RichEdit application using traditional tool bars and ribbon controls:
+                            <ul>
+                                <li><a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditor">Shared code</a>: a customized control providing RichEdit features.</li>
+                                <li>Using <a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditorToolstrip">traditional tool bars</a> to create a RichEdit application using the first project.</li>
+                                <li>Using <a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditorRibbon">ribbon controls</a> to create a RichEdit application using the first project.</li>
+                            </ul>
+                        </p>
                     </li>
                     <li>
                         <p>
                             Skins: GacUI is released with DarkSkin as a default skin.
                             You could create your own skin, or just use DarkSkin to create your application.
                             Please note that a GacUI application has to start with a skin.
+                        </p>
+                        <p>
+                            Both control and list item accept skins, called ControlTemplate and ItemTemplate.
+                            For example, you are able to customize how data is displayed in a list control using ItemTemplate.
+                            You are also able to customize how the control itself renderers using ControlTemplate.
+                            ItemTemplate and ControlTemplate can be created using XML, just like normal UI components.
+                        </p>
+                        <p>
+                            <a href="https://github.com/vczh-libraries/GacUI/tree/master/Source/Skins/DarkSkin">Here</a> is the source code of the built-in skin: DarkSkin.
+                        </p>
+                        <p>
+                            <a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/TriplePhaseImageButton">Here</a> is the demo showing
+                            how to use image resource, control template and customized control together
+                            to create a new control: triple-phase image button.
                         </p>
                     </li>
                     <li>
@@ -250,6 +275,23 @@
                                 <li>implement view models in C++</li>
                             </ul>
                             and finally bring them together to work.
+                        </p>
+                        <p>
+                            In GacUI controls, there are two kind of properties that accept data binding:
+                            <ul>
+                                <li>Normal properties that accepts reflectable types</li>
+                                <li>
+                                    Some of type <name>vl::reflection::descriptions::Value</name>.
+                                    These properties accepts container types, usually called <name>ItemSource</name> in bindable list controls.
+                                    If you assign a <name>vl::reflection::descriptions::IValueObservableList</name> object to this property,
+                                    which can be obtained by calling <name>GetWrapper</name> of a <name>vl::collections::ObservableList</name> object,
+                                    list items will change when the list object is changed.
+                                </li>
+                            </ul>
+                        </p>
+                        <p>
+                            <a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/AddressBook">Here</a> is a demo showing
+                            how to bind a object model to a tree view control, a list view control with customized items.
                         </p>
                     </li>
                 </ul>
