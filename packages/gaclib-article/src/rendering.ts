@@ -46,7 +46,7 @@ function renderContent(content: a.Content[]): TemplateResult {
                         if (value.output !== undefined) {
                             throw new Error('Program with output is not supported yet.');
                         }
-                        return html`<pre><code data-project="${value.project === undefined ? '' : value.project}" data-language="${value.language === undefined ? '' : value.language}">${value.code}</code></pre>`;
+                        return html`<pre class="code"><code data-project="${value.project === undefined ? '' : value.project}" data-language="${value.language === undefined ? '' : value.language}">${value.code}</code></pre>`;
                     default:
                         return value.text;
                 }
