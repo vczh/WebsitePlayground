@@ -57,7 +57,7 @@ export interface Program {
     project?: string;
     language?: string;
     code: string;
-    output?: string;
+    output?: string[];
 }
 
 export type Content =

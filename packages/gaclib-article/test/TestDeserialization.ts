@@ -161,3 +161,122 @@ test(`Flat paragraph`, () => {
     };
     assert.deepStrictEqual(parseArticle(input), output);
 });
+
+test(`Simple program`, () => {
+    const input = `
+<article>
+    <topic>
+        <title>Article</title>
+        <p>
+            <program>
+                <code>
+                    <![CDATA[
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    cout << "Hello, world!";
+    return 0;
+}
+                    ]]>
+                </code>
+            </program>
+        </p>
+    </topic>
+</article>
+`;
+    const output: Article = {
+        index: false,
+        numberBeforeTitle: false,
+        topic: {
+            kind: 'Topic',
+            title: 'Article',
+            content: [
+                {
+                    kind: 'Paragraph',
+                    content: [
+                        {
+                            kind: 'Program',
+                            code: `#include <iostream>
+using namespace std;
+
+int main()
+{
+    cout << "Hello, world!";
+    return 0;
+}`
+                        }
+                    ]
+                }
+            ]
+        }
+    };
+    assert.deepStrictEqual(parseArticle(input), output);
+});
+
+test(`Complex program`, () => {
+    const input = `
+<article>
+    <topic>
+        <title>Article</title>
+        <p>
+            <program project="vlpp" language="C++">
+                <code>
+                    <![CDATA[
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    cout << "Hello, world!" << endl;
+    cout << "This is a C++ program!" << endl;
+    return 0;
+}
+                    ]]>
+                </code>
+                <output>
+                <![CDATA[
+Hello, world!
+This is a C++ program!
+                ]]>
+                </output>
+            </program>
+        </p>
+    </topic>
+</article>
+`;
+    const output: Article = {
+        index: false,
+        numberBeforeTitle: false,
+        topic: {
+            kind: 'Topic',
+            title: 'Article',
+            content: [
+                {
+                    kind: 'Paragraph',
+                    content: [
+                        {
+                            kind: 'Program',
+                            project: 'vlpp',
+                            language: 'C++',
+                            code: `#include <iostream>
+using namespace std;
+
+int main()
+{
+    cout << "Hello, world!";
+    return 0;
+}`,
+                            output: [
+                                'Hello, world!',
+                                'This is a C++ program!'
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    };
+    assert.deepStrictEqual(parseArticle(input), output);
+});

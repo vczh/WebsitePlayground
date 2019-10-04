@@ -19,6 +19,14 @@ function parseTextContent(container: Element, allowEmpty: boolean): string {
     }
 }
 
+function parseList(container: Element, ordered: boolean): a.List {
+    throw new Error('Not Implemented');
+}
+
+function parseProgram(container: Element): a.Program {
+    throw new Error('Not Implemented');
+}
+
 function parseContent(container: Element): a.Content[] {
     const content: a.Content[] = [];
     if (container.elements !== undefined) {
@@ -110,6 +118,7 @@ function parseContent(container: Element): a.Content[] {
                             continue CHILD_LOOP;
                         }
                         case 'ul': case 'ol': {
+                            content.push(parseList(xmlChild, xmlChild.name === 'ol'));
                             continue CHILD_LOOP;
                         }
                         case 'b': {
@@ -133,6 +142,7 @@ function parseContent(container: Element): a.Content[] {
                             continue CHILD_LOOP;
                         }
                         case 'program': {
+                            content.push(parseProgram(xmlChild));
                             continue CHILD_LOOP;
                         }
                         default:
