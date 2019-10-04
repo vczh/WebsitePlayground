@@ -34,64 +34,68 @@
                     <li><b>Main.cpp</b></li>
                 </ul>
             </p>
-            <topic>GacUI.xml</topic>
-            <p>
-                GacUI allow resource files to have dependency to other resource files.
-                GacUI.xml is placed in the root folder.
-                Run GacBuild.ps1 on GacUI.xml and it will search all resource files recursively.
-            </p>
-            <p>
-                In this tutorial, we only have one resource file,
-                that is UI\Resource.xml.
-                In this case, concent of GacUI.xml is very simple:
-            </p>
-            <p>
-                <program language="xml">
-                    <code><![CDATA[
-<GacUI/>
-                    ]]></code>
-                </program>
-            </p>
-            <topic>UI\Resource.xml</topic>
-            <p>
-                In this file, we specify the following informations:
-                <ul>
-                    <li>Where to store generated C++ files</li>
-                    <li>Where to store the generated binary resource file</li>
-                    <li>Include "GacUI.h" because we don't need runtime reflection</li>
-                    <li>The name is HelloWorld</li>
-                    <li>Describe the HelloWorld window</li>
-                </ul>
-            </p>
-            <p>
-                <program language="xml">
-                    <code><![CDATA[
-<?xml version="1.0" encoding="utf-8"?>
-<Resource>
-  <Folder name="GacGenConfig">
-    <Folder name="Cpp">
-      <Text name="SourceFolder">Source</Text>
-      <Text name="Resource">..\HelloWorld.bin</Text>
-      <Text name="NormalInclude">GacUI.h</Text>
-      <Text name="Name">HelloWorld</Text>
+            <topic>
+                <title>GacUI.xml</title>
+                <p>
+                    GacUI allow resource files to have dependency to other resource files.
+                    GacUI.xml is placed in the root folder.
+                    Run GacBuild.ps1 on GacUI.xml and it will search all resource files recursively.
+                </p>
+                <p>
+                    In this tutorial, we only have one resource file,
+                    that is UI\Resource.xml.
+                    In this case, concent of GacUI.xml is very simple:
+                </p>
+                <p>
+                    <program language="xml">
+                        <code><![CDATA[
+    <GacUI/>
+                        ]]></code>
+                    </program>
+                </p>
+            </topic>
+            <topic>
+                <title>UI\Resource.xml</title>
+                <p>
+                    In this file, we specify the following informations:
+                    <ul>
+                        <li>Where to store generated C++ files</li>
+                        <li>Where to store the generated binary resource file</li>
+                        <li>Include "GacUI.h" because we don't need runtime reflection</li>
+                        <li>The name is HelloWorld</li>
+                        <li>Describe the HelloWorld window</li>
+                    </ul>
+                </p>
+                <p>
+                    <program language="xml">
+                        <code><![CDATA[
+    <?xml version="1.0" encoding="utf-8"?>
+    <Resource>
+    <Folder name="GacGenConfig">
+        <Folder name="Cpp">
+        <Text name="SourceFolder">Source</Text>
+        <Text name="Resource">..\HelloWorld.bin</Text>
+        <Text name="NormalInclude">GacUI.h</Text>
+        <Text name="Name">HelloWorld</Text>
+        </Folder>
     </Folder>
-  </Folder>
-  <Folder name="MainWindow">
-    <Instance name="MainWindowResource">
-      <Instance ref.CodeBehind="false" ref.Class="helloworld::MainWindow">
-        <Window Text="Hello, world!" ClientSize="x:480 y:320">
-          <att.BoundsComposition-set PreferredMinSize="x:480 y:320"/>
-          <Label Text="Welcome to GacUI Library!">
-            <att.Font>fontFamily:"Segoe UI" size:32 antialias:true</att.Font>
-          </Label>
-        </Window>
-      </Instance>
-    </Instance>
-  </Folder>
-</Resource>
-                    ]]></code>
-                </program>
-            </p>
+    <Folder name="MainWindow">
+        <Instance name="MainWindowResource">
+        <Instance ref.CodeBehind="false" ref.Class="helloworld::MainWindow">
+            <Window Text="Hello, world!" ClientSize="x:480 y:320">
+            <att.BoundsComposition-set PreferredMinSize="x:480 y:320"/>
+            <Label Text="Welcome to GacUI Library!">
+                <att.Font>fontFamily:"Segoe UI" size:32 antialias:true</att.Font>
+            </Label>
+            </Window>
+        </Instance>
+        </Instance>
+    </Folder>
+    </Resource>
+                        ]]></code>
+                    </program>
+                </p>
+            </topic>
         </topic>
         <topic>
             <title>Build GacUI Resource File</title>
@@ -173,7 +177,9 @@ void GuiMain()
         </topic>
         <topic>
             <title>Build and run your program!</title>
-            <img src="/HelloWOrld.png"/>
+            <p>
+                <img src="/HelloWOrld.png"/>
+            </p>
         </topic>
     </topic>
 </article>
