@@ -338,7 +338,7 @@ test(`List`, () => {
                         },
                         {
                             kind: 'List',
-                            ordered: true,
+                            ordered: false,
                             items: [
                                 {
                                     kind: 'ParagraphListItem',

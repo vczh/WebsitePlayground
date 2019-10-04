@@ -20,8 +20,65 @@ function parseTextContent(container: Element, allowEmpty: boolean): string {
     }
 }
 
+function parseListItem(container: Element): a.ContentListItem | a.ParagraphListItem {
+    if (container.attributes !== undefined && container.attributes.length !== 0) {
+        throw new Error(`No attribute is allowed in <${container.name}>.`);
+    }
+
+    if (container.elements === undefined || container.elements.length === 0) {
+        throw new Error(`<${container.name}> should not be empty.`);
+    }
+
+    if (container.elements[0].type === 'element' && container.elements[0].name === 'p') {
+        const item: a.ParagraphListItem = {
+            kind: 'ParagraphListItem',
+            paragraphs: []
+        };
+        for (const xmlChild of container.elements) {
+            if (xmlChild.type === 'element' && xmlChild.name === 'p') {
+                item.paragraphs.push(parseParagraph(xmlChild));
+            } else {
+                throw new Error(`<p> should not mix with other content in <${container.name}>.`);
+            }
+        }
+        return item;
+    } else {
+        return {
+            kind: 'ContentListItem',
+            content: parseContent(container)
+        };
+    }
+}
+
 function parseList(container: Element, ordered: boolean): a.List {
-    throw new Error('Not Implemented');
+    const l: a.List = {
+        kind: 'List',
+        ordered,
+        items: []
+    };
+
+    if (container.attributes !== undefined && container.attributes.length !== 0) {
+        throw new Error(`No attribute is allowed in <${container.name}>.`);
+    }
+
+    if (container.elements !== undefined) {
+        CHILD_LOOP:
+        for (const xmlChild of container.elements) {
+            if (xmlChild.type === 'element') {
+                switch (xmlChild.name) {
+                    case 'li': {
+                        l.items.push(parseListItem(xmlChild));
+                        continue CHILD_LOOP;
+                    }
+                    default:
+                        throw new Error(`Only <li> is allowed in <${container.name}> instead of <${xmlChild.name}>.`);
+                }
+            }
+            throw new Error(`Only elements are allowed in <${container.name}> instead of ${xmlChild.type}.`);
+        }
+    }
+
+    return l;
 }
 
 function trimEmptyLines(cdataContainer: Element): string {
@@ -108,7 +165,7 @@ function parseProgram(container: Element): a.Program {
     return p;
 }
 
-function parseContent(container: Element): a.Content[] {
+function parseContent(container: Element, addParagraphToErrorMessage: boolean = false): a.Content[] {
     const content: a.Content[] = [];
     if (container.elements !== undefined) {
         CHILD_LOOP:
@@ -226,8 +283,12 @@ function parseContent(container: Element): a.Content[] {
                             content.push(parseProgram(xmlChild));
                             continue CHILD_LOOP;
                         }
+                        case 'p':
+                            if (addParagraphToErrorMessage) {
+                                throw new Error(`<p> should not mix with other content in <${container.name}>.`);
+                            }
                         default:
-                            throw new Error(`Only text, <a>, <symbol>, <name>, <img>, <ul>, <ol>, <b>, <em>, <program> are allowed in <${container.name}> instead of <${xmlChild.name}>.`);
+                            throw new Error(`Only text, <a>, <symbol>, <name>, <img>, <ul>, <ol>, <b>, <em>, <program>${addParagraphToErrorMessage ? ', <p>' : ''} are allowed in <${container.name}> instead of <${xmlChild.name}>.`);
                     }
                 default:
                     throw new Error(`Only text and elements are allowed in <${container.name}> instead of ${xmlChild.type}.`);
