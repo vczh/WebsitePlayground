@@ -1,12 +1,13 @@
+import { Article } from 'gaclib-article/lib/src/interfaces';
+import { renderArticle } from 'gaclib-article/lib/src/rendering';
 import { html, render } from 'lit-html';
 
 export const viewExport = {
     renderView(model: {}, target: Element): void {
+        const article = <Article>window['MVC-Resources.article'];
         const htmlTemplate = html`
-<pre id="article"></pre>
-<script lang="javascript">
-document.getElementById("article").innerText = JSON.stringify(article, null, 2);
-</script>
+<p>Temporary result from articleView</p>
+<p>${renderArticle(article)}</p>
 `;
         render(htmlTemplate, target);
     }

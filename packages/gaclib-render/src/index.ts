@@ -1,3 +1,5 @@
+import { EOL } from 'os';
+
 export interface HtmlInfo {
     title?: string;
     shortcutIcon?: string;
@@ -100,15 +102,16 @@ export function generateHtml(htmlInfo: HtmlInfo, views: ViewMetadata[], viewName
 <head>
 <title>${info.title === undefined ? 'UNTITLED' : info.title}</title>
 ${info.shortcutIcon === undefined ? '' : `<link rel="shortcut icon" href="${info.shortcutIcon}" />`}
-${info.styleSheets === undefined ? '' : info.styleSheets.map((value: string) => `<link rel="stylesheet" type="text/css" href="${value}" />`).join('\n')}
-${info.scripts === undefined ? '' : info.scripts.map((value: string) => `<script src="${value}"></script>`).join('\n')}
+${info.styleSheets === undefined ? '' : info.styleSheets.map((value: string) => `<link rel="stylesheet" type="text/css" href="${value}" />`).join(EOL)}
+${info.scripts === undefined ? '' : info.scripts.map((value: string) => `<script src="${value}"></script>`).join(EOL)}
 ${extraHeadHtml}
 </head>
 <body>
 <div id="MVC-ViewContainer"/>
 <script lang="javascript">
 {
-${Object.keys(resources).map((resourceKey: string) => `  const ${resourceKey} = ${JSON.stringify(resources[resourceKey], undefined, 2)};`).join('\r\n')}
+${Object.keys(resources).map((resourceKey: string) => `  const ${resourceKey} = ${JSON.stringify(resources[resourceKey], undefined, 2)};`).join(EOL)}
+${Object.keys(resources).map((resourceKey: string) => `  window["MVC-Resources.${resourceKey}"] = ${resourceKey};`).join(EOL)}
   for (const view of mvcViews) {
     window[view.viewName].renderView(mvcModel, document.getElementById(view.targetObject));
   }

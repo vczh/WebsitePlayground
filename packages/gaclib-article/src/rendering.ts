@@ -1,6 +1,8 @@
-import { TemplateResult } from 'lit-html';
+import { html, TemplateResult } from 'lit-html';
 import * as a from './interfaces';
 
 export function renderArticle(article: a.Article): TemplateResult {
-    throw new Error('Not Implemented');
+    return html`
+<pre>${JSON.stringify(article, undefined, 4)}</pre>
+`;
 }
