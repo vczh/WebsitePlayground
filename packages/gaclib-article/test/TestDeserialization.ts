@@ -282,3 +282,109 @@ int main()
     };
     assert.deepStrictEqual(parseArticle(input), output);
 });
+
+test(`List`, () => {
+    const input = `
+<article>
+    <topic>
+        <title>Article</title>
+        <p>
+            <ol><li>1</li><li><b>2</b></li><li><em>3</em></li></ol>
+            <ul>
+                <li>
+                    <p>1</p>
+                </li>
+                <li>
+                    <p>1</p>
+                    <p>2</p>
+                </li>
+                <li>
+                    <p>1</p>
+                    <p>2</p>
+                    <p>3</p>
+                </li>
+            </ul>
+        </p>
+    </topic>
+</article>
+`;
+    const output: Article = {
+        index: false,
+        numberBeforeTitle: false,
+        topic: {
+            kind: 'Topic',
+            title: 'Article',
+            content: [
+                {
+                    kind: 'Paragraph',
+                    content: [
+                        {
+                            kind: 'List',
+                            ordered: true,
+                            items: [
+                                {
+                                    kind: 'ContentListItem',
+                                    content: [{ kind: 'Text', text: '1' }]
+                                },
+                                {
+                                    kind: 'ContentListItem',
+                                    content: [{ kind: 'Strong', content: [{ kind: 'Text', text: '2' }] }]
+                                },
+                                {
+                                    kind: 'ContentListItem',
+                                    content: [{ kind: 'Emphasise', content: [{ kind: 'Text', text: '3' }] }]
+                                }
+                            ]
+                        },
+                        {
+                            kind: 'List',
+                            ordered: true,
+                            items: [
+                                {
+                                    kind: 'ParagraphListItem',
+                                    paragraphs: [
+                                        {
+                                            kind: 'Paragraph',
+                                            content: [{ kind: 'Text', text: '1' }]
+                                        }
+                                    ]
+                                },
+                                {
+                                    kind: 'ParagraphListItem',
+                                    paragraphs: [
+                                        {
+                                            kind: 'Paragraph',
+                                            content: [{ kind: 'Text', text: '1' }]
+                                        },
+                                        {
+                                            kind: 'Paragraph',
+                                            content: [{ kind: 'Text', text: '2' }]
+                                        }
+                                    ]
+                                },
+                                {
+                                    kind: 'ParagraphListItem',
+                                    paragraphs: [
+                                        {
+                                            kind: 'Paragraph',
+                                            content: [{ kind: 'Text', text: '1' }]
+                                        },
+                                        {
+                                            kind: 'Paragraph',
+                                            content: [{ kind: 'Text', text: '2' }]
+                                        },
+                                        {
+                                            kind: 'Paragraph',
+                                            content: [{ kind: 'Text', text: '3' }]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    };
+    assert.deepStrictEqual(parseArticle(input), output);
+});

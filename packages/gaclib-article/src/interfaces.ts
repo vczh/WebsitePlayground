@@ -33,12 +33,12 @@ export interface ContentListItem {
 
 export interface ParagraphListItem {
     kind: 'ParagraphListItem';
-    content: Paragraph[];
+    paragraphs: Paragraph[];
 }
 
 export interface List {
     kind: 'List';
-    ordered: string;
+    ordered: boolean;
     items: (ContentListItem | ParagraphListItem)[];
 }
 
