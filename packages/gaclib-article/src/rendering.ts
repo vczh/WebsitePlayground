@@ -43,7 +43,10 @@ function renderContent(content: a.Content[]): TemplateResult {
                     case 'Emphasise':
                         return html`<em>${renderContent(value.content)}<em>`;
                     case 'Program':
-                        throw new Error('Program is not supported yet.');
+                        if (value.output !== undefined) {
+                            throw new Error('Program with output is not supported yet.');
+                        }
+                        return html`<pre><code data-project="${value.project === undefined ? '' : value.project}" data-language="${value.language === undefined ? '' : value.language}">${value.code}</code></pre>`;
                     default:
                         return value.text;
                 }

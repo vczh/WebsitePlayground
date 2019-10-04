@@ -6,7 +6,7 @@
             It based on <a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_HelloWorlds/CppXml">one of the demo project</a> released with GacUI.
             You need to prepare the following first:
             <ul>
-                <li><a href="./download.xml">Download</a> GacUI from github.</li>
+                <li><a href="./download.html">Download</a> GacUI from github.</li>
                 <li>
                     Install Visual Studio 2017 Community or newer version
                     <ul>
@@ -29,7 +29,7 @@
                         </ul>
                     </li>
                     <li>
-                        <b>Lib</b> folder: copy files to this folder from <a href="https://github.com/vczh-libraries/Release/tree/master/Import">here</a>. Choose all files in "Files you need for a typical GacUI application" from the <a href="./download.xml">Download</a> page.
+                        <b>Lib</b> folder: copy files to this folder from <a href="https://github.com/vczh-libraries/Release/tree/master/Import">here</a>. Choose all files in "Files you need for a typical GacUI application" from the <a href="./download.html">Download</a> page.
                     </li>
                     <li><b>Main.cpp</b></li>
                 </ul>
@@ -111,12 +111,20 @@
                 to cause GacBuild.ps1 perform a full build in the next time.
             </p>
             <p>
-                If it build successfully, you will see some files in <b>UI\Source</b> folder. We only need:
+                If it build successfully,
+                you will see <b>HelloWorld.bin</b> on the root folder,
+                and also some files in <b>UI\Source</b> folder.
+                We only need:
                 <ul>
                     <li>HelloWorld.h</li>
                     <li>HelloWorldPartialClasses.h</li>
                     <li>HelloWorldPartialClasses.cpp</li>
                 </ul>
+            </p>
+            <p>
+                There is also a <b>Resource.xml.log</b> folder created.
+                This folder contains build results for GacBuild.ps1 for incremental build.
+                It is safe to be deleted.
             </p>
         </topic>
         <topic>
@@ -178,7 +186,7 @@ void GuiMain()
         <topic>
             <title>Build and run your program!</title>
             <p>
-                <img src="/HelloWOrld.png"/>
+                <img src="/HelloWorld.png"/>
             </p>
         </topic>
     </topic>
