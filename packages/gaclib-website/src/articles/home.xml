@@ -37,9 +37,7 @@
             <title>OS Abstraction</title>
             <p>
                 <ul>
-                    <li>
-                        <b>VlppOS.h/cpp</b>
-                    </li>
+                    <li><b>VlppOS.h/cpp</b></li>
                 </ul>
             </p>
             <p>
@@ -58,9 +56,7 @@
             <title>Regular Expression</title>
             <p>
                 <ul>
-                    <li>
-                        <b>VlppRegex.h/cpp</b>
-                    </li>
+                    <li><b>VlppRegex.h/cpp</b></li>
                 </ul>
             </p>
             <p>
@@ -78,10 +74,8 @@
                 This regular expression library has little but critical differences about character escaping,
                 comparing to other regular expression implementation:
                 <ul>
-                    <li>
-                        <b>"."</b> matches the "." character</li>
-                    <li>
-                        <b>"\."</b> matches any character</li>
+                    <li><b>"."</b> matches the "." character</li>
+                    <li><b>"\."</b> matches any character</li>
                     <li>
                         <b>both "\" and "/"</b> starts a character escaping,
                         which means <b>"\d+"</b> and <b>"/d+"</b> are exactly the same.
@@ -94,9 +88,7 @@
             <title>Parser Generator</title>
             <p>
                 <ul>
-                    <li>
-                        <b>VlppParser.h/cpp</b>
-                    </li>
+                    <li><b>VlppParser.h/cpp</b></li>
                 </ul>
             </p>
             <p>
@@ -113,9 +105,7 @@
             <title>Reflection</title>
             <p>
                 <ul>
-                    <li>
-                        <b>VlppReflection.h/cpp</b>
-                    </li>
+                    <li><b>VlppReflection.h/cpp</b></li>
                 </ul>
             </p>
             <p>
@@ -143,15 +133,9 @@
             <title>The Workflow Script Language</title>
             <p>
                 <ul>
-                    <li>
-                        <b>VlppWorkflowLibrary.h/cpp</b>
-                    </li>
-                    <li>
-                        <b>VlppWorkflowRuntime.h/cpp</b>
-                    </li>
-                    <li>
-                        <b>VlppWorkflowCompiler.h/cpp</b>
-                    </li>
+                    <li><b>VlppWorkflowLibrary.h/cpp</b></li>
+                    <li> <b>VlppWorkflowRuntime.h/cpp</b></li>
+                    <li><b>VlppWorkflowCompiler.h/cpp</b> </li>
                 </ul>
             </p>
             <p>
@@ -171,24 +155,12 @@
             <title>Cross platform GPU Accelerated UI Library</title>
             <p>
                 <ul>
-                    <li>
-                        <b>GacUI.h/cpp</b>
-                    </li>
-                    <li>
-                        <b>GacUIWindows.h/cpp</b>
-                    </li>
-                    <li>
-                        <b>GacUIReflection.h/cpp</b>
-                    </li>
-                    <li>
-                        <b>GacUICompiler.h/cpp</b>
-                    </li>
-                    <li>
-                        <b>DarkSkin.h/cpp</b>
-                    </li>
-                    <li>
-                        <b>DarkSkinReflection.h/cpp</b>
-                    </li>
+                    <li><b>GacUI.h/cpp</b> </li>
+                    <li><b>GacUIWindows.h/cpp</b></li>
+                    <li><b>GacUIReflection.h/cpp</b></li>
+                    <li><b>GacUICompiler.h/cpp</b></li>
+                    <li><b>DarkSkin.h/cpp</b> </li>
+                    <li><b>DarkSkinReflection.h/cpp</b></li>
                 </ul>
             </p>
             <p>
