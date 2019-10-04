@@ -88,3 +88,76 @@ test(`Nested topics`, () => {
     };
     assert.deepStrictEqual(parseArticle(input), output);
 });
+
+test(`Flat paragraph`, () => {
+    const input = `
+<article>
+    <topic>
+        <title>Article</title>
+        <p>
+            <a href="./index.html"><b>Hey</b>, this is <em>an article</em>.</a>
+            <a anchor="Anchor"/>
+            <name>GuiControl</name>
+            <img src="logo.png"/>
+            <img src="logo.png">This is a logo</img>
+        </p>
+    </topic>
+</article>
+`;
+    const output: Article = {
+        index: false,
+        numberBeforeTitle: false,
+        topic: {
+            kind: 'Topic',
+            title: 'Article',
+            content: [
+                {
+                    kind: 'Paragraph',
+                    content: [
+                        {
+                            kind: 'PageLink',
+                            href: './index.html',
+                            content: [
+                                {
+                                    kind: 'Strong',
+                                    content: [{ kind: 'Text', text: 'Hey' }]
+                                },
+                                {
+                                    kind: 'Text',
+                                    text: ', this is  '
+                                },
+                                {
+                                    kind: 'Emphasise',
+                                    content: [{ kind: 'Text', text: 'an article' }]
+                                },
+                                {
+                                    kind: 'Text',
+                                    text: '.'
+                                }
+                            ]
+                        },
+                        {
+                            kind: 'AnchorLink',
+                            anchor: 'Anchor',
+                            content: []
+                        },
+                        {
+                            kind: 'Name',
+                            text: 'GuiControl'
+                        },
+                        {
+                            kind: 'Image',
+                            href: 'logo.png'
+                        },
+                        {
+                            kind: 'Image',
+                            href: 'logo.png',
+                            caption: 'This is a logo'
+                        }
+                    ]
+                }
+            ]
+        }
+    };
+    assert.deepStrictEqual(parseArticle(input), output);
+});

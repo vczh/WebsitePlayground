@@ -1,19 +1,15 @@
 import { Element, xml2js } from 'xml-js';
 import * as a from './interfaces';
 
-function parseParagraph(xmlParagraph: Element): a.Paragraph {
-    const p: a.Paragraph = {
-        kind: 'Paragraph',
-        content: []
-    };
-
-    if (xmlParagraph.elements !== undefined) {
+function parseContent(container: Element): a.Content[] {
+    const content: a.Content[] = [];
+    if (container.elements !== undefined) {
         CHILD_LOOP:
-        for (const xmlChild of xmlParagraph.elements) {
+        for (const xmlChild of container.elements) {
             switch (xmlChild.type) {
                 case 'text':
                     if (typeof xmlChild.text === 'string') {
-                        p.content.push({
+                        content.push({
                             kind: 'Text',
                             text: xmlChild.text
                         });
@@ -25,7 +21,7 @@ function parseParagraph(xmlParagraph: Element): a.Paragraph {
                             continue CHILD_LOOP;
                         }
                         case 'symbol': {
-                            continue CHILD_LOOP;
+                            throw new Error('<symbol> is not supported yet.');
                         }
                         case 'name': {
                             continue CHILD_LOOP;
@@ -50,11 +46,17 @@ function parseParagraph(xmlParagraph: Element): a.Paragraph {
                     break;
                 default:
             }
-            throw new Error('Only text, <a>, <symbol>, <name>, <img>, <ul>, <ol>, <b>, <em>, <program> are allowed in <p>.');
+            throw new Error(`Only text, <a>, <symbol>, <name>, <img>, <ul>, <ol>, <b>, <em>, <program> are allowed in <${container.name}>.`);
         }
     }
+    return content;
+}
 
-    return p;
+function parseParagraph(xmlParagraph: Element): a.Paragraph {
+    return {
+        kind: 'Paragraph',
+        content: parseContent(xmlParagraph)
+    };
 }
 
 function parseTopic(xmlTopic: Element): a.Topic {

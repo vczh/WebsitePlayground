@@ -23,7 +23,7 @@ export interface Name {
 export interface Image {
     kind: 'Image';
     href: string;
-    caption: string;
+    caption?: string;
 }
 
 export interface ContentListItem {
@@ -43,7 +43,7 @@ export interface List {
 }
 
 export interface Strong {
-    kind: 'String';
+    kind: 'Strong';
     content: Content[];
 }
 
