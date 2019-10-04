@@ -242,6 +242,12 @@
                                 <li>Using <a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/DocumentEditorRibbon">ribbon controls</a> to create a RichEdit application using the first project.</li>
                             </ul>
                         </p>
+                        <p>
+                            <img src="/demo_DET.png"/>
+                        </p>
+                        <p>
+                            <img src="/demo_DER.png"/>
+                        </p>
                     </li>
                     <li>
                         <p>
@@ -262,6 +268,9 @@
                             <a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/TriplePhaseImageButton">Here</a> is the demo showing
                             how to use image resource, control template and customized control together
                             to create a new control: triple-phase image button.
+                        </p>
+                        <p>
+                            <img src="/demo_TPIB.png"/>
                         </p>
                     </li>
                     <li>
@@ -292,6 +301,9 @@
                         <p>
                             <a href="https://github.com/vczh-libraries/Release/tree/master/Tutorial/GacUI_Controls/AddressBook">Here</a> is a demo showing
                             how to bind a object model to a tree view control, a list view control with customized items.
+                        </p>
+                        <p>
+                            <img src="/demo_AB.png"/>
                         </p>
                     </li>
                 </ul>
