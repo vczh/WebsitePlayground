@@ -225,7 +225,8 @@
                             <li>SinglelineTextBox, MultilineTextBox</li>
                             <li>DocumentLabel, DocumentTextBox, DocumentViewer</li>
                             <li>ToolstripMenuBar, ToolstripToolBar, ToolstripButton, ToolstripDropDownButton, ToolstripSplitButton, ToolstripSplitter</li>
-                            <li>RibbonTab, RibbonGroup, RibbonIconLabel, RibbonSmallIconlabel, RibbonButtons, RibbonToolstrips, RibbonGallery, RibbonToolstripMenu</li>
+                            <li>RibbonTab, RibbonGroup, RibbonButtons, RibbonToolstrips, RibbonToolstripMenu</li>
+                            <li>RibbonIconLabel, RibbonSmallIconLabel</li>
                             <li>RibbonGallery, RibbonGalleryList, RibbonGalleryItemList</li>
                             <li>RibbonSmallButton, RibbonSmallDropdownButton, RibbonSmallSplitButton, RibbonLargeButton, RibbonLargeDropdownButton, RibbonLargeSplitButton</li>
                             <li>RibbonSplitter, RibbonToolstripHeader</li>
@@ -241,17 +242,20 @@
                     <li>
                         <p>
                             Data Bindings: GacUI has a very powerful data binding feature.
-                            You are able to create windows, layouts, controls and skins in XML,
-                            define view models in Workflow,
-                            bind view model properties to GacUI controls bidirectionally using complex expressions that you could even not imagine,
-                            implement view models in C++,
+                            You are able to
+                            <ul>
+                                <li>create windows, layouts, controls and skins in XML</li>
+                                <li>define view models in Workflow</li>
+                                <li>bind view model properties to GacUI controls bidirectionally using complex expressions that you could even not imagine</li>
+                                <li>implement view models in C++</li>
+                            </ul>
                             and finally bring them together to work.
                         </p>
                     </li>
                 </ul>
             </p>
             <p>
-                Demoes of full GacUI features can be found <a href="./Demo.html">here</a>.
+                Demoes of full GacUI features can be found <a href="./demo.html">here</a>.
             </p>
         </topic>
     </topic>

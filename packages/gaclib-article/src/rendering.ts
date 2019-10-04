@@ -2,8 +2,7 @@ import { html, TemplateResult } from 'lit-html';
 import * as a from './interfaces';
 
 function renderListContent(list: a.List): TemplateResult {
-    return html`
-${
+    return html`${
         list
             .items
             .map((value: a.ContentListItem | a.ParagraphListItem) => {
@@ -13,13 +12,11 @@ ${
                     return html`<li>${value.paragraphs.map(renderParagraph)}</li>`;
                 }
             })
-        }
-`;
+        }`;
 }
 
 function renderContent(content: a.Content[]): TemplateResult {
-    return html`
-${
+    return html`${
         content
             .map((value: a.Content) => {
                 switch (value.kind) {
@@ -37,9 +34,9 @@ ${
                         }
                     case 'List':
                         if (value.ordered) {
-                            return html`</p><ol>${renderListContent(value)}</ol><p>`;
+                            return html`<ol>${renderListContent(value)}</ol>`;
                         } else {
-                            return html`</p><ul>${renderListContent(value)}</ul><p>`;
+                            return html`<ul>${renderListContent(value)}</ul>`;
                         }
                     case 'Strong':
                         return html`<strong>${renderContent(value.content)}</strong>`;
@@ -51,8 +48,7 @@ ${
                         return value.text;
                 }
             })
-        }
-`;
+        }`;
 }
 
 function renderParagraph(paragraph: a.Paragraph): TemplateResult {
