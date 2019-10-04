@@ -8,9 +8,9 @@ ${
             .items
             .map((value: a.ContentListItem | a.ParagraphListItem) => {
                 if (value.kind === 'ContentListItem') {
-                    return renderContent(value.content);
+                    return html`<li>${renderContent(value.content)}</li>`;
                 } else {
-                    return html`${value.paragraphs.map(renderParagraph)}`;
+                    return html`<li>${value.paragraphs.map(renderParagraph)}</li>`;
                 }
             })
         }

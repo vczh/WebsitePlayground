@@ -16,21 +16,153 @@
         </p>
         <topic>
             <title>Basic C++ Construction</title>
+            <p>
+                <ul>
+                    <li>
+                        <b>Vlpp.h/cpp</b>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                Much more easier to deal with data.
+                <ul>
+                    <li>string</li>
+                    <li>shared pointer</li>
+                    <li>functional constructions</li>
+                    <li>containers and Linq</li>
+                    <li>simple console read/write operations</li>
+                    <li>simple unit test framework</li>
+                </ul>
+            </p>
         </topic>
         <topic>
             <title>OS Abstraction</title>
+            <p>
+                <ul>
+                    <li>
+                        <b>VlppOS.h/cpp</b>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                Access basic OS features easily:
+                <ul>
+                    <li>system locale access</li>
+                    <li>threading and synchronization</li>
+                    <li>HTTP client (Windows only)</li>
+                    <li>file access</li>
+                    <li>text encoding detection, serialization and deserialization</li>
+                    <li>streaming and redirection</li>
+                </ul>
+            </p>
         </topic>
         <topic>
             <title>Regular Expression</title>
+            <p>
+                <ul>
+                    <li>
+                        <b>VlppRegex.h/cpp</b>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                A fast C++ regular expression implementation:
+                <ul>
+                    <li>No backtracking at all regardless how you write the regular expression, if no capturing is required.</li>
+                    <li>Matching multiple regular expressions at the same time, if no capturing is required.</li>
+                    <li>Easy to build your lexical analyzer.</li>
+                    <li>Anonymous capturing and named capturing</li>
+                    <li>Sub-expression renaming</li>
+                </ul>
+            </p>
+            <p>
+                <b>IMPORTANT:</b>
+                This regular expression library has little but critical differences about character escaping,
+                comparing to other regular expression implementation:
+                <ul>
+                    <li>
+                        <b>"."</b> matches the "." character</li>
+                    <li>
+                        <b>"\."</b> matches any character</li>
+                    <li>
+                        <b>both "\" and "/"</b> starts a character escaping,
+                        which means <b>"\d+"</b> and <b>"/d+"</b> are exactly the same.
+                        This helps a lot when a regular expression is written in C++ string literal.
+                    </li>
+                </ul>
+            </p>
         </topic>
         <topic>
             <title>Parser Generator</title>
+            <p>
+                <ul>
+                    <li>
+                        <b>VlppParser.h/cpp</b>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                A GLR parser generator for C++.
+                This library will be re-shaped in GacUI 2.0.
+            </p>
         </topic>
         <topic>
             <title>Reflection</title>
+            <p>
+                <ul>
+                    <li>
+                        <b>VlppReflection.h/cpp</b>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                C++ Reflection supports.
+                Reflection supports
+                <ul>
+                    <li>primitive types</li>
+                    <li>strings</li>
+                    <li>functions</li>
+                    <li>raw or shared pointers</li>
+                    <li>containers</li>
+                    <li>structs</li>
+                    <li>classes</li>
+                    <li>interfaces</li>
+                    <li>enums</li>
+                </ul>
+            </p>
+            <p>
+                For classes, you need to inherit <name>vl::reflection::Description&lt;YourClass&gt;</name> or <name>vl::reflection::AggregatableDescription&lt;YourClass&gt;</name> to enable reflection.
+                For interfaces, you need to inherit <name>vl::reflection::IDescriptable</name> to enable reflection.
+                At the end, a set of macros need to be called to register all reflectable types and members.
+            </p>
         </topic>
         <topic>
             <title>The Workflow Script Language</title>
+            <p>
+                <ul>
+                    <li>
+                        <b>VlppWorkflowLibrary.h/cpp</b>
+                    </li>
+                    <li>
+                        <b>VlppWorkflowRuntime.h/cpp</b>
+                    </li>
+                    <li>
+                        <b>VlppWorkflowCompiler.h/cpp</b>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                Workflow is a script language that target on C++ inter-operation.
+                After compiling the script, you are able to:
+                <ul>
+                    <li>Execute the script directly.</li>
+                    <li>Save or load the compiled binary.</li>
+                    <li>
+                        Generate the script to C++ code to get a significant performance improvement,
+                        without having to take the runtime.
+                    </li>
+                </ul>
+            </p>
         </topic>
         <topic>
             <title>Cross platform GPU Accelerated UI Library</title>
