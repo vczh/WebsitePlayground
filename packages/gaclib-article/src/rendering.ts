@@ -24,7 +24,7 @@ ${
             .map((value: a.Content) => {
                 switch (value.kind) {
                     case 'PageLink':
-                        return html`<a href="${value.href}">${renderContent(value.content)}</a>`;
+                        return html`<a href="${value.href}" target="${value.href.startsWith('.') ? '_self' : '_blank'}">${renderContent(value.content)}</a>`;
                     case 'AnchorLink':
                         throw new Error('AnchorLink is not supported yet.');
                     case 'Name':

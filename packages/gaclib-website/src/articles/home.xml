@@ -1,8 +1,39 @@
 <article>
     <topic>
-        <title>Welcome to GPU Accelerated C++ User Interface!</title>
+        <title>Welcome to Gaclib!</title>
         <p>
-            This page is under construction.
+            Gaclib is a GPU accelerated C++ User Interface library.
+            You can find it at <a href="https://github.com/vczh-libraries/Release">github</a>.
+            This library provide many useful features.
+            If you don't need all features,
+            you can just use a subset of released C++ files to reduce the size of the executable.
         </p>
+        <p>
+            More and more developers are using this library to create their applications!
+            You could check out <a href="http://www.majorav.com">majorav.com</a>,
+            which is a very impressive example.
+            Scroll to the end to see screenshots!
+        </p>
+        <topic>
+            <title>Basic C++ Construction</title>
+        </topic>
+        <topic>
+            <title>OS Abstraction</title>
+        </topic>
+        <topic>
+            <title>Regular Expression</title>
+        </topic>
+        <topic>
+            <title>Parser Generator</title>
+        </topic>
+        <topic>
+            <title>Reflection</title>
+        </topic>
+        <topic>
+            <title>The Workflow Script Language</title>
+        </topic>
+        <topic>
+            <title>Cross platform GPU Accelerated UI Library</title>
+        </topic>
     </topic>
 </article>
