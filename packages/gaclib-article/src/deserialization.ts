@@ -218,7 +218,6 @@ export function parseArticle(xml: string): a.Article {
         xml,
         {
             compact: false,
-            trim: true,
             ignoreDeclaration: true,
             ignoreInstruction: true,
             ignoreComment: true,

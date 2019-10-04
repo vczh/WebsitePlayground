@@ -124,7 +124,7 @@ test(`Flat paragraph`, () => {
                                 },
                                 {
                                     kind: 'Text',
-                                    text: ', this is  '
+                                    text: ', this is '
                                 },
                                 {
                                     kind: 'Emphasise',
