@@ -6,11 +6,13 @@
     "scripts": {
         "build": "rimraf ./lib && tslint --project tsconfig.json && tsc && copyfiles -u 1 assest/* lib/dist/ && webpack --config ./lib/Webpack.js",
         "fullbuild": "cls & pushd ..\\.. && yarn build && popd",
-        "start": "node ./lib/index.js"
+        "start": "node ./lib/index.js",
+        "download": "node ./lib/index.js -d"
     },
     "license": "Apache-2.0",
     "devDependencies": {
         "@types/node": "^12.6.9",
+        "@types/website-scraper": "1.2.3",
         "copyfiles": "^2.1.1",
         "rimraf": "^2.6.3",
         "tslint": "^5.18.0",
@@ -24,6 +26,7 @@
         "gaclib-mvc": "^0.0.1",
         "gaclib-render": "^0.0.1",
         "gaclib-host": "^0.0.1",
-        "lit-html": "^1.1.2"
+        "lit-html": "^1.1.2",
+        "website-scraper": "4.0.1"
     }
 }

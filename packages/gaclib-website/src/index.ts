@@ -1,8 +1,9 @@
 import { readFileSync } from 'fs';
 import { Article, parseArticle } from 'gaclib-article';
-import { createMvcServer, hostUntilPressingEnter, litHtmlViewCallback, registerFolder } from 'gaclib-host';
+import { createMvcServer, hostUntilPressingEnter, litHtmlViewCallback, registerFolder, untilPressEnter } from 'gaclib-host';
 import { createRouter, route } from 'gaclib-mvc';
 import * as path from 'path';
+import { downloadWebsite } from './spider';
 import { views } from './views';
 
 function loadArticle(filename: string): Article {
@@ -125,5 +126,13 @@ router.register(
     )
 );
 
+console.log(JSON.stringify(process.argv, undefined, 4));
 const server = createMvcServer(router);
-hostUntilPressingEnter(server, 8080);
+
+if (process.argv[2] === '-d') {
+    server.listen(8080, 'localhost');
+    downloadWebsite();
+    untilPressEnter();
+} else {
+    hostUntilPressingEnter(server, 8080);
+}

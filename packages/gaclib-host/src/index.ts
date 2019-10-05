@@ -97,15 +97,18 @@ export function createMvcServer(router: MvcRouter): http.Server {
     });
 }
 
-export function hostUntilPressingEnter(server: http.Server, port: number, host: string = 'localhost'): void {
-    server.listen(port, host, () => {
-        console.log('Server started at port: 8080');
-        console.log('Press ENTER to stop');
-    });
-
+export function untilPressEnter(): void {
     if (process.stdin.setRawMode !== undefined) {
         process.stdin.setRawMode(true);
     }
     process.stdin.resume();
     process.stdin.on('data', () => { process.exit(0); });
+}
+
+export function hostUntilPressingEnter(server: http.Server, port: number, host: string = 'localhost'): void {
+    server.listen(port, host, () => {
+        console.log('Server started at port: 8080');
+        console.log('Press ENTER to stop');
+    });
+    untilPressEnter();
 }
