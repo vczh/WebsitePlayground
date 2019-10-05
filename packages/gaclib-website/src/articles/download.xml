@@ -96,6 +96,20 @@
         </topic>
         <topic>
             <title>Using Build Tools</title>
+            <p>
+                Tools can be found in the <b>Tools</b> folder.
+            </p>
+            <p>
+                You only need <b>GacBuild.ps1</b> and <b>GacClear.ps1</b>.
+                They required Powershell.
+                If crashes happen in the script instead of in executable files,
+                you may want to upgrade your Powershell version and try again.
+            </p>
+            <p>
+                Please note that,
+                although you only need to run the above 2 script files,
+                but all files in this folder are required.
+            </p>
         </topic>
         <topic>
             <title>Using Demoes</title>
