@@ -142,6 +142,7 @@
                 Workflow is a script language that target on C++ inter-operation.
                 After compiling the script, you are able to:
                 <ul>
+                    <li>Call reflectable C++ classes natively from the script.</li>
                     <li>Execute the script directly.</li>
                     <li>Save or load the compiled binary.</li>
                     <li>

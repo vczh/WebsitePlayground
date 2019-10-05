@@ -2,7 +2,106 @@
     <topic>
         <title>Download</title>
         <p>
-            This page is under construction.
+            Gaclib can be downloaded <a href="https://github.com/vczh-libraries/Release">here</a>.
         </p>
+        <topic>
+            <title>Using C++ Source Code</title>
+            <p>
+                Here are dependencies of the source code.
+                Each box means a set of .h and .cpp file.
+                For example, <b>Vlpp</b> means <b>Vlpp.h</b> and <b>Vlpp.cpp</b>.
+            </p>
+            <p>
+                <img src="/Dependencies.png"/>
+            </p>
+            <p>
+                Source code can be found in the <b>Import</b> folder.
+            </p>
+            <topic>
+                <title>Vlpp, VlppOS, VlppRegex, VlppReflection, VlppParser</title>
+                <p>
+                    These files are basic C++ constructions.
+                    GacUI is built on these libraries.
+                    In most of the cases,
+                    you only need functions and classes from <b>Vlpp</b> and <b>VlppOs</b>.
+                </p>
+            </topic>
+            <topic>
+                <title>VlppWorkflowLibrary</title>
+                <p>
+                    This file contains a very thin library for generated C++ code from <b>the Workflow script language</b>.
+                    UI elements of GacUI are recommended to create from XML.
+                    All resource files will be compiled to the Workflow script language first,
+                    and then generate C++ code from these scripts.
+                    You need this file to run your UI.
+                </p>
+            </topic>
+            <topic>
+                <title>VlppWorkflowRuntime and VlppWorkflowCompiler</title>
+                <p>
+                    <b>Usually you don't need these files.</b>
+                    <b>VlppWorkflowRuntime</b> contains virtual machine to run the Workflow script language directly.
+                    The runtime can serialize compiled script to a binary file and reload it.
+                    If some reflectable C++ classes are used in the script,
+                    please make sure all these classes are registered when loading it.
+                    <b>VlppWorkflowCompiler</b> contains a compiler for the Workflow script language.
+                </p>
+            </topic>
+            <topic>
+                <title>GacUI, GacUIWindows and DarkSkin</title>
+                <p>
+                    This is the GacUI itself.
+                    <b>GacUIWindows</b> is the port to Windows OS.
+                    Windows older than 7 is not supported.
+                    <b>DarkSkin</b> is the default skin.
+                    If you have created your own skin for every control,
+                    you don't need this file.
+                </p>
+            </topic>
+            <topic>
+                <title>GacUIReflection and DarkSkinReflection</title>
+                <p>
+                    <b>Usually you don't need these files.</b>
+                    These files registered all reflectable classes for GacUI.
+                    You only need this when you need to dynamically compiler and execute Workflow script that access GacUI classes.
+                </p>
+                <p>
+                    Usually we don't need runtime reflection in this project,
+                    so you have to define a empty <b>VCZH_DEBUG_NO_REFLECTION</b> macro using <a href="https://docs.microsoft.com/en-us/cpp/build/reference/d-preprocessor-definition">in preprocessor definitions</a>.
+                    You can either to this by updating your project properties,
+                    or use the /D compiler option if you are using Visual Studio Code.
+                    <ul>
+                        <li>
+                            <b>When you don't need reflection</b>,
+                            don't link these files,
+                            and you must add <b>VCZH_DEBUG_NO_REFLECTION</b>.
+                            You will save about 20 megabytes in the executable file.
+                        </li>
+                        <li>
+                            <b>When you need reflection</b>,
+                            link these files,
+                            and you must not add <b>VCZH_DEBUG_NO_REFLECTION</b>.
+                        </li>
+                    </ul>
+                </p>
+            </topic>
+            <topic>
+                <title>GacUICompiler</title>
+                <p>
+                    <b>Usually you don't need these files.</b>
+                    This is the GacUI XML resource compiler.
+                    <b>GacGen32.exe</b> and <b>GacGen64.exe</b> are the executable version of this file.
+                </p>
+            </topic>
+        </topic>
+        <topic>
+            <title>Using Build Tools</title>
+        </topic>
+        <topic>
+            <title>Using Demoes</title>
+            <p>
+                Please read <a href="./demo.html">the Demoes page</a> for more information.
+            </p>
+        </topic>
     </topic>
 </article>
