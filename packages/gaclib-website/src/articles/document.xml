@@ -5,7 +5,7 @@
             This page is under construction. Documents for all libraries is being written.
         </p>
         <p>
-            <a href="./codeIndex/Document.html">Here</a> lists all functions and classes you are going to use for this library.
+            <a href="./CodeIndex.html">Here</a> lists all functions and classes you are going to use for this library.
             It is being rebuilding.
             If you are interested in indexing C++ source code,
             please check out <a href="https://github.com/vczh-libraries/Document">this repo</a>.
