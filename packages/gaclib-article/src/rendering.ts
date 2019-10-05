@@ -69,26 +69,35 @@ function renderHeader(level: number, content: TemplateResult): TemplateResult {
     }
 }
 
-function renderTopic(topic: a.Topic, level: number): TemplateResult {
+function renderTopic(topic: a.Topic, level: number, prefix: string | undefined): TemplateResult {
+    let topicIndex = 0;
     return html`
 ${
         renderHeader(
             level,
             html`
 ${topic.anchor === undefined ? html`` : html`<a id="${topic.anchor}"></a>`}
-${topic.title}
+${prefix === undefined ? '' : `${prefix} `}${topic.title}
         `)
         }
 ${
         topic
             .content
             .map((value: a.Topic | a.Paragraph) => {
-                return value.kind === 'Topic' ? renderTopic(value, level + 1) : renderParagraph(value);
+                if (value.kind === 'Topic') {
+                    let newPrefix = prefix;
+                    if (newPrefix !== undefined) {
+                        newPrefix += `${++topicIndex}.`;
+                    }
+                    return renderTopic(value, level + 1, newPrefix);
+                } else {
+                    return renderParagraph(value);
+                }
             })
         }
 `;
 }
 
 export function renderArticle(article: a.Article): TemplateResult {
-    return html`<div class="article">${renderTopic(article.topic, 1)}<div>`;
+    return html`<div class="article">${renderTopic(article.topic, 1, (article.numberBeforeTitle ? '' : undefined))}<div>`;
 }
