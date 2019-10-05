@@ -2,7 +2,14 @@
     <topic>
         <title>Contact</title>
         <p>
-            This page is under construction.
+            Gaclib team members:
+        </p>
+        <p>
+            <ul>
+                <li><a href="https://github.com/vczh">vczh (Zihan Chen)</a> : Develops everything</li>
+                <li><a href="https://github.com/darkfall">darkfall (Ruiwei Bu)</a> : Ports GacUI to OSX</li>
+                <li><a href="https://github.com/milizhang">MiliMeow (Yi Zhang)</a> : Ports GacUI to Linux</li>
+            </ul>
         </p>
     </topic>
 </article>
