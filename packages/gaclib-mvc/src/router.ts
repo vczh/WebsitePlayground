@@ -9,6 +9,10 @@ interface RouterPackage<TResult> {
 class RouterImpl<TResult> implements Router<TResult> {
     private readonly patterns: RouterPackage<TResult>[] = [];
 
+    public get registered(): readonly RouterPatternBase[] {
+        return this.patterns.map((value: RouterPackage<TResult>) => value.pattern);
+    }
+
     public register<TModel>(methods: HttpMethods[], pattern: RouterPattern<TModel>, callback: RouterCallback<TModel, TResult>): void {
         this.patterns.push({
             methods: methods.length === 0 ? ['GET'] : methods,

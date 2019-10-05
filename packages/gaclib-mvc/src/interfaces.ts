@@ -79,6 +79,7 @@ export interface RouterPattern<T> extends RouterPatternBase {
 export type RouterCallback<TModel, TResult> = (method: HttpMethods, model: TModel) => TResult;
 
 export interface Router<TResult> {
+    readonly registered: readonly RouterPatternBase[];
     register<TModel>(methods: HttpMethods[], pattern: RouterPattern<TModel>, callback: RouterCallback<TModel, TResult>): void;
     match(method: HttpMethods, query: string): TResult | undefined;
 }
