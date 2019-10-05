@@ -69,17 +69,27 @@ function renderHeader(level: number, content: TemplateResult): TemplateResult {
     }
 }
 
-function renderTopic(topic: a.Topic, level: number, prefix: string | undefined): TemplateResult {
+function renderIndex(topic: a.Topic): TemplateResult | string {
+    const subTopics = topic.content.filter((value: a.Topic | a.Paragraph) => value.kind === 'Topic');
+    if (subTopics.length === 0) {
+        return '';
+    } else {
+        return html`<ul>${subTopics.map((value: a.Topic) => html`<li><a href="#${getAnchorOfTopic(value)}">${value.title}</a>${renderIndex(value)}</li>`)}</ul>`;
+    }
+}
+
+function renderTopic(topic: a.Topic, level: number, prefix: string | undefined, buildIndex: boolean): TemplateResult {
     let topicIndex = 0;
     return html`
 ${
         renderHeader(
             level,
             html`
-${topic.anchor === undefined ? html`` : html`<a id="${topic.anchor}"></a>`}
+<a id="${getAnchorOfTopic(topic)}"></a>
 ${prefix === undefined ? '' : `${prefix} `}${topic.title}
         `)
         }
+${buildIndex ? html`<div class="index">${renderIndex(topic)}</div>` : ''}
 ${
         topic
             .content
@@ -89,7 +99,7 @@ ${
                     if (newPrefix !== undefined) {
                         newPrefix += `${++topicIndex}.`;
                     }
-                    return renderTopic(value, level + 1, newPrefix);
+                    return renderTopic(value, level + 1, newPrefix, false);
                 } else {
                     return renderParagraph(value);
                 }
@@ -98,6 +108,14 @@ ${
 `;
 }
 
+function getAnchorOfTopic(topic: a.Topic): string {
+    if (topic.anchor === undefined) {
+        return topic.title.split(/[^a-zA-Z0-9]+/).join('-');
+    } else {
+        return topic.anchor;
+    }
+}
+
 export function renderArticle(article: a.Article): TemplateResult {
-    return html`<div class="article">${renderTopic(article.topic, 1, (article.numberBeforeTitle ? '' : undefined))}<div>`;
+    return html`<div class="article">${renderTopic(article.topic, 1, (article.numberBeforeTitle ? '' : undefined), article.index)}<div>`;
 }

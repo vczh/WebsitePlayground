@@ -14,9 +14,13 @@ body {
 }
 
 .article .name {
-    background-color: #E0E0E0;
+    background-color: #FFFFE0;
 }
 
 .article .code {
-    background-color: #E0E0E0;
+    background-color: #FFFFE0;
+}
+
+.article .index {
+    background-color: #E0FFFF;
 }
