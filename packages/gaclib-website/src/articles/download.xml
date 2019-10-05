@@ -1,4 +1,4 @@
-<article>
+<article numberBeforeTitle="true">
     <topic>
         <title>Download</title>
         <p>
@@ -8,7 +8,7 @@
             <title>Using C++ Source Code</title>
             <p>
                 Here are dependencies of the source code.
-                Each box means a set of .h and .cpp file.
+                Each box means a pair of .h and .cpp file.
                 For example, <b>Vlpp</b> means <b>Vlpp.h</b> and <b>Vlpp.cpp</b>.
             </p>
             <p>
@@ -32,7 +32,7 @@
                     This file contains a very thin library for generated C++ code from <b>the Workflow script language</b>.
                     UI elements of GacUI are recommended to create from XML.
                     All resource files will be compiled to the Workflow script language first,
-                    and then generate C++ code from these scripts.
+                    and then scripts are generate C++ code from these scripts.
                     You need this file to run your UI.
                 </p>
             </topic>
@@ -40,6 +40,8 @@
                 <title>VlppWorkflowRuntime and VlppWorkflowCompiler</title>
                 <p>
                     <b>Usually you don't need these files.</b>
+                </p>
+                <p>
                     <b>VlppWorkflowRuntime</b> contains virtual machine to run the Workflow script language directly.
                     The runtime can serialize compiled script to a binary file and reload it.
                     If some reflectable C++ classes are used in the script,
@@ -52,9 +54,9 @@
                 <p>
                     This is the GacUI itself.
                     <b>GacUIWindows</b> is the port to Windows OS.
-                    Windows older than 7 is not supported.
+                    All Windows older than 7 are not supported.
                     <b>DarkSkin</b> is the default skin.
-                    If you have created your own skin for every control,
+                    If you have created your own skin for every controls,
                     you don't need this file.
                 </p>
             </topic>
@@ -62,25 +64,30 @@
                 <title>GacUIReflection and DarkSkinReflection</title>
                 <p>
                     <b>Usually you don't need these files.</b>
-                    These files registered all reflectable classes for GacUI.
-                    You only need this when you need to dynamically compiler and execute Workflow script that access GacUI classes.
                 </p>
                 <p>
-                    Usually we don't need runtime reflection in this project,
-                    so you have to define a empty <b>VCZH_DEBUG_NO_REFLECTION</b> macro using <a href="https://docs.microsoft.com/en-us/cpp/build/reference/d-preprocessor-definition">in preprocessor definitions</a>.
-                    You can either to this by updating your project properties,
-                    or use the /D compiler option if you are using Visual Studio Code.
+                    These files register all reflectable classes for GacUI.
+                    You only need this when you need to dynamically compiler and execute Workflow scripts that access GacUI classes.
                     <ul>
                         <li>
-                            <b>When you don't need reflection</b>,
-                            don't link these files,
-                            and you must add <b>VCZH_DEBUG_NO_REFLECTION</b>.
-                            You will save about 20 megabytes in the executable file.
+                            <b>When you don't need reflection</b>
+                            <ul>
+                                <li>Don't link these files.</li>
+                                <li>
+                                    You must add <b>VCZH_DEBUG_NO_REFLECTION</b>
+                                    using <a href="https://docs.microsoft.com/en-us/cpp/build/reference/d-preprocessor-definition">in preprocessor definitions</a>.
+                                    You can either to this by updating your project properties,
+                                    or use the /D compiler option if you are using Visual Studio Code.
+                                </li>
+                                <li>You will save about 20 megabytes in the executable file</li>
+                            </ul>
                         </li>
                         <li>
-                            <b>When you need reflection</b>,
-                            link these files,
-                            and you must not add <b>VCZH_DEBUG_NO_REFLECTION</b>.
+                            <b>When you need reflection</b>
+                            <ul>
+                                <li>Link these files.</li>
+                                <li>You must not add <b>VCZH_DEBUG_NO_REFLECTION</b></li>
+                            </ul>
                         </li>
                     </ul>
                 </p>
@@ -89,6 +96,8 @@
                 <title>GacUICompiler</title>
                 <p>
                     <b>Usually you don't need these files.</b>
+                </p>
+                <p>
                     This is the GacUI XML resource compiler.
                     <b>GacGen32.exe</b> and <b>GacGen64.exe</b> are the executable version of this file.
                 </p>
@@ -108,7 +117,7 @@
             <p>
                 Please note that,
                 although you only need to run the above 2 script files,
-                but all files in this folder are required.
+                all files in this folder are required.
             </p>
         </topic>
         <topic>
