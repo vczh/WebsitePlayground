@@ -141,7 +141,7 @@
             </p>
             <p>
                 We don't need runtime reflection in this project,
-                so you have to define a empty <b>VCZH_DEBUG_NO_REFLECTION</b> macro using <a href="https://docs.microsoft.com/en-us/cpp/build/reference/d-preprocessor-definition">in preprocessor definitions</a>.
+                so you have to define a empty <b>VCZH_DEBUG_NO_REFLECTION</b> macro using <a href="https://docs.microsoft.com/en-us/cpp/build/reference/d-preprocessor-definitions">preprocessor definitions</a>.
                 You can either to this by updating your project properties,
                 or use the /D compiler option if you are using Visual Studio Code.
             </p>

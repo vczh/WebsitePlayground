@@ -75,7 +75,7 @@
                                 <li>Don't link these files.</li>
                                 <li>
                                     You must add <b>VCZH_DEBUG_NO_REFLECTION</b>
-                                    using <a href="https://docs.microsoft.com/en-us/cpp/build/reference/d-preprocessor-definition">in preprocessor definitions</a>.
+                                    using <a href="https://docs.microsoft.com/en-us/cpp/build/reference/d-preprocessor-definitions">preprocessor definitions</a>.
                                     You can either to this by updating your project properties,
                                     or use the /D compiler option if you are using Visual Studio Code.
                                 </li>
