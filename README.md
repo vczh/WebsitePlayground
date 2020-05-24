@@ -40,27 +40,3 @@ After `yarn deploy`, you are able to use IIS to run `starter-packages/starter-li
 
 Download a website to a local folder.
 `npm run start` to download `http://127.0.0.1:8080` to `starter-packages/starter-website-scraper/lib/dist`.
-
-## packages folder
-
-Try building `http://gaclib.net` in a new way.
-
-### gaclib-mvc
-
-Gaclib Website MVC url router library.
-
-### gaclib-render
-
-Gaclib Website front-end rendering using lit-html.
-
-### gaclib-host
-
-Gaclib Website http server.
-
-### gaclib-article
-
-Gaclib Website XML to HTML article converter.
-
-### gaclib-website
-
-Gaclib Website content.
