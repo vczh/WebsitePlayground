@@ -5,10 +5,13 @@
             This page is under construction. Documents for all libraries is being written.
         </p>
         <p>
-            <a href="./CodeIndex.html">Here</a> lists all functions and classes you are going to use for this library.
-            It is being rebuilding.
+            The <b>old document page</b> can be found <a href="./CodeIndex.html">here</a>, which lists all functions and classes you are going to use for this library.
+        </p>
+        <p>
+            The <b>new document page</b> is being rebuilding.
             If you are interested in indexing C++ source code,
-            please check out <a href="https://github.com/vczh-libraries/Document">this repo</a>.
+            please check out <a href="https://github.com/vczh-libraries/Document">this repo</a>,
+            and <a href="/CodeIndexDemo/Calculator/FileIndex.html">this demo</a>.
         </p>
     </topic>
 </article>

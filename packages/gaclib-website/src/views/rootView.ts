@@ -3,7 +3,7 @@ import { html, render } from 'lit-html';
 const buttons: [string, string, string][] = [
     ['Home', 'index', 'HOME'],
     ['Tutorial', 'tutorial', 'TUTORIAL'],
-    ['Demo', 'demo', 'DEMOES'],
+    ['Demo', 'demo', 'DEMOS'],
     ['Download', 'download', 'DOWNLOAD'],
     ['Document', 'document', 'DOCUMENT'],
     ['Contact', 'contact', 'CONTACT']

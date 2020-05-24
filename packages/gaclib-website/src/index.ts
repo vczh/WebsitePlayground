@@ -69,7 +69,7 @@ router.register(
         views,
         'Gaclib-ArticleView',
         {
-            info: { title: 'Gaclib -- Demoes' },
+            info: { title: 'Gaclib -- Demos' },
             embeddedResources: {
                 activeButton: 'Demo',
                 article: loadArticle('demo.xml')
