@@ -2,19 +2,21 @@
     "name": "starter-lit-html",
     "version": "1.0.0",
     "description": "Starter Package with Lit-HTML and Webpack",
+    "type": "module",
     "scripts": {
-        "build": "tslint --project tsconfig.json & tsc",
+        "build": "rimraf ./lib && eslint && tsc",
         "deploy": "copyfiles -u 1 assest/* lib/dist/ & webpack --config webpack.config.js"
     },
     "license": "Apache-2.0",
     "devDependencies": {
-        "@types/node": "^12.6.9",
+        "@types/node": "^22.8.7",
         "copyfiles": "^2.1.1",
-        "tslint": "^5.18.0",
-        "tslint-shared": "^1.0.0",
-        "typescript": "^3.6.3",
+        "eslint": "^9.14.0",
+        "eslint-shared": "^0.0.1",
+        "typescript": "^5.6.3",
+        "typescript-eslint": "^8.12.2",
         "webpack": "^5.94.0",
-        "webpack-cli": "^3.3.6"
+        "webpack-cli": "^5.1.4"
     },
     "dependencies": {
         "lit-html": "^1.1.2"
