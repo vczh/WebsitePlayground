@@ -1,4 +1,4 @@
-const path = require('path');
+import * as path from 'path';
 
 function exposeNamespaceInFile(inputPath, outputPath) {
     /*
@@ -18,7 +18,7 @@ function exposeNamespaceInFile(inputPath, outputPath) {
     return {
         entry: inputPath,
         output: {
-            path: path.resolve(__dirname, outputPath),
+            path: path.resolve(outputPath),
             filename: fileName,
             library: namespaceName,
             libraryTarget: 'window',
@@ -28,6 +28,8 @@ function exposeNamespaceInFile(inputPath, outputPath) {
     };
 }
 
-module.exports = [
-    exposeNamespaceInFile('./lib/raw/scripts/indexView.js', 'lib/dist/scripts')
+var exportedArray = [
+    exposeNamespaceInFile('./lib/indexView.js', './lib/dist/scripts')
 ];
+
+export default exportedArray;

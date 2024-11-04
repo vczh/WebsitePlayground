@@ -6,7 +6,7 @@
     "main": "./lib/src/index.js",
     "scripts": {
         "build": "rimraf ./lib && eslint && tsc",
-        "test": "jest"
+        "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js"
     },
     "license": "Apache-2.0",
     "devDependencies": {

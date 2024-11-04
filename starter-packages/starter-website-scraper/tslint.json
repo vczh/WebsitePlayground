@@ -1,8 +1,0 @@
-{
-    "extends": [
-        "tslint-shared"
-    ],
-    "rules": {
-        "no-http-string": false
-    }
-}

@@ -1,8 +1,0 @@
-{
-    "extends": [
-        "tslint-shared"
-    ],
-    "linterOptions": {
-        "exclude": []
-    }
-}

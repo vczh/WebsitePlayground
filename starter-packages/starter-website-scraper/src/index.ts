@@ -7,7 +7,7 @@ type RegisterAction = (
 ) => void;
 
 const options = {
-    urls: ['http://127.0.0.1:8080/index.html'],
+    urls: ['http://localhost:8080/index.html'],
     directory: path.join(__dirname, './dist'),
     // filenameGenerator: 'bySiteStructure',
     recursive: true,
