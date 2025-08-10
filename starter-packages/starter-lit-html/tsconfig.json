@@ -1,12 +1,12 @@
 {
     "compilerOptions": {
         "lib": [
-            "es6",
+            "es2022",
             "dom"
         ],
-        "module": "es6",
-        "moduleResolution": "node",
-        "target": "es5",
+        "module": "es2022",
+        "moduleResolution": "bundler",
+        "target": "es2022",
         "declaration": true,
         "declarationMap": true,
         "esModuleInterop": true,
@@ -21,6 +21,9 @@
             }
         ]
     },
+    "include": [
+        "src/**/*.ts"
+    ],
     "exclude": [
         "node_modules",
         "lib"

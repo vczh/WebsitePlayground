@@ -11,9 +11,4 @@ export default tseslint.config(
             },
         },
     },
-    {
-        ignores: [
-            "webpack.config.js"
-        ]
-    },
 );

@@ -6,7 +6,7 @@
     "main": "./lib/index.js",
     "scripts": {
         "build": "rimraf ./lib && eslint && tsc",
-        "start": "rimraf ./lib/dist & node ./lib/index.js"
+        "start": "rimraf ./lib/dist && node ./lib/index.js"
     },
     "license": "Apache-2.0",
     "devDependencies": {

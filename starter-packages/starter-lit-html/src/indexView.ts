@@ -10,7 +10,7 @@ class IndexView {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace indexView {
+export namespace esbuildExports {
     export function renderIndexView(title: string, target: Element): void {
         const view = new IndexView(title);
         render(view.getTemplate(), target);

@@ -1,26 +1,20 @@
 {
-    "name": "starter-jest",
+    "name": "starter-vitest",
     "version": "1.0.0",
     "description": "Starter Package with Jest",
     "type": "module",
     "main": "./lib/src/index.js",
     "scripts": {
         "build": "rimraf ./lib && eslint && tsc",
-        "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js"
+        "test": "vitest run"
     },
     "license": "Apache-2.0",
     "devDependencies": {
-        "@types/jest": "^24.0.17",
         "@types/node": "^22.8.7",
-        "jest": "^29.7.0",
         "eslint": "^9.14.0",
         "eslint-shared": "^0.0.1",
         "typescript": "^5.6.3",
-        "typescript-eslint": "^8.12.2"
-    },
-    "jest": {
-        "transform": {},
-        "testRegex": "/lib/test/test.*\\.js",
-        "verbose": true
+        "typescript-eslint": "^8.12.2",
+        "vitest": "3.2.4"
     }
 }

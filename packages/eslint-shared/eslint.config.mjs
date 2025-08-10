@@ -7,6 +7,7 @@ export default tseslint.config(
     {
         ignores: [
             "eslint.config.mjs",
+            "vitest.config.js",
             "node_modules/**/*",
             "lib/**/*",
             "dist/**/*"

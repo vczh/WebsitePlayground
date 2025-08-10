@@ -13,9 +13,9 @@ Play with nodejs
 
 The project uses typescript with esmodule, which requires:
 - `"type": "module"` in package.json
-- `"module": "es6"` and optionally `"esModuleInterop": true` in tsconfig.json
+- `"module": "es2022"` and optionally `"esModuleInterop": true` in tsconfig.json
 
-When node or webpack with esmodule, TypeScript's import statement needs to be altered as follows:
+When node or esbuild with esmodule, TypeScript's import statement needs to be altered as follows:
 - `import a from './a` -> `import a from './a.js`
 - `import b from './bs` -> `import a from './bs/index.js`
 
@@ -27,24 +27,23 @@ The project uses eslint to perform additional checking,
 the common configuration is in `packages/eslint-shared`,
 each package introduces configuration from this package with their own additional things.
 
-## Jest and Webpack
+## vitest and ESBuild
 
-The project uses jest and webpack for testing and deployment.
-Configurations are carefully adjusted so that they could work with esmodule.
+The project uses vitest and ESBuild for testing and deployment.
 
 ## starter-packages folder
 
 - Copy any package  to `package` folder to create a new package.
 - Change folder name and `name` in `package.json`.
 - `yarn build` to build every packages.
-- `yarn test` to run unit test in `starter-jest`.
+- `yarn test` to run unit test in `starter-vitest`.
 - `yarn deploy` to deploy `starter-lit-html`.
 
 Run the following packages in order for demo:
 
-### starter-jest
+### starter-vitest
 
-A TypeScript package with unit test in **jest**.
+A TypeScript package with unit test in **ESBuild**.
 
 `npm run build` and `npm run test`
 
