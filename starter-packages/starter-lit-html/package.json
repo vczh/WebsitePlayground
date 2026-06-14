@@ -17,7 +17,7 @@
         "typescript-eslint": "^8.12.2"
     },
     "dependencies": {
-        "esbuild": "0.25.8",
+        "esbuild": "0.28.1",
         "lit-html": "^1.1.2"
     }
 }
